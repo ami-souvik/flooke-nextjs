@@ -58,7 +58,7 @@ export default function TemporaryDrawer({
         {values.map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton
-              onClick={setValue}>
+              onClick={() => setValue(text)}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
@@ -74,7 +74,9 @@ export default function TemporaryDrawer({
   return (
     <div>
       <React.Fragment key={anchor}>
-        <Button onClick={toggleDrawer(anchor, true)}>{label}</Button>
+        <Button
+          onClick={toggleDrawer(anchor, true)}
+          variant="outlined">{label}</Button>
         <Drawer
           anchor={anchor}
           open={state[anchor]}

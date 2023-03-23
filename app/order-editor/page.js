@@ -1,8 +1,11 @@
-"use client";
-import { useContext, useState } from 'react';
+"use client"
+import { useContext, useState } from 'react'
 import { FirebaseRealtimeDB } from '../../context/context'
-import Preview from "./preview";
-import TemporaryDrawer from './temporaryDrawer';
+import Button from '@mui/material/Button'
+import Preview from './preview'
+import Counter from '../../components/counter'
+import TemporaryDrawer from './temporaryDrawer'
+import './order-editor.css'
 
 export default function OrderEditor() {
   const { edibles, orders } = useContext(FirebaseRealtimeDB);
@@ -10,16 +13,35 @@ export default function OrderEditor() {
   console.log(orders);
   const [category, setCategory] = useState(null)
   const [item, setItem] = useState(null)
+  const [count, setCount] = useState(0)
+  const [orderDetails, setOrderDetails] = useState({})
+
+  const updateOrderDetails = () => {
+    const detailsClone = {...orderDetails}
+    if(!detailsClone[category])
+      detailsClone[category] = {}
+    console.log(edibles[category][item]);
+    detailsClone[category][item] = edibles[category][item]
+    detailsClone[category][item].count = count
+    setOrderDetails(detailsClone)
+  }
+
   return (
     <div>
-      <Preview />
+      <Preview
+        data={orderDetails}
+        setCount={setCount}
+        setItem={setItem}
+        setCategory={setCategory}
+      />
       <h1>{category}</h1>
       <h1>{item}</h1>
+      <Counter count={count} setCount={setCount} />
       <TemporaryDrawer
         anchor='bottom'
         label='Choose Category'
-        values={Object.keys(edibles)}
-        setValue={(e, d) => setCategory(e.target.innerText)}
+        values={edibles ? Object.keys(edibles) : []}
+        setValue={setCategory}
       />
       <TemporaryDrawer
         anchor='bottom'
@@ -27,8 +49,11 @@ export default function OrderEditor() {
         values={Object.keys(
           edibles && edibles[category] ? edibles[category] : []
         )}
-        setValue={(e) => setItem(e.target.innerText)}
+        setValue={setItem}
       />
+      <Button
+        onClick={updateOrderDetails}
+        variant="outlined">Add</Button>
     </div>
   );
 }

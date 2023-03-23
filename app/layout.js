@@ -1,6 +1,7 @@
 "use client";
 import '../styles/globals.css'
 import DBContext from '../context/context'
+import Header from '../components/header'
 
 // export const metadata = {
 //   title: 'Create Next App',
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <DBContext>
+          <Header />
           {children}
         </DBContext>
       </body>

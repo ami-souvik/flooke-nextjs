@@ -8,8 +8,8 @@ export const FirebaseRealtimeDB = createContext(null);
 const DBContext = ({ children }) => {
   initializeApp(config);
   const db = getDatabase();
-  const [edibles, setEdibles] = useState({});
-  const [orders, setOrders] = useState({});
+  const [edibles, setEdibles] = useState(null);
+  const [orders, setOrders] = useState(null);
 
   useEffect(() => {
     onValue(ref(
