@@ -13,11 +13,19 @@ import MailIcon from '@mui/icons-material/Mail';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
+interface DrawerProps {
+  anchor: Anchor,
+  label: string,
+  values: string[],
+  setValue: any
+}
+
 export default function TemporaryDrawer({
   anchor = 'left',
   label = 'left',
-  values = []
-}) {
+  values = [],
+  setValue = null
+}: DrawerProps) : JSX.Element{
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -49,7 +57,8 @@ export default function TemporaryDrawer({
       <List>
         {values.map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton
+              onClick={setValue}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>

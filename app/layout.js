@@ -1,5 +1,5 @@
 "use client";
-import '@/styles/globals.css'
+import '../styles/globals.css'
 import DBContext from '../context/context'
 
 export const metadata = {
