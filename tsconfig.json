@@ -29,7 +29,7 @@
     "**/*.ts",
     "**/*.tsx",
     "app/order-editor/temporaryDrawer.tsx"
-  ],
+, "utils/printUtils/sendPrinterData.js"  ],
   "exclude": [
     "node_modules"
   ]
