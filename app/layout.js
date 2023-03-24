@@ -1,5 +1,8 @@
 "use client";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import '../styles/globals.css'
+import store, { persistor } from "../store/index";
 import DBContext from '../context/context'
 import Header from '../components/header'
 
@@ -12,10 +15,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <DBContext>
-          <Header />
-          {children}
-        </DBContext>
+        <Provider store={store}>
+          <PersistGate persistor={persistor}>
+            <DBContext>
+              <Header />
+              {children}
+            </DBContext>
+          </PersistGate>
+        </Provider>
       </body>
     </html>
   )
