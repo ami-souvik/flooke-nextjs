@@ -1,0 +1,20 @@
+.card-piece.backdrop.back {
+  background-color: var(--white-900);
+  border: 4px solid var(--purple-600);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.card-piece.backdrop.head {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--white-800);
+  border-radius: 16px 16px 0px 0px;
+  padding: 20px;
+}
+.card-piece.backdrop.head h4.title {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.card-piece.backdrop.head h4.total {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
