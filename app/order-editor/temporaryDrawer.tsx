@@ -54,6 +54,15 @@ export default function TemporaryDrawer({
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+      <Button style={{
+        width: "100%",
+        position: "relative",
+        zIndex: 1500,
+        color: "white",
+        backgroundColor: "gray",
+        top: "0px",
+        right: "0px"
+      }}>Close</Button>
       <List>
         {values.map((text, index) => (
           <ListItem key={text} disablePadding>

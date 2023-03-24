@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
         <Provider store={store}>
           <PersistGate persistor={persistor}>
             <DBContext>
-              <Header />
+              {/* <Header /> */}
               {children}
             </DBContext>
           </PersistGate>
