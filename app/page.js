@@ -1,25 +1,31 @@
 "use client";
-import { useContext } from 'react';
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import { useState, useContext } from 'react';
 import { FirebaseRealtimeDB } from '../context/context'
-import TemporaryDrawer from './order-editor/temporaryDrawer';
-import Backdrop from '../components/card-pieces/backdrops';
+import { ManagerCard } from '../components/card/types';
+import Picker from '../components/picker';
 import '../styles/components-st/card-pieces.css'
+
+const views = ["Manager", "Chef", "Steward"]
 
 export default function Home() {
   const { edibles, orders } = useContext(FirebaseRealtimeDB);
+  const [view, setView] = useState(views[0]);
   return (
     <main>
-      <TemporaryDrawer />
-      {orders && Object.keys(orders).map(tableKey => (
-        <Backdrop.Basic polish={{ padding: 0 }}>
-          <Backdrop.Header
-            title={tableKey}
-            total="498"
-          />
-          <Backdrop.Body details={orders[tableKey].orderDetails} />
-        </Backdrop.Basic>
+      <Picker
+        label="View"
+        values={views}
+        active={view}
+        setActive={setView}
+      />
+      {orders && Object.keys(orders).map(key => (
+        <ManagerCard
+          loading={orders ? false : true}
+          title={key}
+          orders={{
+            details: orders[key].orderDetails
+          }}
+        />
       ))}
     </main>
   )
