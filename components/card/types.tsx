@@ -9,7 +9,7 @@ export const ManagerCard = ({
   return loading ?
   (<Skeleton variant="text" sx={{ fontSize: '1rem' }} />) :
   (
-    <Pieces.Basic polish={{ padding: 0 }}>
+    <Pieces.Basic>
       <Pieces.Header
         title={title}
         total="498"
