@@ -1,13 +1,28 @@
 import { useState } from "react";
-import IconButton from '@mui/material/IconButton';
+import { TextField, IconButton } from "@mui/material";
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 import KeyboardDoubleArrowUpRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowUpRounded';
 import Pieces from "./card/pieces"
-import Picker from "./picker";
+import Picker from "./picker"
+import Counter from "./counter";
+import Preview from "./preview"
 
 const Editor = ({ title, data }) => {
+  const [details, setDetails] = useState({});
+  const [table, setTable] = useState(null);
   const [category, setCategory] = useState(null);
   const [item, setItem] = useState(null);
+  const [comment, setComment] = useState(null);
+  const [count, setCount] = useState(null);
+  const updateOrder = () => {
+    const cloneOrder = {...details}
+    if(!cloneOrder[category])
+      cloneOrder[category] = {}
+    cloneOrder[category][item] = data[category][item]
+    cloneOrder[category][item].count = count
+    cloneOrder[category][item].comment = comment
+    setDetails(cloneOrder)
+  }
   return (<Pieces.Basic
     polish={{
       position: "fixed",
@@ -22,15 +37,12 @@ const Editor = ({ title, data }) => {
       total=""
     />
     <div>
-      {/* <Preview
-        data={orderDetails}
+      <Preview
+        data={details}
         setCount={setCount}
         setItem={setItem}
         setCategory={setCategory}
-      /> */}
-      {/* <h1>{category}</h1>
-      <h1>{item}</h1> */}
-      {/* <Counter count={count} setCount={setCount} /> */}
+      />
       <Picker
         label="Choose Category"
         values={data ? Object.keys(data) : []}
@@ -50,9 +62,29 @@ const Editor = ({ title, data }) => {
         size="small"
         polishLabel={{ backgroundColor: "white", paddingRight: "6px" }}
       />
+      <Picker
+        label="Choose Table"
+        values={['Table 1', 'Table 2', 'Table 3', 'Table 4', 'Table 5', 'Table 6']}
+        active={table}
+        setActive={setTable}
+        width="full"
+        size="small"
+        polishLabel={{ backgroundColor: "white", paddingRight: "6px" }}
+      />
+      <TextField
+        id="outlined-required"
+        label="Comment"
+        value={comment}
+        style={{ fontFamily: 'DM Sans, sans-serif' }}
+        onChange={e => setComment(e.target.value)}
+      />
+      <Counter
+        count={count}
+        setCount={setCount}
+      />
       <IconButton
-        aria-label="upload"
-        // onClick={() => setOpenEd(!openEd)}
+        aria-label="add"
+        onClick={updateOrder}
         style={{
           backgroundColor: "#ddd"
         }}>

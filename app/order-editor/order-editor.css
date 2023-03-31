@@ -1,5 +1,7 @@
 .preview-case {
-  border: 2px solid;
+  height: 240px;
+  overflow-y: scroll;
+  border: 2px solid black;
   border-radius: 20px;
   padding: 20px;
 }
