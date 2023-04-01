@@ -21,17 +21,25 @@ export default function Preview({
     <h4>Preview:</h4>
     {Object.keys(data).map(cat => (
       <>
-        <h3>{cat}</h3>
+        <p>{cat}</p>
         <List>
           {Object.keys(data[cat]).map(item => (
             <ListItem key={item} disablePadding>
               <ListItemButton
+                style={{ padding: 0 }}
                 onClick={() => {
                   setCount(data[cat][item].count)
                   setItem(item)
                   setCategory(cat)
                 }}>
-                <ListItemText primary={`${data[cat][item].count} x ${item}`} />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                  }}>
+                  <p>{data[cat][item].count} x {item}</p>
+                  {data[cat][item].comment && <p style={{ backgroundColor: '#57C5B6' }}>{data[cat][item].comment}</p>}
+                </div>
               </ListItemButton>
             </ListItem>
           ))}

@@ -15,13 +15,14 @@ export const ManagerCard = ({
     <Pieces.Basic>
       <Pieces.Header
         title={title}
-        total="498"
+        total={orders.total}
       />
       <h3>{orders.phnumber}</h3>
       <Pieces.Body
         details={orders.details}
         onEdit={onEdit}
         onDelete={onDelete}
+        onProcess={onProcess}
       />
     </Pieces.Basic>
   )

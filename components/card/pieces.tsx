@@ -16,13 +16,17 @@ const Header = ({ title = '', total = 0 }) => (
   </div>
 )
 
-const LineItem = ({ timestamp, item, count }) : JSX.Element => (
+const LineItem = ({ timestamp, item, count, comment }) : JSX.Element => (
   <div className="card-piece linestamp">
     <h6 className="timestamp">{timestamp}</h6>
     <div className="lineitem">
       <h4 className="item">{item}</h4>
       <h4 className="count">{count}</h4>
     </div>
+    {comment && (
+      <h4
+        className="comment"
+        style={{ backgroundColor: '#57C5B6' }}>{comment}</h4>)}
   </div>
 )
 
@@ -34,9 +38,10 @@ const Body = ({ details, onEdit, onDelete, onProcess }) => (
           {details[cat] &&
             Object.keys(details[cat]).map(item => (
               <LineItem
-                timestamp="06:29 PM"
+                timestamp={details[cat][item].timestring}
                 item={item}
                 count={details[cat][item].count}
+                comment={details[cat][item].comment}
               />
             ))
           }

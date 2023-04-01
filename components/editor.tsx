@@ -1,5 +1,6 @@
-import { useState, useContext, useEffect } from "react";
-import { TextField, IconButton } from "@mui/material";
+import React, { useState, useContext, useEffect } from "react";
+import { TextField, IconButton, Snackbar } from "@mui/material";
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 import KeyboardDoubleArrowUpRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowUpRounded';
 import { getDatabase, ref, set } from "firebase/database"
@@ -8,6 +9,13 @@ import Pieces from "./card/pieces"
 import Picker from "./picker"
 import Counter from "./counter"
 import Preview from "./preview"
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Editor = ({ title, active }) => {
   const { edibles, orders } = useContext(FirebaseRealtimeDB);
@@ -21,21 +29,58 @@ const Editor = ({ title, active }) => {
   const [comment, setComment] = useState(null);
   const [number, setNumber] = useState(null);
   const [count, setCount] = useState(null);
+  const [snack, setSnack] = useState(null);
   const updateOrder = () => {
+    if(!category || !item) {
+      setTimeout(() => {
+        setSnack(null)
+      }, 3000)
+      setSnack('Please select an item to add');
+      return
+    }
+    else if(!count) {
+      setTimeout(() => {
+        setSnack(null)
+      }, 3000)
+      setSnack('Please provide the item count');
+      return
+    }
+    else if(!table) {
+      setTimeout(() => {
+        setSnack(null)
+      }, 3000)
+      setSnack('Please provide the table number');
+      return
+    }
     const cloneOrder = {...details}
     if(!cloneOrder[category])
       cloneOrder[category] = {}
-    cloneOrder[category][item] = edibles[category][item]
+    if(!cloneOrder[category][item])
+      cloneOrder[category][item] = {}
+    cloneOrder[category][item].unit = edibles[category][item].sellingCost
     cloneOrder[category][item].count = count
+    cloneOrder[category][item].price =
+     Number(count) * Number(edibles[category][item].sellingCost)
     cloneOrder[category][item].comment = comment
+    cloneOrder[category][item].cooked = false
+    cloneOrder[category][item].served = false
+    cloneOrder[category][item].elapsedMillis = new Date().getTime()
+    cloneOrder[category][item].timestring = new Date().toLocaleTimeString()
     setDetails(cloneOrder)
   }
   const uploadOrder = () => {
+    var tableSum = 0
+    Object.keys(details).forEach(cat => {
+      Object.keys(details[cat]).forEach(item => {
+        tableSum += Number(details[cat][item].price)
+      })
+    })
     set(ref(getDatabase(), '/collections/sandbox1/freeData/activeOrders/' + table), {
       orderDetails: details,
-      cooked: false,
-      elapsedMillis: new Date().getTime(),
-      served: false,
+      orderComputation: {
+        orderTotal: tableSum,
+        billingAmount: tableSum
+      },
       phnumber: number
     });
   }
@@ -55,6 +100,17 @@ const Editor = ({ title, active }) => {
       title={title}
       total=""
     />
+    <Snackbar
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'left',
+      }}
+      open={!!snack}
+    >
+      <Alert onClose={() => setSnack(false)} severity="warning" sx={{ width: '100%' }}>
+        {snack}
+      </Alert>
+    </Snackbar>
     <div>
       <Preview
         data={details}
