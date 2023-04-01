@@ -23,7 +23,7 @@ const printTemplateHead =
   '101 & 101/2 Feeder Rd, Belgharia' +
   'Kolkata 700056                  ' +
   'Ph: 9330038609/9062786568       ' +
-  `Date: ${getTodayFormatted()}                 ` +
+  `Date: ${getTodayFormatted()}                  ` +
   DIVIDER +
   'Item             Ct.  Ut.  Price' +
   DIVIDER;
