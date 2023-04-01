@@ -42,7 +42,9 @@ const DBContext = ({ children }) => {
       edibles,
       orders,
       addToPastOrder: (table) => {
-        set(ref(db, '/collections/sandbox1/onlyContent/processedOrders/' + new Date().toISOString()), orders[table]);
+        const ordersClone = JSON.parse( JSON.stringify(orders[table]) )
+        console.log(ordersClone);
+        set(ref(db, '/collections/sandbox1/onlyContent/processedOrders/' + String(new Date().getTime()), ordersClone));
       },
       deleteTable: (table) => {
         confirm("Are you sure you want to delete the order?")
