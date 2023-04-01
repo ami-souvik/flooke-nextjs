@@ -41,6 +41,9 @@ const DBContext = ({ children }) => {
     <FirebaseRealtimeDB.Provider value={{
       edibles,
       orders,
+      addToPastOrder: (table) => {
+        set(ref(db, '/collections/sandbox1/onlyContent/processedOrders/' + new Date().toISOString()), orders[table]);
+      },
       deleteTable: (table) => {
         confirm("Are you sure you want to delete the order?")
           && set(ref(db, '/collections/sandbox1/freeData/activeOrders/' + table), null);
