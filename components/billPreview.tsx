@@ -5,7 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import { FirebaseRealtimeDB } from "../context/context";
-import Pieces from "./card/pieces"
+import Pieces from "./card/pieces.jsx"
 import searchAndConnectBt from "../utils/printUtils/searchAndConnectBt"
 
 const BillPreview = ({ table, handleClose }) => {
@@ -32,7 +32,7 @@ const BillPreview = ({ table, handleClose }) => {
     }}>
       <Button variant="contained" onClick={handleClose} disableElevation>close</Button>
       {Object.keys(data).map(cat => (
-        <List>
+        <List key={cat}>
           {Object.keys(data[cat]).map(item => (
             <ListItem key={item} disablePadding>
               <div

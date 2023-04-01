@@ -1,5 +1,5 @@
 import Skeleton from '@mui/material/Skeleton'
-import Pieces from "./pieces"
+import Pieces from "./pieces.jsx"
 
 export const ManagerCard = ({
   title,
@@ -8,7 +8,7 @@ export const ManagerCard = ({
   onDelete = null,
   onProcess = null,
   loading = true
-}) : JSX.Element => {
+}) => {
   return loading ?
   (<Skeleton variant="text" sx={{ fontSize: '1rem' }} />) :
   (

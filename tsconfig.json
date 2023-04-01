@@ -27,9 +27,8 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "app/order-editor/temporaryDrawer.tsx"
-, "utils/printUtils/sendPrinterData.js"  ],
+    "**/*.tsx"
+  ],
   "exclude": [
     "node_modules"
   ]

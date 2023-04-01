@@ -5,14 +5,14 @@ import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRound
 import KeyboardDoubleArrowUpRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowUpRounded';
 import { getDatabase, ref, set } from "firebase/database"
 import { FirebaseRealtimeDB } from "../context/context";
-import Pieces from "./card/pieces"
+import Pieces from "./card/pieces.jsx"
 import Picker from "./picker"
 import Counter from "./counter"
 import Preview from "./preview"
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+const Alert = React.forwardRef<HTMLDivElement>(function Alert(
   props,
-  ref,
+  ref
 ) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });

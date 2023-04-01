@@ -29,6 +29,7 @@ export default function Home() {
       />
       {orders && Object.keys(orders).map(key => (
         <ManagerCard
+          key={key}
           loading={orders ? false : true}
           title={key}
           orders={{
