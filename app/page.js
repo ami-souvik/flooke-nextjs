@@ -7,16 +7,18 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import EditOffRoundedIcon from '@mui/icons-material/EditOffRounded';
 import Editor from '../components/editor';
 import Picker from '../components/picker';
-import '../styles/components-st/card-pieces.css'
 
 const views = ["Manager", "Chef", "Steward"]
 
 export default function Home() {
-  const { edibles, orders } = useContext(FirebaseRealtimeDB);
+  const { edibles, orders, deleteTable } = useContext(FirebaseRealtimeDB);
   const [view, setView] = useState(views[0]);
   const [openEd, setOpenEd] = useState(false);
+  const [active, setActive] = useState('1');
   return (
     <main>
+      <h3>{`${edibles != null}`}</h3>
+      <h3>{`${orders != null}`}</h3>
       <Picker
         label="View"
         values={views}
@@ -28,14 +30,22 @@ export default function Home() {
           loading={orders ? false : true}
           title={key}
           orders={{
-            details: orders[key].orderDetails
+            details: orders[key].orderDetails,
+            phnumber: orders[key].phnumber
           }}
+          onEdit={() => {
+            setOpenEd(true)
+            setActive(key)
+          }}
+          onDelete={() => deleteTable(key)}
+          onProcess={() => {}}
         />
       ))}
       {openEd &&
         <Editor
           title="Order editor"
           data={edibles}
+          active={active}
         />
       }
       <IconButton

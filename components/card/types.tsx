@@ -4,6 +4,9 @@ import Pieces from "./pieces"
 export const ManagerCard = ({
   title,
   orders = {},
+  onEdit = null,
+  onDelete = null,
+  onProcess = null,
   loading = true
 }) : JSX.Element => {
   return loading ?
@@ -14,7 +17,12 @@ export const ManagerCard = ({
         title={title}
         total="498"
       />
-      <Pieces.Body details={orders.details} />
+      <h3>{orders.phnumber}</h3>
+      <Pieces.Body
+        details={orders.details}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />
     </Pieces.Basic>
   )
 }

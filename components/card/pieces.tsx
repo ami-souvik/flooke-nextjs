@@ -1,3 +1,8 @@
+import IconButton from '@mui/material/IconButton';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import SavingsRoundedIcon from '@mui/icons-material/SavingsRounded';
+
 const Basic = ({ polish, children }) => (
   <div className="card-piece backdrop back" style={polish}>
     {children}
@@ -21,7 +26,7 @@ const LineItem = ({ timestamp, item, count }) : JSX.Element => (
   </div>
 )
 
-const Body = ({ details }) => (
+const Body = ({ details, onEdit, onDelete, onProcess }) => (
   <div className="card-piece backdrop body">
     {details &&
       Object.keys(details).map(cat => (
@@ -38,6 +43,33 @@ const Body = ({ details }) => (
         </>
       ))
     }
+    <IconButton
+      aria-label="edit"
+      onClick={onEdit}
+      style={{
+        padding: "6px",
+        backgroundColor: "#ddd"
+      }}>
+      <EditRoundedIcon fontSize="medium" />
+    </IconButton>
+    <IconButton
+      aria-label="edit"
+      onClick={onDelete}
+      style={{
+        padding: "6px",
+        backgroundColor: "#ddd"
+      }}>
+      <DeleteOutlineRoundedIcon fontSize="medium" />
+    </IconButton>
+    <IconButton
+      aria-label="edit"
+      onClick={onProcess}
+      style={{
+        padding: "6px",
+        backgroundColor: "#ddd"
+      }}>
+      <SavingsRoundedIcon fontSize="medium" />
+    </IconButton>
   </div>
 )
 
