@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 import config from '../firebaseConfig';
 
 export const FirebaseRealtimeDB = createContext(null);
@@ -13,7 +13,7 @@ const DBContext = ({ children }) => {
 
   useEffect(() => {
     onValue(ref(
-      db, 'collections/thepseudoengineers/freeData/edibleItems'
+      db, 'collections/sandbox1/freeData/edibleItems'
     ), (snapshot) => {
       if(snapshot.exists()) {
         const data = snapshot.val();
@@ -25,7 +25,7 @@ const DBContext = ({ children }) => {
     });
   
     onValue(ref(
-      db, 'collections/thepseudoengineers/freeData/activeOrders'
+      db, 'collections/sandbox1/freeData/activeOrders'
     ), (snapshot) => {
       if(snapshot.exists()) {
         const data = snapshot.val();
@@ -40,7 +40,11 @@ const DBContext = ({ children }) => {
   return (
     <FirebaseRealtimeDB.Provider value={{
       edibles,
-      orders
+      orders,
+      deleteTable: (table) => {
+        confirm("Are you sure you want to delete the order?")
+          && set(ref(db, '/collections/sandbox1/freeData/activeOrders/' + table), null);
+      }
     }}>
       {children}
     </FirebaseRealtimeDB.Provider>

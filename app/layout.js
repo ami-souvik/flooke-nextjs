@@ -2,6 +2,8 @@
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import '../styles/globals.css'
+import '../styles/components-st/card-pieces.css'
+import '../styles/components-st/editor.css'
 import store, { persistor } from "../store/index";
 import DBContext from '../context/context'
 import Header from '../components/header'
@@ -18,7 +20,7 @@ export default function RootLayout({ children }) {
         <Provider store={store}>
           <PersistGate persistor={persistor}>
             <DBContext>
-              <Header />
+              {/* <Header /> */}
               {children}
             </DBContext>
           </PersistGate>

@@ -1,92 +1,80 @@
 "use client";
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '../styles/page.module.css'
+import { useState, useContext } from 'react';
+import { FirebaseRealtimeDB } from '../context/context'
+import { ManagerCard } from '../components/card/types';
+import IconButton from '@mui/material/IconButton';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import EditOffRoundedIcon from '@mui/icons-material/EditOffRounded';
+import Editor from '../components/editor';
+import BillPreview from '../components/billPreview';
+import Picker from '../components/picker';
 
-const inter = Inter({ subsets: ['latin'] })
+const views = ["Manager", "Chef", "Steward"]
 
 export default function Home() {
+  const { edibles, orders, deleteTable } = useContext(FirebaseRealtimeDB);
+  const [view, setView] = useState(views[0]);
+  const [openEd, setOpenEd] = useState(false);
+  const [openPcs, setOpenPcs] = useState(false);
+  const [active, setActive] = useState('1');
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <main>
+      <h3>{`${edibles != null}`}</h3>
+      <h3>{`${orders != null}`}</h3>
+      <Picker
+        label="View"
+        values={views}
+        active={view}
+        setActive={setView}
+      />
+      {orders && Object.keys(orders).map(key => (
+        <ManagerCard
+          loading={orders ? false : true}
+          title={key}
+          orders={{
+            details: orders[key].orderDetails,
+            total: orders[key].orderComputation
+              && orders[key].orderComputation.orderTotal
+              ? orders[key].orderComputation.orderTotal : null,
+            phnumber: orders[key].phnumber
+          }}
+          onEdit={() => {
+            setOpenEd(true)
+            setActive(key)
+          }}
+          onDelete={() => deleteTable(key)}
+          onProcess={() => {
+            setOpenPcs(true)
+            setActive(key)
+          }}
         />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      ))}
+      {openEd &&
+        <Editor
+          title="Order editor"
+          data={edibles}
+          active={active}
+        />
+      }
+      {openPcs &&
+        <BillPreview
+          table={active}
+          handleClose={() => setOpenPcs(false)}
+        />
+      }
+      <IconButton
+        aria-label="edit"
+        onClick={() => setOpenEd(!openEd)}
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          padding: "12px",
+          backgroundColor: "#ddd"
+        }}>
+        {openEd ? <EditOffRoundedIcon fontSize="large" />
+        : <EditRoundedIcon fontSize="large" />}
+      </IconButton>
     </main>
   )
 }
