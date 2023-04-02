@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { getDatabase, ref, set } from "firebase/database";
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -20,7 +21,8 @@ const BillPreview = ({ table, handleClose }) => {
   })
   const processOrder = () => {
     addToPastOrder(table)
-    deleteTable(table)
+    set(ref(getDatabase(), '/collections/sandbox1/freeData/activeOrders/' + table), null);
+    handleClose();
   }
   return (<Pieces.Basic
     polish={{
