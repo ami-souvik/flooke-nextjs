@@ -16,7 +16,7 @@ export default function Counter({
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <IconButton
         onClick={() => {
-          if(count >= 0) {
+          if(count > 0) {
             setCount(count - 1)
           }
         }}
@@ -28,7 +28,7 @@ export default function Counter({
       <h1 style={{ padding: '0px 20px' }}>{count}</h1>
       <IconButton
         onClick={() => {
-          if(count <= 50) {
+          if(count < 50) {
             setCount(count + 1)
           }
         }}

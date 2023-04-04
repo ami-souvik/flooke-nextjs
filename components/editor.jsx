@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import { TextField, IconButton, Snackbar } from "@mui/material";
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 import KeyboardDoubleArrowUpRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowUpRounded';
 import { getDatabase, ref, set } from "firebase/database"
@@ -9,13 +8,6 @@ import Pieces from "./card/pieces.jsx"
 import Picker from "./picker"
 import Counter from "./counter"
 import Preview from "./preview"
-
-const Alert = React.forwardRef<HTMLDivElement>(function Alert(
-  props,
-  ref
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
 const Editor = ({ title, active }) => {
   const { edibles, orders } = useContext(FirebaseRealtimeDB);
@@ -28,28 +20,18 @@ const Editor = ({ title, active }) => {
   const [item, setItem] = useState(null);
   const [comment, setComment] = useState(null);
   const [number, setNumber] = useState(null);
-  const [count, setCount] = useState(null);
-  const [snack, setSnack] = useState(null);
+  const [count, setCount] = useState(0);
   const updateOrder = () => {
     if(!category || !item) {
-      setTimeout(() => {
-        setSnack(null)
-      }, 3000)
-      setSnack('Please select an item to add');
+      alert('Please select an item to add');
       return
     }
-    else if(!count) {
-      setTimeout(() => {
-        setSnack(null)
-      }, 3000)
-      setSnack('Please provide the item count');
+    else if(!count || Number(count) === 0) {
+      alert('Please provide the item count');
       return
     }
     else if(!table) {
-      setTimeout(() => {
-        setSnack(null)
-      }, 3000)
-      setSnack('Please provide the table number');
+      alert('Please provide the table number');
       return
     }
     const cloneOrder = {...details}
@@ -100,17 +82,6 @@ const Editor = ({ title, active }) => {
       title={title}
       total=""
     />
-    <Snackbar
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'left',
-      }}
-      open={!!snack}
-    >
-      <Alert onClose={() => setSnack(false)} severity="warning" sx={{ width: '100%' }}>
-        {snack}
-      </Alert>
-    </Snackbar>
     <div>
       <Preview
         data={details}
