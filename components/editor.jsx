@@ -11,7 +11,7 @@ import Preview from "./preview"
 
 const Editor = ({ title, active }) => {
   const { edibles, orders } = useContext(FirebaseRealtimeDB);
-  
+  console.log(active);
   const [details, setDetails] = useState(
     active && orders?[active] && orders[active]?.orderDetails ? orders[active].orderDetails : {} : {}
   );
@@ -67,7 +67,7 @@ const Editor = ({ title, active }) => {
     });
   }
   useEffect(() => {
-    setDetails(table && orders?[table] && orders[table].orderDetails ? orders[table].orderDetails : {} : {});
+    setDetails(table && orders?[table] && orders[table]?.orderDetails ? orders[table].orderDetails : {} : {});
   }, [table])
   return (<Pieces.Basic
     polish={{

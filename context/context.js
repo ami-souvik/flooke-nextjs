@@ -2,27 +2,14 @@ import { createContext, useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 import config from '../firebaseConfig';
+import { getDatestamp } from "../utils/helperUtils";
 
 export const FirebaseRealtimeDB = createContext(null);
 
 const getTimestamp = () => {
   // 2023|04|02::21:52:25
   var today = new Date
-  return `${getDatestamp()}::${today.toJSON().substring(11, 19)}`
-}
-
-const getDatestamp = () => {
-  // 2023|04|02
-  var today = new Date
-  var month
-  if(today.getMonth() + 1 < 10) {
-    month = `0${today.getMonth() + 1}`
-  }
-  var date
-  if(today.getDate() < 10) {
-    date = `0${today.getDate()}`
-  }
-  return `${today.getFullYear()}|${month}|${date}`
+  return `${getDatestamp()}::${today.toLocaleTimeString()}`
 }
 
 const DBContext = ({ children }) => {
@@ -30,6 +17,7 @@ const DBContext = ({ children }) => {
   const db = getDatabase();
   const [edibles, setEdibles] = useState(null);
   const [orders, setOrders] = useState(null);
+  const [pastOrders, setPastOrders] = useState({});
 
   useEffect(() => {
     onValue(ref(
@@ -55,12 +43,25 @@ const DBContext = ({ children }) => {
       //   console.log('error occurred retrieving active orders');
       // }
     });
+
+    onValue(ref(
+      db, 'collections/sandbox1/onlyContent/processedOrders'
+    ), (snapshot) => {
+      if(snapshot.exists()) {
+        const data = snapshot.val();
+        setPastOrders(data);
+      }
+      else {
+        console.log('error occurred retrieving processedOrders');
+      }
+    });
   }, []);
   
   return (
     <FirebaseRealtimeDB.Provider value={{
       edibles,
       orders,
+      pastOrders,
       addToPastOrder: (table) => {
         const ordersClone = JSON.parse( JSON.stringify(orders[table]) )
         ordersClone.orderedDate = getDatestamp()

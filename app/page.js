@@ -1,26 +1,45 @@
 "use client";
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { FirebaseRealtimeDB } from '../context/context'
 import { ManagerCard } from '../components/card/types';
-import IconButton from '@mui/material/IconButton';
+import { IconButton, Switch } from '@mui/material';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import EditOffRoundedIcon from '@mui/icons-material/EditOffRounded';
 import Editor from '../components/editor';
 import BillPreview from '../components/billPreview';
 import Picker from '../components/picker';
+import { getDatestamp } from '../utils/helperUtils';
 
 const views = ["Manager", "Chef", "Steward"]
 
 export default function Home() {
-  const { edibles, orders, deleteTable } = useContext(FirebaseRealtimeDB);
+  const { edibles, orders, pastOrders, deleteTable } = useContext(FirebaseRealtimeDB);
   const [view, setView] = useState(views[0]);
   const [openEd, setOpenEd] = useState(false);
   const [openPcs, setOpenPcs] = useState(false);
   const [active, setActive] = useState('1');
+  const [todaysTotal, setTodaysTotal] = useState(0);
+  const calculateTotal = () => {
+    var total = 0
+    Object.keys(pastOrders).forEach(each => {
+      console.log(pastOrders[each]);
+      if(each.substring(0, 10) === getDatestamp()) {
+        console.log('total called');
+        total += pastOrders[each].orderComputation.billingAmount
+      }
+    })
+    console.log(total);
+    setTodaysTotal(total)
+  }
+  useEffect(() => {
+    calculateTotal()
+  }, [pastOrders])
   return (
     <main>
-      <h3>{`${edibles != null}`}</h3>
-      <h3>{`${orders != null}`}</h3>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Switch checked={!!edibles} color="success" />
+        <h3 style={{ paddingRight: "12px" }}>Total: {todaysTotal}</h3>
+      </div>
       <Picker
         label="View"
         values={views}
