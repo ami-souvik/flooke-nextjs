@@ -2,7 +2,6 @@
 import { useContext, useState } from 'react'
 import { FirebaseRealtimeDB } from '../../context/context'
 import Button from '@mui/material/Button'
-import Preview from './preview'
 import Counter from '../../components/counter'
 import TemporaryDrawer from './temporaryDrawer'
 import './order-editor.css'
@@ -28,12 +27,6 @@ export default function OrderEditor() {
 
   return (
     <div>
-      <Preview
-        data={orderDetails}
-        setCount={setCount}
-        setItem={setItem}
-        setCategory={setCategory}
-      />
       <h1>{category}</h1>
       <h1>{item}</h1>
       <Counter count={count} setCount={setCount} />
