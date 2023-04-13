@@ -14,5 +14,8 @@ export const getDatestamp = () => {
   if(today.getDate() < 10) {
     date = `0${today.getDate()}`
   }
+  else {
+    date = `${today.getDate()}`
+  }
   return `${today.getFullYear()}|${month}|${date}`
 }

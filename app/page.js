@@ -22,13 +22,10 @@ export default function Home() {
   const calculateTotal = () => {
     var total = 0
     Object.keys(pastOrders).forEach(each => {
-      console.log(pastOrders[each]);
       if(each.substring(0, 10) === getDatestamp()) {
-        console.log('total called');
-        total += pastOrders[each].orderComputation.billingAmount
+        total += Number(pastOrders[each].orderComputation.billingAmount)
       }
     })
-    console.log(total);
     setTodaysTotal(total)
   }
   useEffect(() => {
