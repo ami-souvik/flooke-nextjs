@@ -1,14 +1,11 @@
-import { useContext } from 'react'
-import { FirebaseRealtimeDB } from '../context/context'
+import { Typography } from "@mui/material"
 
-export default function Header() : JSX.Element{
-  const { edibles, orders } = useContext(FirebaseRealtimeDB);
-  console.log('Header called');
-  
+export default function Header({ label }) : JSX.Element{
   return (
-    <>
-      <h1>{edibles ? 'Edibles fetched' : 'Not connected'}</h1>
-      <h1>{orders ? 'Orders fetched' : 'Not connected'}</h1>
-    </>
+    <Typography
+      fontSize="2rem"
+      fontFamily="judera flat"
+      textTransform="uppercase"
+    >{label}</Typography>
   )
 }

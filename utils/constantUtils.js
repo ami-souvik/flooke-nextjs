@@ -1,0 +1,1 @@
+export const BACKEND_API_BASE_URL = "https://flooke-node-express-production.up.railway.app";

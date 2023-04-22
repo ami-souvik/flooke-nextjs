@@ -1,17 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
-import { TextField, IconButton, Snackbar } from "@mui/material";
-import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
-import KeyboardDoubleArrowUpRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowUpRounded';
+import { Box, TextField, Typography } from "@mui/material";
 import { getDatabase, ref, set } from "firebase/database"
 import { FirebaseRealtimeDB } from "../context/context";
+import Header from "./header";
 import Pieces from "./card/pieces.jsx"
-import Picker from "./picker"
-import Counter from "./counter"
+import Counter from "./form-components/counter"
 import Preview from "./preview"
+import AddUploadButtonSet from "./form-components/addUploadButtonSet";
+import { DoublePicker } from "./form-components/pickers";
+import { Picker } from "./form-components/pickers";
 
 const Editor = ({ title, active }) => {
   const { edibles, orders } = useContext(FirebaseRealtimeDB);
-  console.log(active);
   const [details, setDetails] = useState(
     active && orders?[active] && orders[active]?.orderDetails ? orders[active].orderDetails : {} : {}
   );
@@ -69,91 +69,60 @@ const Editor = ({ title, active }) => {
   useEffect(() => {
     setDetails(table && orders?[table] && orders[table]?.orderDetails ? orders[table].orderDetails : {} : {});
   }, [table])
-  return (<Pieces.Basic
-    polish={{
+  return (<Box
+    sx={{
       position: "fixed",
       left: "0px",
       top: "0px",
       right: "0px",
       bottom: "0px",
-      margin: "20px"
+      padding: "16px",
+      backgroundColor: "white"
     }}>
-    <Pieces.Header
-      title={title}
-      total=""
+    <Header label="Order Editor"/>
+    <Typography
+      color="black"
+      fontSize="2rem"
+      fontFamily="alpha beta"
+    >Table {table}</Typography>
+    <Preview
+      data={details}
+      setCount={setCount}
+      setItem={setItem}
+      setCategory={setCategory}
     />
-    <div>
-      <Preview
-        data={details}
-        setCount={setCount}
-        setItem={setItem}
-        setCategory={setCategory}
-      />
-      <h3>{number}</h3>
-      <Picker
-        label="Choose Category"
-        values={edibles ? Object.keys(edibles) : []}
-        active={category}
-        setActive={setCategory}
-        width="full"
-        size="small"
-        polishLabel={{ backgroundColor: "white" }}
-      />
-      <Picker
-        label="Choose Item"
-        values={edibles && edibles[category] ? Object.keys(edibles[category]) : []}
-        active={item}
-        setActive={setItem}
-        disabled={!category}
-        width="full"
-        size="small"
-        polishLabel={{ backgroundColor: "white" }}
-      />
-      <Picker
-        label="Choose Table"
-        values={['1', '2', '3', '4', '5', '6']}
-        active={table}
-        setActive={setTable}
-        width="full"
-        size="small"
-        polishLabel={{ backgroundColor: "white" }}
-      />
-      <TextField
-        id="outlined-required"
-        label="Comment"
-        value={comment}
-        style={{ fontFamily: 'DM Sans, sans-serif' }}
-        onChange={e => setComment(e.target.value)}
-      />
-      <TextField
-        id="outlined-required"
-        label="Phone number"
-        value={number}
-        style={{ fontFamily: 'DM Sans, sans-serif' }}
-        onChange={e => setNumber(e.target.value)}
-      />
+    <h3>{number}</h3>
+    <DoublePicker />
+    <TextField
+      label="Item instruction..."
+      value={comment}
+      sx={{
+        width: "100%",
+        fontFamily: "alpha beta",
+      }}
+      fontFamily="alpha beta"
+      style={{
+        borderRadius: 0,
+        borderStyle: "solid",
+        borderWidth: "3px",
+        borderBottomWidth: "6px",
+        borderColor: "black"
+      }}
+      onChange={e => setComment(e.target.value)}
+    />
+    <Picker
+      active={table}
+      setActive={setTable}
+      values={['1', '2', '3', '4', '5', '6']}
+    />
+    <Box sx={{ display: "flex" }}>
       <Counter
         count={count}
         setCount={setCount}
       />
-      <IconButton
-        aria-label="add"
-        onClick={updateOrder}
-        style={{
-          backgroundColor: "#ddd"
-        }}>
-        <KeyboardArrowUpRoundedIcon fontSize="large"/>
-      </IconButton>
-      <IconButton
-        aria-label="upload"
-        onClick={uploadOrder}
-        style={{
-          backgroundColor: "#ddd"
-        }}>
-        <KeyboardDoubleArrowUpRoundedIcon fontSize="large"/>
-      </IconButton>
-    </div>
-  </Pieces.Basic>)
+      <AddUploadButtonSet />
+    </Box>
+  </Box>)
 }
 
 export default Editor;
