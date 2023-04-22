@@ -4,12 +4,6 @@ import ItemLine from "./item-line";
 
 interface ItemDrawerProps {}
 
-const elementInnerHeight = window.innerHeight/2
- - 12 /** full screen padding bottom */
- - 39.5 /** header category name */
- - 64 /** input field height */
- - 10 /** divider half height */
-
 export default function ItemDrawer({}: ItemDrawerProps) : JSX.Element {
   const [isOpen, setDrawer] = useState(false);
   const [category, setCategory] = useState('Appetizers');
@@ -78,7 +72,11 @@ export default function ItemDrawer({}: ItemDrawerProps) : JSX.Element {
         }}
       >{category}</Box>
       <Box
-        height={`${elementInnerHeight}px`}
+        /** 12 full screen padding bottom */
+        /** 39.5 header category name */
+        /** 64 input field height */
+        /** 10 divider half height */
+        height="calc(50vh - 12px - 39.5px - 64px - 10px)"
         overflow="scroll">
         <ItemLine itemName="Chicken Dry Fry" price={189} />
         <ItemLine itemName="Fish & Chips" price={189} />

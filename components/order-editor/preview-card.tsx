@@ -10,13 +10,6 @@ interface PreviewCardProps {
   setCategory: any
 }
 
-const elementInnerHeight = window.innerHeight/2
- - 12 /** full screen padding top */
- - 48 /** screen header height */
- - 8 /** element border width x2 */
- - 46.4 /** bottom button case height */
- - 10 /** divider half height */
-
 export default function PreviewCard({
   data = {},
   setCount = null,
@@ -35,7 +28,12 @@ export default function PreviewCard({
     }}>
     <OrderEditorTablePick open={overlay} handleClose={() => setOverlay(false)} />
     <Box
-      height={`${elementInnerHeight}px`}
+      /** 12  full screen padding top */
+      /** 48 screen header height */
+      /** 8 element border width x2 */
+      /** 46.4 bottom button case height */
+      /** 10 divider half height */
+      height="calc(50vh - 12px - 48px - 8px - 46.6px - 10px)"
       overflow="scroll"
       style={{
         paddingTop: "12px",
@@ -64,7 +62,7 @@ export default function PreviewCard({
         <Typography fontSize="1.6rem" fontFamily="Montserrat">Guest Details</Typography>
       </Box>
       <Box
-        padding="4px"
+        padding="4px 16px"
         bgcolor="var(--primary-yellow)"
         onClick={() => setOverlay(true)}>
         <Typography fontSize="1.6rem" fontFamily="Montserrat">Table 1</Typography>

@@ -10,7 +10,8 @@ const TableClick = ({ label }) => (
     <Typography
       width="7rem"
       fontSize="1.6rem"
-      fontFamily="Montserrat">
+      fontFamily="Montserrat"
+      textAlign="center">
       {label}
     </Typography>
   </Box>
@@ -22,8 +23,10 @@ const TableClickLine = ({
 }) => (
   <Box
     display="flex"
-    justifyContent="space-between">
+    justifyContent="space-between"
+    margin="4px 0px">
     <TableClick label={leftLabel} />
+    <Box width="4px" />
     <TableClick label={rightLabel} />
   </Box>
 )
@@ -44,7 +47,6 @@ const OrderEditorTablePick = ({
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
         bgcolor: "var(--white-X00)",
         border: '8px solid var(--gray-hard-500)',
         boxShadow: 24,
