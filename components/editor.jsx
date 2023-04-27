@@ -4,7 +4,6 @@ import { getDatabase, ref, set } from "firebase/database"
 import { FirebaseRealtimeDB } from "../context/context";
 import Header from "./header";
 import Pieces from "./card/pieces.jsx"
-import Counter from "./form-components/counter"
 import Preview from "./preview"
 import AddUploadButtonSet from "./form-components/addUploadButtonSet";
 import { DoublePicker } from "./form-components/pickers";
@@ -115,13 +114,6 @@ const Editor = ({ title, active }) => {
       setActive={setTable}
       values={['1', '2', '3', '4', '5', '6']}
     />
-    <Box sx={{ display: "flex" }}>
-      <Counter
-        count={count}
-        setCount={setCount}
-      />
-      <AddUploadButtonSet />
-    </Box>
   </Box>)
 }
 

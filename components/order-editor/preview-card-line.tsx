@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Box, Typography, IconButton } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import Counter from "./counter";
+import Counter from "../form-components/smCounter";
 
 interface PreviewCardLineProps {
   itemName: string
