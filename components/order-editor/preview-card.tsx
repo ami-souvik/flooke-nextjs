@@ -1,20 +1,25 @@
-import { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Skeleton, Typography } from '@mui/material';
 import PreviewCardLine from './preview-card-line';
 import OrderEditorTablePick from '../overlays/order-editor-table-pick';
+import { TABLES_MAP } from '../../utils/constantUtils';
 
 interface PreviewCardProps {
-  data: any,
-  setCount: any,
-  setItem: any,
-  setCategory: any
+  loading: boolean
+  data: any
+  deleteItem: (item: object) => void
+  table: object
+  setCount: (item: object, count: number) => void
+  setTable: (table: object) => void
 }
 
 export default function PreviewCard({
+  loading = false,
   data = {},
+  deleteItem,
+  table,
   setCount = null,
-  setItem = null,
-  setCategory = null
+  setTable = null
 }: PreviewCardProps) : JSX.Element {
   const [overlay, setOverlay] = useState(false);
   return (<div
@@ -26,7 +31,12 @@ export default function PreviewCard({
       borderColor: "var(--foreground-rgb)",
       borderWidth: "4px"
     }}>
-    <OrderEditorTablePick open={overlay} handleClose={() => setOverlay(false)} />
+    <OrderEditorTablePick
+      open={overlay}
+      options={TABLES_MAP}
+      pickTable={setTable}
+      handleClose={() => setOverlay(false)}
+    />
     <Box
       /** 12  full screen padding top */
       /** 48 screen header height */
@@ -40,16 +50,30 @@ export default function PreviewCard({
         paddingLeft: "12px",
         paddingBottom: "12px"
       }}>
-      <PreviewCardLine itemName="Honey mustard chicken sandwich" />
-      <PreviewCardLine itemName="Barbecue Lollipop" />
-      <PreviewCardLine itemName="Honey mustard chicken sandwich" />
-      <PreviewCardLine itemName="Barbecue Lollipop" />
-      <PreviewCardLine itemName="Honey mustard chicken sandwich" />
-      <PreviewCardLine itemName="Barbecue Lollipop" />
-      <PreviewCardLine itemName="Honey mustard chicken sandwich" />
-      <PreviewCardLine itemName="Barbecue Lollipop" />
-      <PreviewCardLine itemName="Honey mustard chicken sandwich" />
-      <PreviewCardLine itemName="Barbecue Lollipop" />
+      {
+        loading ?
+        <Box
+          display="flex"
+          flexDirection="column"
+          paddingRight="12px">
+          <Skeleton variant="text" sx={{ fontSize: '1rem' }} height={40} />
+          <Skeleton variant="text" sx={{ fontSize: '1rem' }} height={40} />
+          <Skeleton variant="text" sx={{ fontSize: '1rem' }} height={40} />
+          <Skeleton variant="text" sx={{ fontSize: '1rem' }} height={40} />
+        </Box> :
+        data &&
+        Object.keys(data).length > 0 ?
+        Object.keys(data).map(each =>
+          <PreviewCardLine
+            key={data[each]["item-unique"]}
+            deleteItem={() => deleteItem(data[each])}
+            itemName={data[each]["item-name"]}
+            count={data[each]["item-count"]}
+            setCount={c => setCount(data[each], c)}
+          />
+        ) :
+        <Typography>{"Table doesn't have an order"}</Typography>
+      }
     </Box>
     <Box
       sx={{
@@ -62,10 +86,15 @@ export default function PreviewCard({
         <Typography fontSize="1.6rem" fontFamily="Montserrat">Guest Details</Typography>
       </Box>
       <Box
+        display="flex"
+        alignItems="center"
         padding="4px 16px"
         bgcolor="var(--primary-yellow)"
         onClick={() => setOverlay(true)}>
-        <Typography fontSize="1.6rem" fontFamily="Montserrat">Table 1</Typography>
+        <Typography
+          fontSize="1.2rem"
+          fontFamily="Montserrat"
+        >{TABLES_MAP[table]}</Typography>
       </Box>
     </Box>
   </div>)

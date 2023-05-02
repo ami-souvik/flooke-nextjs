@@ -1,15 +1,16 @@
 import { Box, Typography, Modal } from "@mui/material"
 
-const TableClick = ({ label }) => (
+const TableClick = ({ label, clickHandle }) => (
   <Box
-    border="8px solid var(--gray-hard-500)"
+    border="4px solid var(--gray-hard-500)"
     borderRadius="16px"
     padding="12px"
+    marginY="6px"
     bgcolor="var(--primary-yellow)"
-    >
+    onClick={clickHandle}>
     <Typography
       width="7rem"
-      fontSize="1.6rem"
+      fontSize="1.2rem"
       fontFamily="Montserrat"
       textAlign="center">
       {label}
@@ -17,22 +18,10 @@ const TableClick = ({ label }) => (
   </Box>
 )
 
-const TableClickLine = ({
-  leftLabel,
-  rightLabel
-}) => (
-  <Box
-    display="flex"
-    justifyContent="space-between"
-    margin="4px 0px">
-    <TableClick label={leftLabel} />
-    <Box width="4px" />
-    <TableClick label={rightLabel} />
-  </Box>
-)
-
 const OrderEditorTablePick = ({
   open,
+  options,
+  pickTable,
   handleClose
 }) => (
   <Modal
@@ -42,20 +31,29 @@ const OrderEditorTablePick = ({
   >
     <Box
       sx={{
-        padding: 4,
+        width: "calc(100% - 30px)",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        padding: 3,
         position: 'absolute' as 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         bgcolor: "var(--white-X00)",
-        border: '8px solid var(--gray-hard-500)',
-        boxShadow: 24,
+        border: '4px solid var(--gray-hard-500)',
+        boxShadow: 12,
       }}>
-      <TableClickLine leftLabel="Table 1" rightLabel="Table 2" />
-      <TableClickLine leftLabel="Table 3" rightLabel="Table 4" />
-      <TableClickLine leftLabel="Table 5" rightLabel="Table 6" />
-      <TableClickLine leftLabel="Table 7" rightLabel="Table 8" />
-      <TableClickLine leftLabel="Table 9" rightLabel="Table 10" />
+      {
+        Object.keys(options).map(each => <TableClick
+          key={each}
+          label={options[each]}
+          clickHandle={() => {
+            pickTable(each)
+            handleClose()
+          }}
+        />)
+      }
     </Box>
   </Modal>
 )

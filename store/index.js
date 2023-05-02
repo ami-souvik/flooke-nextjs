@@ -23,10 +23,12 @@ import {
   REGISTER,
 } from "redux-persist";
 import sessionReducer from "./slice/sessionSlice";
+import uiReducer from "./slice/uiSlice";
 
 // Combine reducers
 const reducers = combineReducers({
-  session: sessionReducer
+  session: sessionReducer,
+  ui: uiReducer
 });
 
 // Persist config

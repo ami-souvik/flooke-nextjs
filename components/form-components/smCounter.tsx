@@ -14,18 +14,12 @@ export default function Counter({
   count = 0,
   setCount = null
 } : CounterProps) : JSX.Element {
-  const onAddLongClick = () => {
-    if(count < 50) {
-      setCount(count + 1)
-    }
-  }
   const onAddClick = () => {
     if(count < 50) {
       setCount(count + 1)
     }
   }
   const onSubClick = () => {
-    console.log('called');
     if(count > 0) {
       setCount(count - 1)
     }
@@ -38,7 +32,7 @@ export default function Counter({
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <Box
         bgcolor="var(--red-hard-500)"
-        {...useLongPress(onSubClick, onSubClick, defaultOptions)}
+        onClick={onSubClick}
         sx={{
           width: "2rem",
           height: "2rem",
@@ -59,7 +53,7 @@ export default function Counter({
         >{count}</Typography>
       <Box
         bgcolor="var(--green-hard-500)"
-        {...useLongPress(onAddLongClick, onAddClick, defaultOptions)}
+        onClick={onAddClick}
         sx={{
           width: "2rem",
           height: "2rem",

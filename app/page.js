@@ -1,97 +1,99 @@
 "use client";
-import { useState, useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { FirebaseRealtimeDB } from '../context/context'
-import { ManagerCard } from '../components/card/types';
-import { IconButton, Switch } from '@mui/material';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import EditOffRoundedIcon from '@mui/icons-material/EditOffRounded';
-import Editor from '../components/editor';
-import BillPreview from '../components/billPreview';
-import Picker from '../components/picker';
-import { getDatestamp } from '../utils/helperUtils';
-
-const views = ["Manager", "Chef", "Steward"]
+import { Box, Button, IconButton, Typography } from '@mui/material';
+import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import PageAction from '../components/form-components/page-action';
+import BottomNav from '../components/bottomNav';
+import { TABLES_MAP } from '../utils/constantUtils';
 
 export default function Home() {
-  const { edibles, orders, pastOrders, deleteTable } = useContext(FirebaseRealtimeDB);
-  const [view, setView] = useState(views[0]);
-  const [openEd, setOpenEd] = useState(false);
-  const [openPcs, setOpenPcs] = useState(false);
-  const [active, setActive] = useState('1');
-  const [todaysTotal, setTodaysTotal] = useState(0);
-  const calculateTotal = () => {
-    var total = 0
-    Object.keys(pastOrders).forEach(each => {
-      if(each.substring(0, 10) === getDatestamp()) {
-        total += Number(pastOrders[each].orderComputation.billingAmount)
-      }
-    })
-    setTodaysTotal(total)
-  }
-  useEffect(() => {
-    calculateTotal()
-  }, [pastOrders])
+  const { orders } = useContext(FirebaseRealtimeDB);
   return (
-    <main>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <Switch checked={!!edibles} color="success" />
-        <h3 style={{ paddingRight: "12px" }}>Total: {todaysTotal}</h3>
-      </div>
-      <Picker
-        label="View"
-        values={views}
-        active={view}
-        setActive={setView}
-      />
-      {orders && Object.keys(orders).map(key => (
-        <ManagerCard
-          key={key}
-          loading={orders ? false : true}
-          title={key}
-          orders={{
-            details: orders[key].orderDetails,
-            total: orders[key].orderComputation
-              && orders[key].orderComputation.orderTotal
-              ? orders[key].orderComputation.orderTotal : null,
-            phnumber: orders[key].phnumber
-          }}
-          onEdit={() => {
-            setOpenEd(true)
-            setActive(key)
-          }}
-          onDelete={() => deleteTable(key)}
-          onProcess={() => {
-            setOpenPcs(true)
-            setActive(key)
-          }}
-        />
-      ))}
-      {openEd &&
-        <Editor
-          title="Order editor"
-          data={edibles}
-          active={active}
-        />
-      }
-      {openPcs &&
-        <BillPreview
-          table={active}
-          handleClose={() => setOpenPcs(false)}
-        />
-      }
-      <IconButton
-        aria-label="edit"
-        onClick={() => setOpenEd(!openEd)}
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          padding: "12px",
-          backgroundColor: "#ddd"
+    <main
+      style={{
+        height: "100vh",
+        position: "relative"
+      }}>
+      <Box
+        height={`${window.innerHeight - 140}px`}
+        sx={{
+          overflowY: "scroll"
         }}>
-        {openEd ? <EditOffRoundedIcon fontSize="large" />
-        : <EditRoundedIcon fontSize="large" />}
-      </IconButton>
+        {
+          orders &&
+          Object.keys(orders).map((key, index) => (
+            <Box key={index}>
+              <Typography
+                mx="12px"
+                fontSize="2rem"
+                fontFamily="DM Sans"
+              >{TABLES_MAP[orders[key]["table-number"]]}</Typography>
+              <Box
+                m="12px"
+                px="24px"
+                py="12px"
+                borderRadius="4px"
+                boxShadow="0px 0px 2px #000">
+                {
+                  orders[key]["order-details"].map(
+                    eachItem =>
+                    <Box
+                      key={eachItem["item-unique"]}
+                      my="8px"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="space-between">
+                      <Typography
+                        fontSize="1rem"
+                        fontFamily="DM Sans, sans-serif"
+                      >{eachItem["item-name"]}</Typography>
+                      <Box
+                        height="32px"
+                        width="32px"
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        borderRadius="40px"
+                        bgcolor="var(--gray-hard-500)">
+                        <Typography
+                          color="var(--white-X00)"
+                          fontSize="1.2rem"
+                          fontFamily="DM Sans, sans-serif"
+                        >{eachItem["item-count"]}</Typography>
+                      </Box>
+                    </Box>
+                  )
+                }
+                <Box>
+                  <IconButton
+                    onClick={() => {
+                      window.open(`/order-editor?id=${orders[key]["table-number"]}`, '_self');
+                    }}>
+                    <NoteAltOutlinedIcon fontSize="large" />
+                  </IconButton>
+                  <IconButton>
+                    <DeleteOutlineRoundedIcon fontSize="large" />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      window.open(`/order-processor?id=${orders[key]["table-number"]}`, '_self');
+                    }}>
+                    <DescriptionOutlinedIcon fontSize="large" />
+                  </IconButton>
+                </Box>
+              </Box>
+            </Box>
+          ))
+        }
+      </Box>
+      <PageAction
+        label="Editor"
+        clickAction={() => window.open('/order-editor', '_self')}
+      />
+      <BottomNav />
     </main>
   )
 }

@@ -5,14 +5,17 @@ import Counter from "../form-components/smCounter";
 
 interface PreviewCardLineProps {
   itemName: string
+  deleteItem: () => void
   count: number
+  setCount: (count: number) => void
 }
 
 export default function PreviewCardLine({
   itemName,
-  count: propCount
+  deleteItem,
+  count,
+  setCount,
 }: PreviewCardLineProps) : JSX.Element {
-  const [count, setCount] = useState(propCount || 0);
   return (
     <Box
       sx={{
@@ -25,8 +28,10 @@ export default function PreviewCardLine({
         {itemName}
       </Typography>
       <Box sx={{ display: "flex" }}>
-        <Counter count={count} setCount={setCount} />
-        <IconButton sx={{ color: "var(--foreground-rgb)" }}>
+        <Counter count={count} setCount={c => setCount(c)} />
+        <IconButton
+          sx={{ color: "var(--foreground-rgb)" }}
+          onClick={deleteItem}>
           <DeleteOutlineIcon fontSize="large" />
         </IconButton>
       </Box>

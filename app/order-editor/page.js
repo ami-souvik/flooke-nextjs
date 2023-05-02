@@ -1,19 +1,51 @@
 "use client"
-import { useState } from "react";
-import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
 import Header from "../../components/header"
 import PreviewCard from "../../components/order-editor/preview-card";
 import ItemDrawer from "../../components/order-editor/item-drawer";
+import { addActiveOrder, readActiveOrder } from "../../utils/web/apis/activeOrderApis";
+import { setAlertWithDelay } from "../../store/services/uiServices";
 
 export default function OrderEditor() {
-  const [details, setDetails] = useState({})
-  const addItem = (item, count) => {
+  const queryParameters = new URLSearchParams(window.location.search)
+  const tableId = queryParameters.get("id")
+  const [details, setDetails] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [table, setTable] = useState(tableId || "table1");
+  const setItemCount = (item, count) => {
+    const {
+      "item-unique": itemUnique
+    } = item;
     const _details = {...details}
-    _details[item.unique] = {
-      "category-name": item["category-name"],
-      "item-count": count,
-      "item-name": item.name,
-      "item-unique": item.unique
+    console.log(itemUnique);
+    if(_details[itemUnique]) {
+      _details[itemUnique]["item-count"] = count;
+    }
+    else {
+      _details[itemUnique] = {
+        "category-name": item["category-name"],
+        "item-count": count,
+        "item-name": item.name,
+        "item-unique": item.unique
+      }
+    }
+    setDetails(_details);
+  }
+  const addItem = (item) => {
+    const {
+      "unique": itemUnique
+    } = item;
+    const _details = {...details}
+    if(_details[itemUnique]) {
+      _details[itemUnique]["item-count"] += 1;
+    }
+    else {
+      _details[itemUnique] = {
+        "category-name": item["category-name"],
+        "item-count": 1,
+        "item-name": item.name,
+        "item-unique": item.unique
+      }
     }
     setDetails(_details);
   }
@@ -22,6 +54,55 @@ export default function OrderEditor() {
     delete _details[item.unique];
     setDetails(_details);
   }
+  const _readActiveOrder = async () => {
+    setLoading(true);
+    const res = await readActiveOrder({
+      "table-number": table
+    })
+    if(res?.data?.firebase?.content) {
+      setDetails(res.data.firebase.content["order-details"]);
+      setLoading(false);
+    }
+    else if(res?.data?.firebase?.error) {
+      setAlertWithDelay({
+        status: "error",
+        message: res.data.firebase.error
+      });
+    }
+    else {
+      setAlertWithDelay({
+        status: "error",
+        message: "Something went wrong"
+      });
+    }
+  }
+  const syncWithDatabase = async () => {
+    const apiDetails = {};
+    apiDetails["table-number"] = table;
+    apiDetails["order-details"] = Object.values(details);
+    const res = await addActiveOrder(apiDetails);
+    if(res?.data?.firebase?.error) {
+      setAlertWithDelay({
+        status: "error",
+        message: res.data.firebase.error
+      });
+    }
+    else if(res?.data?.firebase?.status) {
+      setAlertWithDelay({
+        status: "success",
+        message: res.data.firebase.status
+      });
+    }
+    else {
+      setAlertWithDelay({
+        status: "error",
+        message: "Something went wrong"
+      });
+    }
+  }
+  useEffect(() => {
+    _readActiveOrder();
+  }, [table])
   return (
     <div
       style={{
@@ -32,10 +113,17 @@ export default function OrderEditor() {
         padding: "12px"
       }}>
       <Header label="Order Editor"/>
-      <PreviewCard />
+      <PreviewCard
+        loading={loading}
+        data={details}
+        table={table}
+        setCount={setItemCount}
+        deleteItem={deleteItem}
+        setTable={setTable}
+      />
       <ItemDrawer
         addItem={addItem}
-        deleteItem={deleteItem}
+        syncWithDatabase={syncWithDatabase}
       />
     </div>
   );
