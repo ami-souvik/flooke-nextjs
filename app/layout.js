@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Provider, useSelector } from "react-redux";
-import { ThemeProvider, Button } from "@mui/material";
+import { ThemeProvider, Dialog, Button } from "@mui/material";
 import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "../store/index";
 import DBContext from "../context/context";
@@ -12,14 +12,6 @@ import { openFullscreen, closeFullscreen } from "../utils/helperUtils";
 import theme from "../styles/theme";
 
 export default function RootLayout({ children }) {
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  useEffect(() => {
-    function onFullscreenChange() {
-      setIsFullscreen(Boolean(document.fullscreenElement));
-    }   
-    document.addEventListener('fullscreenchange', onFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
-  }, []);
   return (
     <html lang="en">
       <head>
@@ -32,12 +24,6 @@ export default function RootLayout({ children }) {
           <PersistGate persistor={persistor}>
             <DBContext>
               <ThemeProvider theme={theme}>
-                <Button onClick={openFullscreen}>
-                  Full Screen
-                </Button>
-                <Button onClick={closeFullscreen}>
-                  Exit Full
-                </Button>
                 <AlertUI />
                 {children}
               </ThemeProvider>

@@ -6,6 +6,7 @@ import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import PageAction from '../components/form-components/page-action';
+import Header from '../components/header';
 import BottomNav from '../components/bottomNav';
 import { TABLES_MAP } from '../utils/constantUtils';
 
@@ -13,12 +14,14 @@ export default function Home() {
   const { orders } = useContext(FirebaseRealtimeDB);
   return (
     <main
+      suppressHydrationWarning
       style={{
         height: "100vh",
         position: "relative"
       }}>
+      <Header label="Orders"/>
       <Box
-        height={`${window.innerHeight - 140}px`}
+        height={`${window.innerHeight - 189}px`}
         sx={{
           overflowY: "scroll"
         }}>

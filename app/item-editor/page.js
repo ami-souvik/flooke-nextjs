@@ -8,6 +8,7 @@ import FigureClick from "../../components/form-components/figureClick";
 import { getAllCategories } from "../../utils/web/apis/categoryApis";
 import { addCategory, deleteItemFromCategory } from "../../utils/web/apis/categoryApis";
 import PageAction from "../../components/form-components/page-action";
+import Header from "../../components/header";
 import BottomNav from "../../components/bottomNav";
 import Editor from "../../components/item-editor/editor";
 
@@ -60,6 +61,7 @@ export default function ItemEditor() {
         height: "100vh",
         position: "relative"
       }}>
+      <Header label="Item editor"/>
       {
         formopen &&
         <Editor
