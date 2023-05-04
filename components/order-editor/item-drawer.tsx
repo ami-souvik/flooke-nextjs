@@ -6,7 +6,7 @@ import {
   ListItem,
   ListItemButton,
   Divider,
-  TextField,
+  InputBase,
   Typography,
   IconButton,
   Skeleton
@@ -82,7 +82,6 @@ export default function ItemDrawer({ addItem, syncWithDatabase }: ItemDrawerProp
     {
       loading ?
       <Box
-        height="calc(50vh - 12px - 64px - 10px + 65.6px)"
         display="flex"
         flexDirection="column"
         justifyContent="space-between">
@@ -118,8 +117,7 @@ export default function ItemDrawer({ addItem, syncWithDatabase }: ItemDrawerProp
           /** 12 full screen padding bottom */
           /** 39.5 header category name */
           /** 64 input field height */
-          /** 10 divider half height */
-          height="calc(50vh - 12px - 39.5px - 64px - 10px)"
+          height="calc(50vh - 12px - 39.5px - 48px)"
           overflow="scroll">
           {
             category &&
@@ -134,11 +132,12 @@ export default function ItemDrawer({ addItem, syncWithDatabase }: ItemDrawerProp
           }
         </Box>
         <Box display="flex">
-          <TextField
+          <InputBase
             sx={{
               flexGrow: 1,
               fontFamily: "Montserrat",
-              borderWidth: "4px",
+              padding: "0px 12px",
+              borderWidth: "2px",
               borderStyle: "solid",
               borderColor: "var(--gray-hard-500)",
               color: "rgb(var(--foreground-rgb))",
@@ -147,6 +146,7 @@ export default function ItemDrawer({ addItem, syncWithDatabase }: ItemDrawerProp
           />
           <FigureClick
             icon={<PublishRoundedIcon htmlColor="var(--white-X00)" />}
+            padding="12px"
             clickWork={syncWithDatabase}
           />
         </Box>

@@ -1,9 +1,9 @@
 export const DATABASE = "crystalsteward";
 
-// export const FRONTEND_BASE_URL = "http://http://localhost:3000/";
+// export const FRONTEND_BASE_URL = "http://localhost:3000/";
 export const FRONTEND_BASE_URL = "https://flooke-nextjs-git-development-v2-heres-sav.vercel.app/";
-// export const BACKEND_API_BASE_URL = "http://localhost:4000";
-export const BACKEND_API_BASE_URL = "https://flooke-mw.onrender.com";
+export const BACKEND_API_BASE_URL = "http://localhost:4000";
+// export const BACKEND_API_BASE_URL = "https://flooke-mw.onrender.com";
 
 export const ADD_ACTIVE_ORDER = {
   URL: "/api/v1/flooke/orders/ops/add-active",
@@ -12,6 +12,11 @@ export const ADD_ACTIVE_ORDER = {
 
 export const READ_ACTIVE_ORDER = {
   URL: "/api/v1/flooke/orders/ops/read-active",
+  METHOD: "POST",
+};
+
+export const DELETE_ACTIVE_ORDER = {
+  URL: "/api/v1/flooke/orders/ops/delete-active",
   METHOD: "POST",
 };
 

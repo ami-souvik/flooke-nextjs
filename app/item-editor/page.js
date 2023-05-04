@@ -8,8 +8,6 @@ import FigureClick from "../../components/form-components/figureClick";
 import { getAllCategories } from "../../utils/web/apis/categoryApis";
 import { addCategory, deleteItemFromCategory } from "../../utils/web/apis/categoryApis";
 import PageAction from "../../components/form-components/page-action";
-import Header from "../../components/header";
-import BottomNav from "../../components/bottomNav";
 import Editor from "../../components/item-editor/editor";
 
 export default function ItemEditor() {
@@ -46,7 +44,7 @@ export default function ItemEditor() {
     }
   }
   const calculateTableHeight = () => {
-    var height = window.innerHeight - 143 - 65
+    var height = window.innerHeight - 56 - 60.5
     if(error) {
       height -= 24
     }
@@ -61,7 +59,6 @@ export default function ItemEditor() {
         height: "100vh",
         position: "relative"
       }}>
-      <Header label="Item editor"/>
       {
         formopen &&
         <Editor
@@ -194,7 +191,10 @@ export default function ItemEditor() {
             <InputBase
               placeholder="Category name"
               value={categoryName}
-              onChange={event => setCategoryName(event.target.value)}
+              onChange={event => {
+                setError(null)
+                setCategoryName(event.target.value)
+              }}
               sx={{
                 width: "100%",
                 border: "2px solid #000",
@@ -209,7 +209,6 @@ export default function ItemEditor() {
           </Box>
         </Box>
       </Box>
-      <BottomNav />
     </main>
   )
 }

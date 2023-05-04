@@ -28,7 +28,7 @@ export default function PreviewCard({
       flexDirection: "column",
       justifyContent: "space-between",
       borderStyle: "solid",
-      borderColor: "var(--foreground-rgb)",
+      borderColor: "var(--gray-hard-500)",
       borderWidth: "4px"
     }}>
     <OrderEditorTablePick
@@ -38,12 +38,10 @@ export default function PreviewCard({
       handleClose={() => setOverlay(false)}
     />
     <Box
-      /** 12  full screen padding top */
-      /** 48 screen header height */
+      /** 12 full screen padding top and preview card border */
       /** 8 element border width x2 */
       /** 46.4 bottom button case height */
-      /** 10 divider half height */
-      height="calc(50vh - 12px - 48px - 8px - 46.6px - 10px)"
+      height="calc(50vh - 12px - 8px - 46.6px)"
       overflow="scroll"
       style={{
         paddingTop: "12px",

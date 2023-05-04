@@ -1,9 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
-import Header from "../../components/header"
 import PreviewCard from "../../components/order-editor/preview-card";
 import ItemDrawer from "../../components/order-editor/item-drawer";
-import { addActiveOrder, readActiveOrder } from "../../utils/web/apis/activeOrderApis";
+import { addActiveOrder, readActiveOrder, deleteActiveOrder } from "../../utils/web/apis/activeOrderApis";
 import { setAlertWithDelay } from "../../store/services/uiServices";
 
 export default function OrderEditor() {
@@ -17,7 +16,6 @@ export default function OrderEditor() {
       "item-unique": itemUnique
     } = item;
     const _details = {...details}
-    console.log(itemUnique);
     if(_details[itemUnique]) {
       _details[itemUnique]["item-count"] = count;
     }
@@ -51,7 +49,7 @@ export default function OrderEditor() {
   }
   const deleteItem = (item) => {
     const _details = {...details}
-    delete _details[item.unique];
+    delete _details[item["item-unique"]];
     setDetails(_details);
   }
   const _readActiveOrder = async () => {
@@ -60,7 +58,12 @@ export default function OrderEditor() {
       "table-number": table
     })
     if(res?.data?.firebase?.content) {
-      setDetails(res.data.firebase.content["order-details"]);
+      const _details = res.data.firebase.content["order-details"]
+      const _detailsObj = {}
+      _details?.forEach(each => {
+        _detailsObj[each["item-unique"]] = each
+      })
+      setDetails(_detailsObj);
       setLoading(false);
     }
     else if(res?.data?.firebase?.error) {
@@ -78,8 +81,16 @@ export default function OrderEditor() {
   }
   const syncWithDatabase = async () => {
     const apiDetails = {};
-    apiDetails["table-number"] = table;
-    apiDetails["order-details"] = Object.values(details);
+    if(Object.values(details).length === 0) {
+      if(confirm("Are you surely want to delete the table?")) {
+        deleteActiveOrder({ "table-number": table });
+      }
+      return;
+    }
+    else {
+      apiDetails["table-number"] = table;
+      apiDetails["order-details"] = Object.values(details);
+    }
     const res = await addActiveOrder(apiDetails);
     if(res?.data?.firebase?.error) {
       setAlertWithDelay({
@@ -112,7 +123,6 @@ export default function OrderEditor() {
         justifyContent: "space-between",
         padding: "12px"
       }}>
-      <Header label="Order Editor"/>
       <PreviewCard
         loading={loading}
         data={details}

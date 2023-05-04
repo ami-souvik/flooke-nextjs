@@ -4,7 +4,6 @@ import { Box, Divider, Typography } from '@mui/material';
 import { setAlertWithDelay } from '../../store/services/uiServices';
 import { readActiveOrder } from '../../utils/web/apis/activeOrderApis';
 import Picker from '../../components/form-components/picker';
-import Header from '../../components/header';
 import PrintRoundedIcon from '@mui/icons-material/PrintRounded';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import FigureClick from '../../components/form-components/figureClick';
@@ -49,7 +48,6 @@ export default function OrderProcessor() {
         position: "relative",
         padding: "12px 20px"
       }}>
-      <Header label="Processor"/>
       <Box
         height={`calc(${window.innerHeight}px - 211px)`}>
         {

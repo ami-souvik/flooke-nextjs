@@ -6,8 +6,7 @@ import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import PageAction from '../components/form-components/page-action';
-import Header from '../components/header';
-import BottomNav from '../components/bottomNav';
+import { deleteActiveOrder } from '../utils/web/apis/activeOrderApis';
 import { TABLES_MAP } from '../utils/constantUtils';
 
 export default function Home() {
@@ -19,9 +18,8 @@ export default function Home() {
         height: "100vh",
         position: "relative"
       }}>
-      <Header label="Orders"/>
       <Box
-        height={`${window.innerHeight - 189}px`}
+        height={`${window.innerHeight - 60.5}px`}
         sx={{
           overflowY: "scroll"
         }}>
@@ -77,7 +75,11 @@ export default function Home() {
                     }}>
                     <NoteAltOutlinedIcon fontSize="large" />
                   </IconButton>
-                  <IconButton>
+                  <IconButton onClick={() => {
+                    if(confirm("Are you surely want to delete the table?")) {
+                      deleteActiveOrder({ "table-number": orders[key]["table-number"] });
+                    }
+                  }}>
                     <DeleteOutlineRoundedIcon fontSize="large" />
                   </IconButton>
                   <IconButton
@@ -96,7 +98,6 @@ export default function Home() {
         label="Editor"
         clickAction={() => window.open('/order-editor', '_self')}
       />
-      <BottomNav />
     </main>
   )
 }
