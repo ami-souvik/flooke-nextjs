@@ -5,7 +5,7 @@ import { Box, Button, IconButton, Typography } from '@mui/material';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-import PageAction from '../components/form-components/page-action';
+import { OPageAction } from '../components/form-components/page-action';
 import { deleteActiveOrder } from '../utils/web/apis/activeOrderApis';
 import { TABLES_MAP } from '../utils/constantUtils';
 
@@ -94,8 +94,7 @@ export default function Home() {
           ))
         }
       </Box>
-      <PageAction
-        label="Editor"
+      <OPageAction
         clickAction={() => window.open('/order-editor', '_self')}
       />
     </main>

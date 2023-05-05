@@ -1,7 +1,8 @@
 export const DATABASE = "crystalsteward";
 
-// export const FRONTEND_BASE_URL = "http://localhost:3000/";
-export const FRONTEND_BASE_URL = "https://flooke-nextjs-git-development-v2-heres-sav.vercel.app/";
+export const WRAPPER_BASE_URL = "http://localhost:3001/";
+export const FRONTEND_BASE_URL = "http://localhost:3000/";
+// export const FRONTEND_BASE_URL = "https://flooke-nextjs-git-development-v2-heres-sav.vercel.app/";
 export const BACKEND_API_BASE_URL = "http://localhost:4000";
 // export const BACKEND_API_BASE_URL = "https://flooke-mw.onrender.com";
 
@@ -42,6 +43,11 @@ export const UPDATE_ITEM_TO_CATEGORY = {
 
 export const DELETE_ITEM_FROM_CATEGORY = {
   URL: "/api/v1/flooke/menu/ops/delete-item",
+  METHOD: "POST",
+};
+
+export const BULK_IMPORT_CATEGORY = {
+  URL: "/api/v1/flooke/menu/ops/bulk-import",
   METHOD: "POST",
 };
 

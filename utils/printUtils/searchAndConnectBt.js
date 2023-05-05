@@ -26,7 +26,7 @@ const searchAndConnectBt = (details) => {
       // store.dispatch(setToken(characteristic));
       sendPrinterData(details, characteristic);
     })
-    .catch(handleError);
+    .catch(err => console.log(err));
   // } else {
   //   sendPrinterData();
   // }

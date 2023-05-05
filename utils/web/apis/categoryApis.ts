@@ -4,7 +4,8 @@ import {
   ADD_CATEGORY,
   ADD_ITEM_TO_CATEGORY,
   UPDATE_ITEM_TO_CATEGORY,
-  DELETE_ITEM_FROM_CATEGORY
+  DELETE_ITEM_FROM_CATEGORY,
+  BULK_IMPORT_CATEGORY
 } from "../../constantUtils";
 
 export const getAllCategories = async () => {
@@ -62,6 +63,19 @@ export const deleteItemFromCategory = async (params: object) => {
   try {
     const res = await sendApiRequest(
       DELETE_ITEM_FROM_CATEGORY,
+      params
+    );
+    if (!res) return null;
+    return res;
+  } catch (exp) {
+    return null;
+  }
+}
+
+export const bulkImportCategories = async (params: object) => {
+  try {
+    const res = await sendApiRequest(
+      BULK_IMPORT_CATEGORY,
       params
     );
     if (!res) return null;

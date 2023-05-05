@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 
-const PageAction = ({ label, clickAction }) => (
+export const IEPageAction = ({ handleFile, clickAction }) => (
   <Box
     display="flex"
     justifyContent="flex-end"
@@ -10,9 +10,22 @@ const PageAction = ({ label, clickAction }) => (
     <Button
       variant="outlined"
       onClick={clickAction}>
-      {label}
+      Add Item
     </Button>
   </Box>
 )
 
-export default PageAction;
+export const OPageAction = ({ clickAction }) => (
+  <Box
+    display="flex"
+    justifyContent="flex-end"
+    padding="12px"
+    bgcolor="var(--white-X00)"
+    >
+    <Button
+      variant="outlined"
+      onClick={clickAction}>
+      Add Order
+    </Button>
+  </Box>
+)

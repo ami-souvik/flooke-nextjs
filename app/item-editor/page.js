@@ -6,15 +6,17 @@ import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import FigureClick from "../../components/form-components/figureClick";
 import { getAllCategories } from "../../utils/web/apis/categoryApis";
-import { addCategory, deleteItemFromCategory } from "../../utils/web/apis/categoryApis";
-import PageAction from "../../components/form-components/page-action";
+import { addCategory, deleteItemFromCategory, bulkImportCategories } from "../../utils/web/apis/categoryApis";
+import { IEPageAction } from "../../components/form-components/page-action";
 import Editor from "../../components/item-editor/editor";
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 export default function ItemEditor() {
   const [edibles, setEdibles] = useState([]);
   const [error, setError] = useState(null);
   const [formopen, setFormopen] = useState(null);
   const [categoryName, setCategoryName] = useState(null);
+  const [fileContent, setFileContent] = useState(null);
   const _setEdibles = async () => {
     const res = await getAllCategories();
     setEdibles(res?.data?.mongodb?.content);
@@ -43,12 +45,35 @@ export default function ItemEditor() {
       setFormopen(null);
     }
   }
+  const handleFile = file => {
+    const fileReader = new FileReader();
+    fileReader.onloadend = e => {
+      const content = fileReader.result;
+      setFileContent(content);
+    }
+    fileReader.readAsText(file);
+  }
   const calculateTableHeight = () => {
-    var height = window.innerHeight - 56 - 60.5
+    var height = window.innerHeight - 56 - 64
     if(error) {
       height -= 24
     }
     return `${height}px`
+  }
+  const _bulkImportCategories = () => {
+    const contents = fileContent.split('\r\n');
+    const lineItems = []
+    contents.slice(1, contents.length).forEach(eachContent => {
+      const lineItem = {}
+      const elements = eachContent.split(',');
+      lineItem["category-name"] = elements[0]
+      lineItem.name = elements[1]
+      lineItem.serving = elements[2]
+      lineItem["processing-cost"] = elements[3]
+      lineItem["selling-cost"] = elements[4]
+      lineItems.push(lineItem);
+    });
+    bulkImportCategories(lineItems);
   }
   useEffect(() => {
     _setEdibles()
@@ -57,7 +82,8 @@ export default function ItemEditor() {
     <main
       style={{
         height: "100vh",
-        position: "relative"
+        position: "relative",
+        display: window.innerWidth > 600 ? "flex" : "block",
       }}>
       {
         formopen &&
@@ -77,7 +103,8 @@ export default function ItemEditor() {
           sx={{
             overflowX: "scroll"
           }}>
-          <table>
+          <table
+            width={window.innerWidth > 600 ? "600px" : "auto"}>
             <thead>
               <tr>
                 <td>
@@ -180,8 +207,7 @@ export default function ItemEditor() {
             </tbody>
           </table>
         </Box>
-        <PageAction
-          label="Add Item"
+        <IEPageAction
           clickAction={() => setFormopen({})}
         />
         <Box>
@@ -209,6 +235,78 @@ export default function ItemEditor() {
           </Box>
         </Box>
       </Box>
+      {
+        window.innerWidth > 600 &&
+        <Box
+          height="100vh"
+          position="relative">
+          <Box
+            height="calc(100vh - 36px)"
+            sx={{
+              overflowY: "scroll"
+            }}>
+            {
+              fileContent &&
+              <table>
+                <thead>
+                  <tr>
+                    {
+                      fileContent?.split('\r\n')[0]?.split(',')?.map((element, index) =>
+                        <th key={index}>
+                          <Typography>{element}</Typography>
+                        </th>
+                      )
+                    }
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    fileContent?.split('\r\n').slice(1,
+                      fileContent?.split('\r\n').length).map((elements, index) => 
+                      <tr key={index}>
+                        {
+                          elements.split(',')?.map((element, ind2) =>
+                          <td key={ind2}>
+                            <Typography>{element}</Typography>
+                          </td>)
+                        }
+                      </tr>
+                    )
+                  }
+                </tbody>
+              </table>
+            }
+          </Box>
+          <Box
+            position="absolute"
+            bottom="0px"
+            display="flex">
+            <Button
+              variant="contained"
+              component="label"
+              sx={{
+                marginRight: "8px",
+                boxShadow: "none",
+                ":hover": {
+                  boxShadow: "none"
+                }
+              }}
+            >
+              <FileDownloadOutlinedIcon />
+              <input
+                type="file"
+                hidden
+                accept=".csv"
+                onChange={e => handleFile(e.target.files[0])}
+              />
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={_bulkImportCategories}
+            >Import</Button>
+          </Box>
+        </Box>
+      }
     </main>
   )
 }

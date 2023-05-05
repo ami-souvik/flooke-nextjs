@@ -15,13 +15,8 @@ const DBContext = ({ children }) => {
     onValue(ref(
       db, `collections/${DATABASE}/active-orders`
     ), (snapshot) => {
-      if(snapshot.exists()) {
-        const data = snapshot.val();
-        setOrders(data);
-      }
-      else {
-        console.log('error occurred retrieving active orders');
-      }
+      const data = snapshot.val();
+      setOrders(data);
     });
   }, []);
   
