@@ -111,8 +111,8 @@ export default function OrderProcessor() {
             />
           </Box>
           <Box>
-            <Typography>{processed["billed-amount"]}</Typography>
-            <Typography>{processed["order-total"]}</Typography>
+            <Typography>{processed && processed["billed-amount"]}</Typography>
+            <Typography>{processed && processed["order-total"]}</Typography>
           </Box>
         </Box>
         <Box
