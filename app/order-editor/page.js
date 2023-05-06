@@ -24,14 +24,15 @@ export default function OrderEditor() {
         "category-name": item["category-name"],
         "item-count": count,
         "item-name": item.name,
-        "item-unique": item.unique
+        price: item.price,
       }
     }
     setDetails(_details);
   }
   const addItem = (item) => {
     const {
-      "unique": itemUnique
+      "unique": itemUnique,
+      "selling-cost": price
     } = item;
     const _details = {...details}
     if(_details[itemUnique]) {
@@ -42,7 +43,8 @@ export default function OrderEditor() {
         "category-name": item["category-name"],
         "item-count": 1,
         "item-name": item.name,
-        "item-unique": item.unique
+        "item-unique": item.unique,
+        price
       }
     }
     setDetails(_details);

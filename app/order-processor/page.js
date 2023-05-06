@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Divider, Typography } from '@mui/material';
 import { setAlertWithDelay } from '../../store/services/uiServices';
-import { readActiveOrder } from '../../utils/web/apis/activeOrderApis';
+import { processOrder } from '../../utils/web/apis/processOrderApis';
 import Picker from '../../components/form-components/picker';
 import searchAndConnectBt from '../../utils/printUtils/searchAndConnectBt';
 import { WRAPPER_BASE_URL } from '../../utils/constantUtils';
@@ -16,16 +16,15 @@ const paymentMethods = ["Cash", "UPI", "Card"]
 export default function OrderProcessor() {
   const queryParameters = new URLSearchParams(window.location.search)
   const tableId = queryParameters.get("id")
-  const [active, setActive] = useState(null);
+  const [processed, setProcessed] = useState(null);
   const [serviceType, setServiceType] = useState(serviceTypes[0]);
   const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]);
-  const _readActiveOrder = async () => {
-    const res = await readActiveOrder({
+  const _readPreviewProcessed = async () => {
+    const res = await processOrder({
       "table-number": tableId
     })
-    console.log(res.data);
     if(res?.data?.firebase?.content) {
-      setActive(res.data.firebase.content);
+      setProcessed(res.data.firebase.content);
     }
     else if(res?.data?.firebase?.error) {
       setAlertWithDelay({
@@ -41,7 +40,7 @@ export default function OrderProcessor() {
     }
   }
   useEffect(() => {
-    _readActiveOrder();
+    _readPreviewProcessed();
   }, [])
   return (
     <main
@@ -53,8 +52,8 @@ export default function OrderProcessor() {
       <Box
         height={`calc(${window.innerHeight}px - 211px)`}>
         {
-          active &&
-          active["order-details"].map(
+          processed &&
+          processed["order-details"].map(
             eachItem =>
             <Box
               key={eachItem["item-unique"]}
@@ -94,20 +93,27 @@ export default function OrderProcessor() {
         display="flex"
         justifyContent="space-between">
         <Box
-          display="flex"
-          flexDirection="column">
-          <Picker
-            label="Service Type"
-            values={serviceTypes}
-            active={serviceType}
-            setActive={setServiceType}
-          />
-          <Picker
-            label="Payment Method"
-            values={paymentMethods}
-            active={paymentMethod}
-            setActive={setPaymentMethod}
-          />
+          display="flex">
+          <Box
+            display="flex"
+            flexDirection="column">
+            <Picker
+              label="Service Type"
+              values={serviceTypes}
+              active={serviceType}
+              setActive={setServiceType}
+            />
+            <Picker
+              label="Payment Method"
+              values={paymentMethods}
+              active={paymentMethod}
+              setActive={setPaymentMethod}
+            />
+          </Box>
+          <Box>
+            <Typography>{processed["billed-amount"]}</Typography>
+            <Typography>{processed["order-total"]}</Typography>
+          </Box>
         </Box>
         <Box
           display="flex"
