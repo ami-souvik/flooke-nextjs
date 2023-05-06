@@ -7,7 +7,8 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import { OPageAction } from '../components/form-components/page-action';
 import { deleteActiveOrder } from '../utils/web/apis/activeOrderApis';
-import { TABLES_MAP } from '../utils/constantUtils';
+import { TABLES_MAP, PATH_ORDER_EDITOR, PATH_ORDER_PROCESSOR } from '../utils/constantUtils';
+import { navigate } from '../utils/helperUtils';
 
 export default function Home() {
   const { orders } = useContext(FirebaseRealtimeDB);
@@ -70,9 +71,7 @@ export default function Home() {
                 }
                 <Box>
                   <IconButton
-                    onClick={() => {
-                      window.open(`/order-editor?id=${orders[key]["table-number"]}`, '_self');
-                    }}>
+                    onClick={() => navigate(`${PATH_ORDER_EDITOR}?id=${orders[key]["table-number"]}`)}>
                     <NoteAltOutlinedIcon fontSize="large" />
                   </IconButton>
                   <IconButton onClick={() => {
@@ -83,9 +82,7 @@ export default function Home() {
                     <DeleteOutlineRoundedIcon fontSize="large" />
                   </IconButton>
                   <IconButton
-                    onClick={() => {
-                      window.open(`/order-processor?id=${orders[key]["table-number"]}`, '_self');
-                    }}>
+                    onClick={() => navigate(`${PATH_ORDER_PROCESSOR}?id=${orders[key]["table-number"]}`)}>
                     <DescriptionOutlinedIcon fontSize="large" />
                   </IconButton>
                 </Box>
@@ -95,7 +92,7 @@ export default function Home() {
         }
       </Box>
       <OPageAction
-        clickAction={() => window.open('/order-editor', '_self')}
+        clickAction={() => navigate(PATH_ORDER_EDITOR)}
       />
     </main>
   )

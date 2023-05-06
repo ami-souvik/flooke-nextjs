@@ -108,26 +108,30 @@ export default function ItemEditor() {
             <thead>
               <tr>
                 <td>
-                  <Box
-                    width="40px"
-                    height="40px" />
+                  <Box width="40px" />
                 </td>
                 <td width="70%">
                   <Box
-                    height="40px"
                     display="flex"
                     alignItems="center"
-                    paddingLeft="20px">
-                    <Typography fontFamily="DM Sans, sans-serif">Name</Typography>
+                    padding="6px 12px">
+                    <Typography
+                      fontFamily="DM Sans, sans-serif"
+                      fontWeight="800"
+                      fontSize="0.9rem"
+                    >Name</Typography>
                   </Box>
                 </td>
                 <td width="30%">
                   <Box
-                    height="40px"
                     display="flex"
                     alignItems="center"
-                    paddingLeft="20px">
-                    <Typography fontFamily="DM Sans, sans-serif">Price</Typography>
+                    padding="6px 8px">
+                    <Typography
+                      fontFamily="DM Sans, sans-serif"
+                      fontWeight="800"
+                      fontSize="0.9rem"
+                    >Price</Typography>
                   </Box>
                 </td>
               </tr>
@@ -139,8 +143,6 @@ export default function ItemEditor() {
                     <tr key={each.name}>
                       <td>
                         <Box
-                          width="40px"
-                          height="40px"
                           display="flex"
                           justifyContent="center"
                           alignItems="center"
@@ -152,8 +154,13 @@ export default function ItemEditor() {
                         </Box>
                       </td>
                       <td width="70%" colSpan={2}>
-                        <Box paddingLeft="20px">
-                          <Typography fontFamily="DM Sans, sans-serif">{each.name}</Typography>
+                        <Box
+                          padding="6px 12px">
+                          <Typography
+                            fontFamily="DM Sans, sans-serif"
+                            fontWeight="800"
+                            fontSize="0.8rem"
+                          >{each.name}</Typography>
                         </Box>
                       </td>
                     </tr>
@@ -183,18 +190,21 @@ export default function ItemEditor() {
                             <Box
                               display="flex"
                               alignItems="center"
-                              padding="8px 20px">
-                              <Typography fontFamily="DM Sans, sans-serif">{eachItem.name}</Typography>
+                              padding="6px 12px">
+                              <Typography
+                                fontFamily="DM Sans, sans-serif"
+                                fontSize="0.8rem"
+                              >{eachItem.name}</Typography>
                             </Box>
                           </td>
                           <td width="30%">
                             <Box
-                              height="40px"
                               display="flex"
                               alignItems="center"
                               paddingLeft="20px">
                               <Typography
                                 fontFamily="DM Sans, sans-serif"
+                                fontSize="0.8rem"
                               >{eachItem["selling-cost"]}</Typography>
                             </Box>
                           </td>
@@ -252,8 +262,16 @@ export default function ItemEditor() {
                   <tr>
                     {
                       fileContent?.split('\r\n')[0]?.split(',')?.map((element, index) =>
-                        <th key={index}>
-                          <Typography>{element}</Typography>
+                        <th
+                          key={index}
+                          style={{
+                            textAlign: "left",
+                            padding: "0px 8px"
+                          }}>
+                          <Typography
+                            fontFamily="DM Sans"
+                            fontSize="0.8rem"
+                          >{element}</Typography>
                         </th>
                       )
                     }
@@ -266,8 +284,16 @@ export default function ItemEditor() {
                       <tr key={index}>
                         {
                           elements.split(',')?.map((element, ind2) =>
-                          <td key={ind2}>
-                            <Typography>{element}</Typography>
+                          <td
+                            key={ind2}
+                            style={{
+                              padding: "0px 8px"
+                            }}>
+                            <Typography
+                              fontFamily="DM Sans"
+                              fontSize="0.8rem"
+                              textAlign={ind2 > 1 && "right"}
+                            >{element}</Typography>
                           </td>)
                         }
                       </tr>

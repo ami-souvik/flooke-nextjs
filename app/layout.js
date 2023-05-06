@@ -8,7 +8,6 @@ import DBContext from "../context/context";
 import '../styles/globals.css'
 import '../styles/font-faces.css'
 import { AlertUI } from "../components/ui-components/flookeAlert";
-import { openFullscreen, closeFullscreen } from "../utils/helperUtils";
 import theme from "../styles/theme";
 
 export default function RootLayout({ children }) {

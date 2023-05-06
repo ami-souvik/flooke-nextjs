@@ -1,11 +1,19 @@
 export const DATABASE = "crystalsteward";
 
+// development urls
 // export const WRAPPER_BASE_URL = "http://localhost:3001";
-export const WRAPPER_BASE_URL = "https://heres-sav.github.io/flooke-wrapper";
 // export const FRONTEND_BASE_URL = "http://localhost:3000";
-export const FRONTEND_BASE_URL = "https://flooke-nextjs-git-development-v2-heres-sav.vercel.app";
 // export const BACKEND_API_BASE_URL = "http://localhost:4000";
+
+// production urls
+export const WRAPPER_BASE_URL = "https://heres-sav.github.io/flooke-wrapper";
+export const FRONTEND_BASE_URL = "https://flooke-nextjs-git-development-v2-heres-sav.vercel.app";
 export const BACKEND_API_BASE_URL = "https://flooke-mw.onrender.com";
+
+export const PATH_DEFAULT = "/";
+export const PATH_ITEM_EDITOR = "/item-editor";
+export const PATH_ORDER_EDITOR = "/order-editor";
+export const PATH_ORDER_PROCESSOR = "/order-processor";
 
 export const ADD_ACTIVE_ORDER = {
   URL: "/api/v1/flooke/orders/ops/add-active",
