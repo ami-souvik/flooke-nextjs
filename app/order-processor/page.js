@@ -8,7 +8,7 @@ import searchAndConnectBt from '../../utils/printUtils/searchAndConnectBt';
 import { WRAPPER_BASE_URL } from '../../utils/constantUtils';
 import PrintRoundedIcon from '@mui/icons-material/PrintRounded';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
-import FigureClick from '../../components/form-components/figureClick';
+import FigureClick from '../../components/form-components/figure-click';
 
 const serviceTypes = ["Dine in", "Takeout", "Delivery", "Zomato", "Swiggy"]
 const paymentMethods = ["Cash", "UPI", "Card"]
@@ -170,7 +170,7 @@ export default function OrderProcessor() {
               sx={{
                 width: "80px",
                 textAlign: "right",
-                borderBottom: "1px solid #000",
+                borderBottom: "1px solid var(--gray-hard-500)",
               }}
               inputProps={{
                 style: {

@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Box, Divider, Skeleton, Typography } from '@mui/material';
-import { DialogCase } from '../overlays/dialog-case';
 import PreviewCardLine from './preview-card-line';
-import OrderEditorTablePick from '../overlays/order-editor-table-pick';
-import { TABLES_MAP } from '../../utils/constantUtils';
+
 
 interface PreviewCardProps {
   loading: boolean
   data: object
   compare: object
-  changed: boolean
   setChanged: (v: boolean) => void
   deleteItem: (item: object) => void
   table: object
+  setComment: (unique: string, v: string) => void
+  setSelected: (unique: string) => void
   setCount: (item: object, count: number) => void
   setTable: (table: object) => void
 }
@@ -20,16 +19,15 @@ interface PreviewCardProps {
 export default function PreviewCard({
   loading = false,
   data = {},
-  compare={},
-  changed,
+  compare = {},
   setChanged,
   deleteItem,
   table,
+  setComment,
+  setSelected,
   setCount = null,
   setTable = null
 }: PreviewCardProps) : JSX.Element {
-  const [overlay, setOverlay] = useState(false);
-  const [guestOpen, setGuestOpen] = useState(false);
   const [guest, setGuest] = useState({});
   const _compare = () => {
     let flag = false
@@ -44,9 +42,11 @@ export default function PreviewCard({
         merged[each].added = true
       }
       else if(compare[each] && data[each]
-      && !(compare[each]["item-count"] === data[each]["item-count"])) {
+      && (!(compare[each]["item-count"] === data[each]["item-count"])
+      || !(compare[each].comment === data[each].comment))) {
         flag = true
         merged[each]["item-count"] = data[each]["item-count"]
+        merged[each].comment = data[each].comment
         merged[each].updated = true
       }
     })
@@ -63,18 +63,6 @@ export default function PreviewCard({
       borderColor: "var(--gray-hard-500)",
       borderWidth: "4px"
     }}>
-    <DialogCase
-      open={guestOpen}
-      setOpen={setGuestOpen}
-    >
-      <></>
-    </DialogCase>
-    <OrderEditorTablePick
-      open={overlay}
-      options={TABLES_MAP}
-      pickTable={setTable}
-      handleClose={() => setOverlay(false)}
-    />
     <Box
       /** 12 full screen padding top and preview card border */
       /** 8 element border width x2 */
@@ -99,8 +87,10 @@ export default function PreviewCard({
         </Box> :
         compared &&
         Object.keys(compared).length > 0 ?
-        Object.keys(compared).reverse().map(each =>
-          <>
+        Object.keys(compared).reverse().map((each, index) =>
+          <Box
+            key={index}
+            onClick={() => setSelected(each["item-unique"])}>
             <PreviewCardLine
               key={compared[each]["item-unique"]}
               added={compared[each].added}
@@ -108,38 +98,16 @@ export default function PreviewCard({
               deleted={compared[each].deleted}
               deleteItem={() => deleteItem(compared[each])}
               itemName={compared[each]["item-name"]}
+              itemComment={compared[each].comment}
+              setComment={v => setComment(compared[each]["item-unique"], v)}
               count={compared[each]["item-count"]}
               setCount={c => setCount(compared[each], c)}
             />
             <Divider />
-          </>
+          </Box>
         ) :
         <Typography>{"Table doesn't have an order"}</Typography>
       }
-    </Box>
-    <Box display="flex">
-      <Box
-        flexGrow={1}
-        padding="4px"
-        bgcolor="var(--primary-purple)"
-        onClick={() => setGuestOpen(true)}>
-        <Typography
-          color="var(--white-X00)"
-          fontSize="0.6rem"
-          fontFamily="Comme, sans-serif"
-        >Guest Details</Typography>
-      </Box>
-      <Box
-        display="flex"
-        alignItems="center"
-        padding="4px 16px"
-        bgcolor="var(--primary-yellow)"
-        onClick={() => setOverlay(true)}>
-        <Typography
-          fontSize="1.2rem"
-          fontFamily="Montserrat"
-        >{TABLES_MAP[table]}</Typography>
-      </Box>
     </Box>
   </div>)
 }

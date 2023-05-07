@@ -1,12 +1,15 @@
 "use client"
-import { useEffect, useState } from "react";
-import { Box, InputBase } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
 import PublishRoundedIcon from '@mui/icons-material/PublishRounded';
-import FigureClick from "../../components/form-components/figureClick";
+import FigureClick from "../../components/form-components/figure-click";
 import PreviewCard from "../../components/order-editor/preview-card";
 import ItemDrawer from "../../components/order-editor/item-drawer";
 import { addActiveOrder, readActiveOrder, deleteActiveOrder } from "../../utils/web/apis/activeOrderApis";
 import { setAlertWithDelay } from "../../store/services/uiServices";
+import { DialogCase } from "../../components/overlays/dialog-case";
+import OrderEditorTablePick from "../../components/overlays/order-editor-table-pick";
+import { TABLES_MAP } from "../../utils/constantUtils";
 
 export default function OrderEditor() {
   const queryParameters = new URLSearchParams(window.location.search)
@@ -15,7 +18,13 @@ export default function OrderEditor() {
   const [content, setContent] = useState({});
   const [details, setDetails] = useState({});
   const [changed, setChanged] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [comment, setComment] = useState(null);
+  const [tableOverlay, setTableOverlay] = useState(false);
+  const [guestOpen, setGuestOpen] = useState(false);
   const [table, setTable] = useState(tableId || "table1");
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
   const setItemCount = (item, count) => {
     const {
       "item-unique": itemUnique
@@ -123,6 +132,10 @@ export default function OrderEditor() {
   useEffect(() => {
     _readActiveOrder();
   }, [table])
+  useEffect(() => {
+    console.log('details changed');
+    console.log(details);
+  }, [details])
   return (
     <div
       style={{
@@ -132,13 +145,35 @@ export default function OrderEditor() {
         justifyContent: "space-between",
         padding: "12px"
       }}>
+      <DialogCase
+        open={guestOpen}
+        setOpen={setGuestOpen}
+      >
+        <></>
+      </DialogCase>
+      <OrderEditorTablePick
+        open={tableOverlay}
+        options={TABLES_MAP}
+        pickTable={setTable}
+        handleClose={() => setTableOverlay(false)}
+      />
       <PreviewCard
         loading={loading}
         data={details}
         compare={content}
-        changed={changed}
         setChanged={setChanged}
         table={table}
+        setComment={(unique, v) => {
+          const _details = {...details}
+          _details[unique].comment = v;
+          setDetails(det => {
+            det[unique].comment = v
+            console.log(det);
+            return det
+          });
+          forceUpdate();
+        }}
+        setSelected={setSelected}
         setCount={setItemCount}
         deleteItem={deleteItem}
         setTable={setTable}
@@ -147,23 +182,35 @@ export default function OrderEditor() {
         addItem={addItem}
         syncWithDatabase={syncWithDatabase}
       />
+      <Box display="flex">
+      </Box>
       <Box
         width="calc(100% - 24px)"
         display="flex"
         position="absolute"
         bottom="0px">
-        <InputBase
-          sx={{
-            flexGrow: 1,
-            fontFamily: "Montserrat",
-            padding: "0px 12px",
-            borderWidth: "2px",
-            borderStyle: "solid",
-            borderColor: "var(--gray-hard-500)",
-            color: "rgb(var(--foreground-rgb))",
-            backgroundColor: "rgb(var(--background-end-rgb))"
-          }}
-        />
+        <Box
+          flexGrow={1}
+          padding="4px"
+          bgcolor="var(--primary-purple)"
+          onClick={() => setGuestOpen(true)}>
+          <Typography
+            color="var(--white-X00)"
+            fontSize="0.6rem"
+            fontFamily="Comme, sans-serif"
+          >Guest Details</Typography>
+        </Box>
+        <Box
+          display="flex"
+          alignItems="center"
+          padding="4px 16px"
+          bgcolor="var(--primary-yellow)"
+          onClick={() => setTableOverlay(true)}>
+          <Typography
+            fontSize="1.2rem"
+            fontFamily="Montserrat"
+          >{TABLES_MAP[table]}</Typography>
+        </Box>
         <FigureClick
           disabled={!changed}
           icon={<PublishRoundedIcon htmlColor="var(--white-X00)" />}

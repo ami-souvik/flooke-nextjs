@@ -4,9 +4,9 @@ import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
 import { DialogCase } from "../overlays/dialog-case";
 import { getAllCategories, addItemToCategory, updateItemToCategory } from "../../utils/web/apis/categoryApis";
-import CloseButton from "../ui-components/closeButton";
+import CloseButton from "../ui-components/close-button";
 import { setAlertWithDelay } from "../../store/services/uiServices";
-import FigureClick from "../form-components/figureClick";
+import FigureClick from "../form-components/figure-click";
 
 const Editor = ({ data, _setEdibles, _deleteItem, handleClose }) => {
   const [isOpen, setDrawer] = useState(false);

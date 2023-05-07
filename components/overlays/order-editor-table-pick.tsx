@@ -2,15 +2,15 @@ import { Box, Typography, Modal } from "@mui/material"
 
 const TableClick = ({ label, clickHandle }) => (
   <Box
-    border="4px solid var(--gray-hard-500)"
-    borderRadius="16px"
+    border="2px solid var(--gray-hard-500)"
+    borderRadius="8px"
     padding="12px"
     marginY="6px"
     bgcolor="var(--primary-yellow)"
     onClick={clickHandle}>
     <Typography
       width="7rem"
-      fontSize="1.2rem"
+      fontSize="1rem"
       fontFamily="Comme, sans-serif"
       textAlign="center">
       {label}

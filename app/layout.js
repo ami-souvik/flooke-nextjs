@@ -1,13 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
-import { Provider, useSelector } from "react-redux";
-import { ThemeProvider, Dialog, Button } from "@mui/material";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "@mui/material";
 import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "../store/index";
 import DBContext from "../context/context";
+import InputDialogProvider from "../context/input-dialog";
 import '../styles/globals.css'
 import '../styles/font-faces.css'
-import { AlertUI } from "../components/ui-components/flookeAlert";
+import { AlertUI } from "../components/ui-components/flooke-alert";
 import theme from "../styles/theme";
 
 export default function RootLayout({ children }) {
@@ -22,10 +22,12 @@ export default function RootLayout({ children }) {
         <Provider store={store}>
           <PersistGate persistor={persistor}>
             <DBContext>
-              <ThemeProvider theme={theme}>
-                <AlertUI />
-                {children}
-              </ThemeProvider>
+              <InputDialogProvider>
+                <ThemeProvider theme={theme}>
+                  <AlertUI />
+                  {children}
+                </ThemeProvider>
+              </InputDialogProvider>
             </DBContext>
           </PersistGate>
         </Provider>

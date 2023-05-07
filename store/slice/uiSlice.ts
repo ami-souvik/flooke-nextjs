@@ -15,7 +15,7 @@ export const uiSlice = createSlice({
   reducers: {
     setAlert: (state, action) => {
       state.alert = action.payload;
-    },
+    }
   }
 });
 

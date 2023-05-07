@@ -4,12 +4,13 @@ import { Box, IconButton, InputBase, Typography, Button } from "@mui/material";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import FigureClick from "../../components/form-components/figureClick";
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import FigureClick from "../../components/form-components/figure-click";
 import { getAllCategories } from "../../utils/web/apis/categoryApis";
 import { addCategory, deleteItemFromCategory, bulkImportCategories } from "../../utils/web/apis/categoryApis";
 import { IEPageAction } from "../../components/form-components/page-action";
 import Editor from "../../components/item-editor/editor";
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import TypeIn from "../../components/form-components/type-in";
 
 export default function ItemEditor() {
   const [edibles, setEdibles] = useState([]);
@@ -224,20 +225,7 @@ export default function ItemEditor() {
           <Typography color="var(--red-hard-500)">{error}</Typography>
           <Box
             display="flex">
-            <InputBase
-              placeholder="Category name"
-              value={categoryName}
-              onChange={event => {
-                setError(null)
-                setCategoryName(event.target.value)
-              }}
-              sx={{
-                width: "100%",
-                border: "2px solid #000",
-                fontFamily: "Comme",
-                paddingLeft: "12px"
-              }}
-            />
+            <TypeIn unique="item-editor-category-name" />
             <FigureClick
               icon={<AddOutlinedIcon htmlColor="var(--white-X00)" />}
               clickWork={_addCategory}

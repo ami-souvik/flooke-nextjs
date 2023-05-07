@@ -49,19 +49,20 @@ export default function Home() {
                       alignItems="center"
                       justifyContent="space-between">
                       <Typography
-                        fontSize="1rem"
-                        fontFamily="DM Sans, sans-serif"
+                        paddingRight="6px"
+                        fontSize="0.8rem"
+                        fontFamily="Comme, sans-serif"
                       >{eachItem["item-name"]}</Typography>
                       <Box
-                        height="32px"
-                        width="32px"
                         display="flex"
                         justifyContent="center"
                         alignItems="center"
-                        borderRadius="40px"
-                        bgcolor="var(--gray-hard-500)">
+                        padding="0px 8px"
+                        border="1px solid var(--gray-hard-500)"
+                        borderRadius="4px"
+                        bgcolor="var(--white-X00)">
                         <Typography
-                          color="var(--white-X00)"
+                          color="var(--gray-hard-500)"
                           fontSize="1.2rem"
                           fontFamily="DM Sans, sans-serif"
                         >{eachItem["item-count"]}</Typography>
