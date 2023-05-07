@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comme:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 :root {
   --max-width: 1100px;
@@ -55,6 +56,9 @@
   --gray-subtle-500: #D9D9D9;
   --green-hard-500: #1CC900;
   --red-hard-500: #FC1717;
+  --red-subtle-500: #FA9884;
+  --yellow-subtle-200: #FCFFB2;
+  --green-subtle-400: #98D8AA;
 }
 
 @media (prefers-color-scheme: light) {

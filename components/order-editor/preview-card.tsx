@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Box, Skeleton, Typography } from '@mui/material';
+import { Box, Divider, Skeleton, Typography } from '@mui/material';
+import { DialogCase } from '../overlays/dialog-case';
 import PreviewCardLine from './preview-card-line';
 import OrderEditorTablePick from '../overlays/order-editor-table-pick';
 import { TABLES_MAP } from '../../utils/constantUtils';
 
 interface PreviewCardProps {
   loading: boolean
-  data: any
+  data: object
+  compare: object
+  changed: boolean
+  setChanged: (v: boolean) => void
   deleteItem: (item: object) => void
   table: object
   setCount: (item: object, count: number) => void
@@ -16,12 +20,40 @@ interface PreviewCardProps {
 export default function PreviewCard({
   loading = false,
   data = {},
+  compare={},
+  changed,
+  setChanged,
   deleteItem,
   table,
   setCount = null,
   setTable = null
 }: PreviewCardProps) : JSX.Element {
   const [overlay, setOverlay] = useState(false);
+  const [guestOpen, setGuestOpen] = useState(false);
+  const [guest, setGuest] = useState({});
+  const _compare = () => {
+    let flag = false
+    const merged = JSON.parse(JSON.stringify({...data, ...compare}));
+    Object.keys(merged).forEach(each => {
+      if(compare[each] && !data[each]) {
+        flag = true
+        merged[each].deleted = true
+      }
+      else if(!compare[each] && data[each]) {
+        flag = true
+        merged[each].added = true
+      }
+      else if(compare[each] && data[each]
+      && !(compare[each]["item-count"] === data[each]["item-count"])) {
+        flag = true
+        merged[each]["item-count"] = data[each]["item-count"]
+        merged[each].updated = true
+      }
+    })
+    setChanged(flag)
+    return merged;
+  }
+  const compared = _compare();
   return (<div
     style={{
       display: "flex",
@@ -31,6 +63,12 @@ export default function PreviewCard({
       borderColor: "var(--gray-hard-500)",
       borderWidth: "4px"
     }}>
+    <DialogCase
+      open={guestOpen}
+      setOpen={setGuestOpen}
+    >
+      <></>
+    </DialogCase>
     <OrderEditorTablePick
       open={overlay}
       options={TABLES_MAP}
@@ -59,29 +97,37 @@ export default function PreviewCard({
           <Skeleton variant="text" sx={{ fontSize: '1rem' }} height={40} />
           <Skeleton variant="text" sx={{ fontSize: '1rem' }} height={40} />
         </Box> :
-        data &&
-        Object.keys(data).length > 0 ?
-        Object.keys(data).map(each =>
-          <PreviewCardLine
-            key={data[each]["item-unique"]}
-            deleteItem={() => deleteItem(data[each])}
-            itemName={data[each]["item-name"]}
-            count={data[each]["item-count"]}
-            setCount={c => setCount(data[each], c)}
-          />
+        compared &&
+        Object.keys(compared).length > 0 ?
+        Object.keys(compared).reverse().map(each =>
+          <>
+            <PreviewCardLine
+              key={compared[each]["item-unique"]}
+              added={compared[each].added}
+              updated={compared[each].updated}
+              deleted={compared[each].deleted}
+              deleteItem={() => deleteItem(compared[each])}
+              itemName={compared[each]["item-name"]}
+              count={compared[each]["item-count"]}
+              setCount={c => setCount(compared[each], c)}
+            />
+            <Divider />
+          </>
         ) :
         <Typography>{"Table doesn't have an order"}</Typography>
       }
     </Box>
-    <Box
-      sx={{
-        display: "flex"
-      }}>
+    <Box display="flex">
       <Box
         flexGrow={1}
         padding="4px"
-        bgcolor="var(--primary-purple)">
-        <Typography fontSize="1.6rem" fontFamily="Montserrat">Guest Details</Typography>
+        bgcolor="var(--primary-purple)"
+        onClick={() => setGuestOpen(true)}>
+        <Typography
+          color="var(--white-X00)"
+          fontSize="0.6rem"
+          fontFamily="Comme, sans-serif"
+        >Guest Details</Typography>
       </Box>
       <Box
         display="flex"

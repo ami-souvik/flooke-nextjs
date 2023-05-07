@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
-import { Box, Modal, Drawer, Button, List, ListItem, ListItemButton, Divider, InputBase, Typography, Dialog, DialogContent, IconButton } from "@mui/material"
+import { Box, Drawer, List, ListItem, ListItemButton, Divider, InputBase, Typography } from "@mui/material"
+import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
+import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
+import { DialogCase } from "../overlays/dialog-case";
 import { getAllCategories, addItemToCategory, updateItemToCategory } from "../../utils/web/apis/categoryApis";
 import CloseButton from "../ui-components/closeButton";
 import { setAlertWithDelay } from "../../store/services/uiServices";
-import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
-import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
 import FigureClick from "../form-components/figureClick";
 
 const Editor = ({ data, _setEdibles, _deleteItem, handleClose }) => {
@@ -149,125 +150,112 @@ const Editor = ({ data, _setEdibles, _deleteItem, handleClose }) => {
     _setCategory()
   }, [])
   return (
-    <Dialog
-      fullWidth
-      keepMounted
+    <DialogCase
       open={!!data}
-      onClose={handleClose}
-      sx={{
-        padding: "20px"
-      }}
-      >
-      <DialogContent
+      setOpen={() => handleClose()}>
+      <Drawer
+        anchor="right"
+        open={isOpen}
+        onClose={toggleDrawer(false)}
         sx={{
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column"
-        }}>
-        <Drawer
-          anchor="right"
-          open={isOpen}
-          onClose={toggleDrawer(false)}
-          sx={{
-            zIndex: 1301
-          }}
-        >
-          {list()}
-        </Drawer>
-        <Box
-          display="flex"
-          justifyContent="flex-end">
-          <CloseButton handleClose={handleClose} />
-        </Box>
-        <Box
-          margin="4px 0px"
-          padding="4px 12px"
-          border="1px solid var(--red-hard-500)"
-          onClick={toggleDrawer(true)}>
-          <Typography
-            fontFamily="DM Sans"
-            fontSize="1.2rem"
-          >{category || "Choose Category"}</Typography>
-        </Box>
-        <InputBase
-          value={itemName}
-          placeholder="Item name"
-          onChange={setValue(setItemName)}
-          sx={{
-            margin: "4px 0px",
-            width: "100%",
-            border: "1px solid var(--red-hard-500)",
-            fontFamily: "DM Sans",
-            fontSize: "1.2rem",
-            padding: "0px 12px"
-          }}
-        />
-        <InputBase
-          value={serving}
-          placeholder="Servings"
-          onChange={setValue(setServing)}
-          sx={{
-            margin: "4px 0px",
-            width: "100%",
-            border: "1px solid var(--gray-hard-500)",
-            fontFamily: "DM Sans",
-            fontSize: "1.2rem",
-            padding: "0px 12px"
-          }}
-        />
-        <InputBase
-          value={processingCost}
-          placeholder="Processing Cost"
-          onChange={setValue(setProcessingCost)}
-          sx={{
-            margin: "4px 0px",
-            width: "100%",
-            border: "1px solid var(--gray-hard-500)",
-            fontFamily: "DM Sans",
-            fontSize: "1.2rem",
-            padding: "0px 12px"
-          }}
-        />
-        <InputBase
-          value={sellingCost}
-          placeholder="Selling Cost"
-          onChange={setValue(setSellingCost)}
-          sx={{
-            margin: "4px 0px",
-            width: "100%",
-            border: "1px solid var(--red-hard-500)",
-            fontFamily: "DM Sans",
-            fontSize: "1.2rem",
-            padding: "0px 12px"
-          }}
-        />
+          zIndex: 1301
+        }}
+      >
+        {list()}
+      </Drawer>
+      <Box
+        display="flex"
+        justifyContent="flex-end">
+        <CloseButton handleClose={handleClose} />
+      </Box>
+      <Box
+        margin="4px 0px"
+        padding="4px 12px"
+        border="1px solid var(--red-hard-500)"
+        onClick={toggleDrawer(true)}>
         <Typography
           fontFamily="DM Sans"
-          color="var(--red-hard-500)"
-        >{error}</Typography>
-        <Box
-          display="flex"
-          justifyContent="flex-end">
-          {
-            (data?.unique !== null
-            && data?.unique !== undefined) &&
-            <FigureClick
-              icon={<DeleteForeverRoundedIcon htmlColor="var(--white-X00)" />}
-              clickWork={() => _deleteItem(category, itemName, data?.index)}
-            />
-          }
+          fontSize="1.2rem"
+        >{category || "Choose Category"}</Typography>
+      </Box>
+      <InputBase
+        value={itemName}
+        placeholder="Item name"
+        onChange={setValue(setItemName)}
+        sx={{
+          margin: "4px 0px",
+          width: "100%",
+          border: "1px solid var(--red-hard-500)",
+          fontFamily: "DM Sans",
+          fontSize: "1.2rem",
+          padding: "0px 12px"
+        }}
+      />
+      <InputBase
+        value={serving}
+        placeholder="Servings"
+        onChange={setValue(setServing)}
+        sx={{
+          margin: "4px 0px",
+          width: "100%",
+          border: "1px solid var(--gray-hard-500)",
+          fontFamily: "DM Sans",
+          fontSize: "1.2rem",
+          padding: "0px 12px"
+        }}
+      />
+      <InputBase
+        value={processingCost}
+        placeholder="Processing Cost"
+        onChange={setValue(setProcessingCost)}
+        sx={{
+          margin: "4px 0px",
+          width: "100%",
+          border: "1px solid var(--gray-hard-500)",
+          fontFamily: "DM Sans",
+          fontSize: "1.2rem",
+          padding: "0px 12px"
+        }}
+      />
+      <InputBase
+        value={sellingCost}
+        placeholder="Selling Cost"
+        onChange={setValue(setSellingCost)}
+        sx={{
+          margin: "4px 0px",
+          width: "100%",
+          border: "1px solid var(--red-hard-500)",
+          fontFamily: "DM Sans",
+          fontSize: "1.2rem",
+          padding: "0px 12px"
+        }}
+      />
+      <Typography
+        fontFamily="DM Sans"
+        color="var(--red-hard-500)"
+      >{error}</Typography>
+      <Box
+        display="flex"
+        justifyContent="flex-end">
+        {
+          (data?.unique !== null
+          && data?.unique !== undefined) &&
           <FigureClick
-            icon={<SaveRoundedIcon htmlColor="var(--white-X00)" />}
-            clickWork={() => {
-              (data?.unique !== null
-              && data?.unique !== undefined) ?
-              _saveItemToCategory() :
-              _addItemToCategory()
-            }}
+            icon={<DeleteForeverRoundedIcon htmlColor="var(--white-X00)" />}
+            clickWork={() => _deleteItem(category, itemName, data?.index)}
           />
-        </Box>
-      </DialogContent>
-    </Dialog>
+        }
+        <FigureClick
+          icon={<SaveRoundedIcon htmlColor="var(--white-X00)" />}
+          clickWork={() => {
+            (data?.unique !== null
+            && data?.unique !== undefined) ?
+            _saveItemToCategory() :
+            _addItemToCategory()
+          }}
+        />
+      </Box>
+    </DialogCase>
   )
 }
 

@@ -29,11 +29,12 @@ export default function ItemLine({
       }}
       onClick={clickHandle}>
       <Typography
-        fontFamily="Montserrat">
+        fontFamily="Comme, sans-serif"
+        fontSize="0.8rem">
         {itemName}
       </Typography>
       <Typography
-        fontFamily="Montserrat">
+        fontFamily="Comme, sans-serif">
         {price}
       </Typography>
     </Box>

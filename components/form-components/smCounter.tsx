@@ -31,40 +31,40 @@ export default function Counter({
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <Box
-        bgcolor="var(--red-hard-500)"
+        bgcolor="var(--primary-yellow)"
         onClick={onSubClick}
         sx={{
-          width: "2rem",
+          width: "1.6rem",
           height: "2rem",
           display: "flex",
           justifyContent: "center",
           alignItems: "center"
         }}>
         <Typography
-          fontSize="2rem"
-          fontFamily="bulky pixels"
-          letterSpacing="-0.6rem"
+          fontSize="1.6rem"
+          fontFamily="Comme, sans-serif"
+          color="var(--gray-hard-500)"
         >-</Typography>
       </Box>
       <Typography
-        fontSize="2rem"
-        fontFamily="Montserrat"
-        paddingX={1}
+        fontSize="1.6rem"
+        fontFamily="Comme, sans-serif"
+        paddingX="2px"
         >{count}</Typography>
       <Box
-        bgcolor="var(--green-hard-500)"
+        bgcolor="var(--primary-yellow)"
         onClick={onAddClick}
         sx={{
-          width: "2rem",
+          width: "1.6rem",
           height: "2rem",
           display: "flex",
           justifyContent: "center",
           alignItems: "center"
         }}>
         <Typography
-          fontSize="2rem"
-          fontFamily="bulky pixels"
-          letterSpacing="-0.6rem"
+          fontSize="1.6rem"
+          fontFamily="Comme, sans-serif"
+          color="var(--gray-hard-500)"
         >+</Typography>
       </Box>
     </div>

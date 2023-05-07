@@ -114,11 +114,11 @@ export default function ItemEditor() {
                   <Box
                     display="flex"
                     alignItems="center"
-                    padding="6px 12px">
+                    padding="4px 12px">
                     <Typography
-                      fontFamily="DM Sans, sans-serif"
-                      fontWeight="800"
-                      fontSize="0.9rem"
+                      fontFamily="Comme, sans-serif"
+                      fontWeight="400"
+                      fontSize="0.8rem"
                     >Name</Typography>
                   </Box>
                 </td>
@@ -126,11 +126,11 @@ export default function ItemEditor() {
                   <Box
                     display="flex"
                     alignItems="center"
-                    padding="6px 8px">
+                    padding="4px 8px">
                     <Typography
-                      fontFamily="DM Sans, sans-serif"
-                      fontWeight="800"
-                      fontSize="0.9rem"
+                      fontFamily="Comme, sans-serif"
+                      fontWeight="400"
+                      fontSize="0.8rem"
                     >Price</Typography>
                   </Box>
                 </td>
@@ -155,11 +155,11 @@ export default function ItemEditor() {
                       </td>
                       <td width="70%" colSpan={2}>
                         <Box
-                          padding="6px 12px">
+                          padding="2px 12px">
                           <Typography
-                            fontFamily="DM Sans, sans-serif"
+                            fontFamily="Comme, sans-serif"
                             fontWeight="800"
-                            fontSize="0.8rem"
+                            fontSize="1rem"
                           >{each.name}</Typography>
                         </Box>
                       </td>
@@ -190,9 +190,9 @@ export default function ItemEditor() {
                             <Box
                               display="flex"
                               alignItems="center"
-                              padding="6px 12px">
+                              padding="4px 12px">
                               <Typography
-                                fontFamily="DM Sans, sans-serif"
+                                fontFamily="Comme, sans-serif"
                                 fontSize="0.8rem"
                               >{eachItem.name}</Typography>
                             </Box>
@@ -203,7 +203,7 @@ export default function ItemEditor() {
                               alignItems="center"
                               paddingLeft="20px">
                               <Typography
-                                fontFamily="DM Sans, sans-serif"
+                                fontFamily="Comme, sans-serif"
                                 fontSize="0.8rem"
                               >{eachItem["selling-cost"]}</Typography>
                             </Box>
@@ -234,7 +234,7 @@ export default function ItemEditor() {
               sx={{
                 width: "100%",
                 border: "2px solid #000",
-                fontFamily: "DM Sans",
+                fontFamily: "Comme",
                 paddingLeft: "12px"
               }}
             />

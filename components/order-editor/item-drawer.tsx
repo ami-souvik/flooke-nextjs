@@ -6,13 +6,9 @@ import {
   ListItem,
   ListItemButton,
   Divider,
-  InputBase,
   Typography,
-  IconButton,
   Skeleton
 } from "@mui/material";
-import PublishRoundedIcon from '@mui/icons-material/PublishRounded';
-import FigureClick from "../form-components/figureClick";
 import ItemLine from "./item-line";
 import { getAllCategories } from "../../utils/web/apis/categoryApis";
 
@@ -67,7 +63,10 @@ export default function ItemDrawer({ addItem, syncWithDatabase }: ItemDrawerProp
             <ListItem key={each._id}>
               <ListItemButton
                 onClick={() => setCategory(each)}>
-                <Typography fontFamily="Montserrat">{each.name}</Typography>
+                <Typography
+                  fontFamily="Comme, sans-serif"
+                  fontSize="1rem"
+                >{each.name}</Typography>
               </ListItemButton>
             </ListItem>
             <Divider />
@@ -112,7 +111,12 @@ export default function ItemDrawer({ addItem, syncWithDatabase }: ItemDrawerProp
             padding: "8px 12px",
             textAlign: "right"
           }}
-        >{category?.name}</Box>
+        >
+          <Typography
+            fontFamily="Comme, sans-serif"
+            fontSize="1.2rem"
+          >{category?.name}</Typography>
+        </Box>
         <Box
           /** 12 full screen padding bottom */
           /** 39.5 header category name */
@@ -130,25 +134,6 @@ export default function ItemDrawer({ addItem, syncWithDatabase }: ItemDrawerProp
               />
             )
           }
-        </Box>
-        <Box display="flex">
-          <InputBase
-            sx={{
-              flexGrow: 1,
-              fontFamily: "Montserrat",
-              padding: "0px 12px",
-              borderWidth: "2px",
-              borderStyle: "solid",
-              borderColor: "var(--gray-hard-500)",
-              color: "rgb(var(--foreground-rgb))",
-              backgroundColor: "rgb(var(--background-end-rgb))"
-            }}
-          />
-          <FigureClick
-            icon={<PublishRoundedIcon htmlColor="var(--white-X00)" />}
-            padding="12px"
-            clickWork={syncWithDatabase}
-          />
         </Box>
       </>
     }

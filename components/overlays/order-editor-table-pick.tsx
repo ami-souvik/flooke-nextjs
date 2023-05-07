@@ -11,7 +11,7 @@ const TableClick = ({ label, clickHandle }) => (
     <Typography
       width="7rem"
       fontSize="1.2rem"
-      fontFamily="Montserrat"
+      fontFamily="Comme, sans-serif"
       textAlign="center">
       {label}
     </Typography>
