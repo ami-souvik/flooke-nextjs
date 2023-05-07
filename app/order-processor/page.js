@@ -1,8 +1,8 @@
 "use client"
 import { useEffect, useState } from 'react';
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Divider, InputBase, Typography } from '@mui/material';
 import { setAlertWithDelay } from '../../store/services/uiServices';
-import { processOrder } from '../../utils/web/apis/processOrderApis';
+import { previewProcessOrder, processOrder } from '../../utils/web/apis/processOrderApis';
 import Picker from '../../components/form-components/picker';
 import searchAndConnectBt from '../../utils/printUtils/searchAndConnectBt';
 import { WRAPPER_BASE_URL } from '../../utils/constantUtils';
@@ -19,12 +19,41 @@ export default function OrderProcessor() {
   const [processed, setProcessed] = useState(null);
   const [serviceType, setServiceType] = useState(serviceTypes[0]);
   const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]);
+  const [billedAmount, setBilledAmount] = useState();
   const _readPreviewProcessed = async () => {
-    const res = await processOrder({
+    const res = await previewProcessOrder({
       "table-number": tableId
     })
     if(res?.data?.firebase?.content) {
       setProcessed(res.data.firebase.content);
+      setBilledAmount(res.data.firebase.content["billed-amount"]);
+    }
+    else if(res?.data?.firebase?.error) {
+      setAlertWithDelay({
+        status: "error",
+        message: res.data.firebase.error
+      });
+    }
+    else {
+      setAlertWithDelay({
+        status: "error",
+        message: "Something went wrong"
+      });
+    }
+  }
+  const _processOrder = async () => {
+    const res = await processOrder({
+      "table-number": tableId,
+      "payment-type": paymentMethod,
+      "service-type": serviceType,
+      "billed-amount": billedAmount,
+      "order-total": processed["order-total"]
+    })
+    if(res?.data?.mongodb?.status) {
+      setAlertWithDelay({
+        status: "success",
+        message: res.data.mongodb.status
+      });
     }
     else if(res?.data?.firebase?.error) {
       setAlertWithDelay({
@@ -50,7 +79,7 @@ export default function OrderProcessor() {
         padding: "12px 20px"
       }}>
       <Box
-        height={`calc(${window.innerHeight}px - 211px)`}>
+        height={`calc(${window.innerHeight}px - 73px - 149px)`}>
         {
           processed &&
           processed["order-details"].map(
@@ -91,34 +120,76 @@ export default function OrderProcessor() {
       />
       <Box
         display="flex"
-        justifyContent="space-between">
-        <Box
-          display="flex">
-          <Box
-            display="flex"
-            flexDirection="column">
-            <Picker
-              label="Service Type"
-              values={serviceTypes}
-              active={serviceType}
-              setActive={setServiceType}
-            />
-            <Picker
-              label="Payment Method"
-              values={paymentMethods}
-              active={paymentMethod}
-              setActive={setPaymentMethod}
-            />
-          </Box>
-          <Box>
-            <Typography>{processed && processed["billed-amount"]}</Typography>
-            <Typography>{processed && processed["order-total"]}</Typography>
-          </Box>
-        </Box>
+        justifyContent="space-between"
+        marginBottom="6px">
         <Box
           display="flex"
           flexDirection="column"
           justifyContent="space-between">
+          <Picker
+            label="Service Type"
+            values={serviceTypes}
+            active={serviceType}
+            setActive={setServiceType}
+          />
+          <Picker
+            label="Payment Method"
+            values={paymentMethods}
+            active={paymentMethod}
+            setActive={setPaymentMethod}
+          />
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="column">
+          <Box
+            display="flex"
+            justifyContent="space-between">
+            <Typography>Sub Total - </Typography>
+            <Typography
+              sx={{
+                width: "80px",
+                textAlign: "right"
+              }}>{processed && processed["order-total"]}</Typography>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="space-between">
+            <Typography>Tax (0%) - </Typography>
+            <Typography
+              sx={{
+                width: "80px",
+                textAlign: "right"
+              }}>0.00</Typography>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="space-between">
+            <Typography>Total -</Typography>
+            <InputBase
+              sx={{
+                width: "80px",
+                textAlign: "right",
+                borderBottom: "1px solid #000",
+              }}
+              inputProps={{
+                style: {
+                  padding: 0,
+                  textAlign: "right"
+                }
+              }}
+              value={billedAmount}
+              onChange={e => setBilledAmount(e.target.value)}
+            />
+          </Box>
+        </Box>
+      </Box>
+      <Box
+        display="flex"
+        justifyContent="flex-end">
+        <Box
+          display="flex"
+          alignItems="flex-end">
           <FigureClick
             icon={<PrintRoundedIcon htmlColor="var(--white-X00)" />}
             clickWork={() => parent.window.postMessage({
@@ -128,6 +199,7 @@ export default function OrderProcessor() {
           />
           <FigureClick
             icon={<ArrowCircleRightOutlinedIcon htmlColor="var(--white-X00)" />}
+            clickWork={_processOrder}
           />
         </Box>
       </Box>
