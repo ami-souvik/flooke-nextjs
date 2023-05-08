@@ -22,7 +22,7 @@ export default function Dashboard() {
           fontWeight="100"
           fontFamily="Comme, sans-serif"
           textAlign="right"
-        >good Evening, BOSS!</Typography>
+        >Good Evening, BOSS!</Typography>
         <DashboardCard retrieveApi={filterProcessedOrderByDate} />
       </Box>
     </main>
