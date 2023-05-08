@@ -18,6 +18,9 @@ const Editor = ({ data, _setEdibles, _deleteItem, handleClose }) => {
   const [itemName, setItemName] = useState(
     data && data.name ? data.name : null
   );
+  const [description, setDescription] = useState(
+    data && data.description ? data.description : null
+  );
   const [serving, setServing] = useState(
     data && data.serving ? data.serving : null
   );
@@ -170,12 +173,12 @@ const Editor = ({ data, _setEdibles, _deleteItem, handleClose }) => {
       </Box>
       <Box
         margin="4px 0px"
-        padding="4px 12px"
-        border="1px solid var(--red-hard-500)"
+        padding="4px 0px"
+        borderBottom="1px solid var(--red-hard-500)"
         onClick={toggleDrawer(true)}>
         <Typography
-          fontFamily="DM Sans"
-          fontSize="1.2rem"
+          fontFamily="Comme, sans-serif"
+          fontSize="1rem"
         >{category || "Choose Category"}</Typography>
       </Box>
       <InputBase
@@ -185,53 +188,87 @@ const Editor = ({ data, _setEdibles, _deleteItem, handleClose }) => {
         sx={{
           margin: "4px 0px",
           width: "100%",
-          border: "1px solid var(--red-hard-500)",
-          fontFamily: "DM Sans",
-          fontSize: "1.2rem",
-          padding: "0px 12px"
+          borderBottom: "1px solid var(--red-hard-500)",
+          fontFamily: "Comme, sans-serif",
+          fontSize: "0.8rem",
+          textAlign: "right"
         }}
       />
       <InputBase
-        value={serving}
-        placeholder="Servings"
-        onChange={setValue(setServing)}
+        value={description}
+        placeholder="Item description"
+        onChange={setValue(setDescription)}
         sx={{
           margin: "4px 0px",
           width: "100%",
-          border: "1px solid var(--gray-hard-500)",
-          fontFamily: "DM Sans",
-          fontSize: "1.2rem",
-          padding: "0px 12px"
+          borderBottom: "1px solid var(--gray-hard-500)",
+          fontFamily: "Comme, sans-serif",
+          fontSize: "0.8rem",
+          textAlign: "right"
         }}
       />
-      <InputBase
-        value={processingCost}
-        placeholder="Processing Cost"
-        onChange={setValue(setProcessingCost)}
-        sx={{
-          margin: "4px 0px",
-          width: "100%",
-          border: "1px solid var(--gray-hard-500)",
-          fontFamily: "DM Sans",
-          fontSize: "1.2rem",
-          padding: "0px 12px"
-        }}
-      />
-      <InputBase
-        value={sellingCost}
-        placeholder="Selling Cost"
-        onChange={setValue(setSellingCost)}
-        sx={{
-          margin: "4px 0px",
-          width: "100%",
-          border: "1px solid var(--red-hard-500)",
-          fontFamily: "DM Sans",
-          fontSize: "1.2rem",
-          padding: "0px 12px"
-        }}
-      />
+      <Box
+        display="flex"
+        justifyContent="space-between">
+        <InputBase
+          value={serving}
+          placeholder="Servings"
+          onChange={setValue(setServing)}
+          sx={{
+            width: "80px",
+            padding: "0px 6px",
+            margin: "4px 0px",
+            marginRight: "8px",
+            border: "1px solid var(--red-hard-500)",
+            fontFamily: "Comme, sans-serif",
+            fontSize: "1.2rem"
+          }}
+          inputProps={{
+            style: {
+              textAlign: "right"
+            }
+          }}
+        />
+        <InputBase
+          value={processingCost}
+          placeholder="Processing Cost"
+          onChange={setValue(setProcessingCost)}
+          sx={{
+            width: "180px",
+            padding: "0px 6px",
+            margin: "4px 0px",
+            marginRight: "8px",
+            border: "1px solid var(--red-hard-500)",
+            fontFamily: "Comme, sans-serif",
+            fontSize: "1.2rem"
+          }}
+          inputProps={{
+            style: {
+              textAlign: "right"
+            }
+          }}
+        />
+        <InputBase
+          value={sellingCost}
+          placeholder="Selling Cost"
+          onChange={setValue(setSellingCost)}
+          sx={{
+            width: "180px",
+            padding: "0px 6px",
+            margin: "4px 0px",
+            border: "1px solid var(--red-hard-500)",
+            fontFamily: "Comme, sans-serif",
+            fontSize: "1.2rem"
+          }}
+          inputProps={{
+            style: {
+              textAlign: "right"
+            }
+          }}
+        />
+      </Box>
       <Typography
-        fontFamily="DM Sans"
+        fontFamily="Comme, sans-serif"
         color="var(--red-hard-500)"
       >{error}</Typography>
       <Box
@@ -241,12 +278,14 @@ const Editor = ({ data, _setEdibles, _deleteItem, handleClose }) => {
           (data?.unique !== null
           && data?.unique !== undefined) &&
           <FigureClick
-            icon={<DeleteForeverRoundedIcon htmlColor="var(--white-X00)" />}
+            padding="12px"
+            icon={<DeleteForeverRoundedIcon fontSize="small" htmlColor="var(--white-X00)" />}
             clickWork={() => _deleteItem(category, itemName, data?.index)}
           />
         }
         <FigureClick
-          icon={<SaveRoundedIcon htmlColor="var(--white-X00)" />}
+          padding="12px"
+          icon={<SaveRoundedIcon fontSize="small" htmlColor="var(--white-X00)" />}
           clickWork={() => {
             (data?.unique !== null
             && data?.unique !== undefined) ?

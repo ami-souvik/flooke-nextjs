@@ -9,6 +9,7 @@ import { PATH_DEFAULT, WRAPPER_BASE_URL } from '../../utils/constantUtils';
 import PrintRoundedIcon from '@mui/icons-material/PrintRounded';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import { navigate } from '../../utils/helperUtils';
+import InputDialogCase from '../../context/input-dialog-case';
 import FigureClick from '../../components/form-components/figure-click';
 
 const serviceTypes = ["Dine in", "Takeout", "Delivery", "Zomato", "Swiggy"]
@@ -17,6 +18,7 @@ const paymentMethods = ["Cash", "UPI", "Card"]
 export default function OrderProcessor() {
   const queryParameters = new URLSearchParams(window.location.search)
   const tableId = queryParameters.get("id")
+  const [open, setOpen] = useState(false);
   const [processed, setProcessed] = useState(null);
   const [serviceType, setServiceType] = useState(serviceTypes[0]);
   const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]);
@@ -80,12 +82,18 @@ export default function OrderProcessor() {
         position: "relative",
         padding: "12px 20px"
       }}>
+      <InputDialogCase
+        isOpen={open}
+        handleClose={() => setOpen(false)}
+        value={billedAmount}
+        setValue={setBilledAmount}
+      />
       <Box
         /** 24 full screen padding */
         /** 12 Divider */
         /** 78 processing details section */
-        /** 56 process actions */
-        height={`calc(100vh - 24px - 12px - 78px - 56px)`}>
+        /** 74 process actions */
+        height={`calc(100vh - 24px - 12px - 78px - 74px)`}>
         {
           processed &&
           processed["order-details"].map(
@@ -97,22 +105,37 @@ export default function OrderProcessor() {
               alignItems="center"
               justifyContent="space-between">
               <Typography
-                fontSize="1rem"
-                fontFamily="DM Sans, sans-serif"
+                fontSize="0.8rem"
+                fontFamily="Comme, sans-serif"
               >{eachItem["item-name"]}</Typography>
               <Box
-                height="32px"
-                width="32px"
+                width="100px"
                 display="flex"
-                justifyContent="center"
-                alignItems="center"
-                borderRadius="40px"
-                bgcolor="var(--gray-hard-500)">
-                <Typography
-                  color="var(--white-X00)"
-                  fontSize="1.2rem"
-                  fontFamily="DM Sans, sans-serif"
-                >{eachItem["item-count"]}</Typography>
+                justifyContent="space-between">
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  borderRadius="4px">
+                  <Typography
+                    color="var(--gray-hard-500)"
+                    fontSize="1rem"
+                    fontFamily="Comme, sans-serif"
+                  >{eachItem["item-count"]}</Typography>
+                </Box>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  padding="0px 8px"
+                  border="1px solid var(--gray-hard-500)"
+                  borderRadius="4px">
+                  <Typography
+                    color="var(--gray-hard-500)"
+                    fontSize="1rem"
+                    fontFamily="Comme, sans-serif"
+                  >{Number(eachItem["item-count"]) * Number(eachItem.price)}</Typography>
+                </Box>
               </Box>
             </Box>
           )
@@ -127,7 +150,7 @@ export default function OrderProcessor() {
       <Box
         display="flex"
         justifyContent="space-between"
-        marginBottom="6px">
+        marginBottom="24px">
         <Box
           display="flex"
           flexDirection="column"
@@ -172,21 +195,15 @@ export default function OrderProcessor() {
             display="flex"
             justifyContent="space-between">
             <Typography>Total -</Typography>
-            <InputBase
+            <Box
+              onClick={() => setOpen(true)}
               sx={{
                 width: "80px",
                 textAlign: "right",
                 borderBottom: "1px solid var(--gray-hard-500)",
-              }}
-              inputProps={{
-                style: {
-                  padding: 0,
-                  textAlign: "right"
-                }
-              }}
-              value={billedAmount}
-              onChange={e => setBilledAmount(e.target.value)}
-            />
+              }}>
+              <Typography textAlign="right">{billedAmount}</Typography>
+            </Box>
           </Box>
         </Box>
       </Box>
@@ -200,7 +217,7 @@ export default function OrderProcessor() {
             icon={<PrintRoundedIcon htmlColor="var(--white-X00)" />}
             clickWork={() => parent.window.postMessage({
               method: "print",
-              content: 2
+              content: processed
             }, WRAPPER_BASE_URL)}
           />
           <FigureClick

@@ -9,7 +9,7 @@ interface InputDialogCaseProps {
   setValue?: (v: string) => void
 }
 
-const InputDialogCase = ({ isOpen, handleClose, value: parentValue, setValue: setParentValue }
+const InputDialogCase = ({ isOpen, handleClose, value: parentValue = null, setValue: setParentValue }
   : InputDialogCaseProps): JSX.Element => {
   const inputRef = useRef(null);
   const [value, setValue] = useState(parentValue);
@@ -18,7 +18,6 @@ const InputDialogCase = ({ isOpen, handleClose, value: parentValue, setValue: se
     if(setParentValue)
       setParentValue(value);
     handleClose();
-    setValue(null);
   }
   useEffect(() => {
     const input = inputRef.current;
@@ -31,11 +30,12 @@ const InputDialogCase = ({ isOpen, handleClose, value: parentValue, setValue: se
     });
     return input?.removeEventListener("keypress");
   }, []);
+  useEffect(() => setValue(parentValue), [parentValue])
   return (
     <Dialog
       fullWidth
       open={isOpen}
-      onClose={() => save()}>
+      onClose={() => handleClose()}>
       <DialogContent
         sx={{
           display: "flex",
@@ -52,7 +52,7 @@ const InputDialogCase = ({ isOpen, handleClose, value: parentValue, setValue: se
             borderBottom: "2px solid #000",
             fontFamily: "Comme"
           }}
-        ></InputBase>
+        />
         <IconButton
           sx={{
             borderRadius: "0px",

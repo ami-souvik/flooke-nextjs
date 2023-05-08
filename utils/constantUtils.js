@@ -1,16 +1,16 @@
 // development urls
-export const DATABASE = "crystalsteward";
+// export const DATABASE = "crystalsteward";
 
-export const WRAPPER_BASE_URL = "http://localhost:3001";
-export const FRONTEND_BASE_URL = "http://localhost:3000";
-export const BACKEND_API_BASE_URL = "http://localhost:4000";
+// export const WRAPPER_BASE_URL = "http://localhost:3001";
+// export const FRONTEND_BASE_URL = "http://localhost:3000";
+// export const BACKEND_API_BASE_URL = "http://localhost:4000";
 
 // production constants
-// export const DATABASE = "thepseudoengineers";
+export const DATABASE = "thepseudoengineers";
 
-// export const WRAPPER_BASE_URL = "https://heres-sav.github.io/flooke-wrapper";
-// export const FRONTEND_BASE_URL = "https://flooke-nextjs-git-development-v2-heres-sav.vercel.app";
-// export const BACKEND_API_BASE_URL = "https://flooke-mw.onrender.com";
+export const WRAPPER_BASE_URL = "https://heres-sav.github.io/flooke-wrapper";
+export const FRONTEND_BASE_URL = "https://flooke-nextjs-git-development-v2-heres-sav.vercel.app";
+export const BACKEND_API_BASE_URL = "https://flooke-mw.onrender.com";
 
 export const PATH_DEFAULT = "/";
 export const PATH_ITEM_EDITOR = "/item-editor";
@@ -69,6 +69,12 @@ export const DELETE_ITEM_FROM_CATEGORY = {
 
 export const BULK_IMPORT_CATEGORY = {
   URL: "/api/v1/flooke/menu/ops/bulk-import",
+  METHOD: "POST",
+};
+
+// guest details apis
+export const ADD_GUEST_DETAILS_ = {
+  URL: "/api/v1/flooke/guest/ops/create",
   METHOD: "POST",
 };
 

@@ -10,18 +10,19 @@ import { setAlertWithDelay } from "../../store/services/uiServices";
 import { DialogCase } from "../../components/overlays/dialog-case";
 import OrderEditorTablePick from "../../components/overlays/order-editor-table-pick";
 import { TABLES_MAP } from "../../utils/constantUtils";
+import GuestDetailsForm from "../../components/order-editor/guest-details-form";
 
 export default function OrderEditor() {
   const queryParameters = new URLSearchParams(window.location.search)
   const tableId = queryParameters.get("id")
   const [loading, setLoading] = useState(false);
+  const [formopen, setFormopen] = useState(null);
   const [content, setContent] = useState({});
   const [details, setDetails] = useState({});
   const [changed, setChanged] = useState(false);
   const [selected, setSelected] = useState(null);
   const [comment, setComment] = useState(null);
   const [tableOverlay, setTableOverlay] = useState(false);
-  const [guestOpen, setGuestOpen] = useState(false);
   const [table, setTable] = useState(tableId || "table1");
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
@@ -145,12 +146,13 @@ export default function OrderEditor() {
         justifyContent: "space-between",
         padding: "12px"
       }}>
-      <DialogCase
-        open={guestOpen}
-        setOpen={setGuestOpen}
-      >
-        <></>
-      </DialogCase>
+      {
+        !!formopen &&
+        <GuestDetailsForm
+          data={formopen}
+          handleClose={() => setFormopen(null)}
+        />
+      }
       <OrderEditorTablePick
         open={tableOverlay}
         options={TABLES_MAP}
@@ -191,7 +193,7 @@ export default function OrderEditor() {
           flexGrow={1}
           padding="4px"
           bgcolor="var(--primary-purple)"
-          onClick={() => setGuestOpen(true)}>
+          onClick={() => setFormopen({})}>
           <Typography
             color="var(--white-X00)"
             fontSize="0.6rem"

@@ -80,7 +80,7 @@ export default function ItemEditor() {
         display: window.innerWidth > 600 ? "flex" : "block",
       }}>
       {
-        formopen &&
+        !!formopen &&
         <Editor
           data={formopen}
           _setEdibles={_setEdibles}
@@ -159,7 +159,7 @@ export default function ItemEditor() {
                           <Typography
                             fontFamily="Comme, sans-serif"
                             fontWeight="200"
-                            fontSize="1.2rem"
+                            fontSize="1rem"
                           >{each.name}</Typography>
                         </Box>
                       </td>

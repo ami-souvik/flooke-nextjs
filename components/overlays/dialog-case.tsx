@@ -12,12 +12,14 @@ export const DialogCase = ({
   setOpen
 }: DialogCaseProps): JSX.Element => (
   <Dialog
-    fullScreen
+    fullWidth
     keepMounted
     open={open}
     onClose={() => setOpen(false)}
     sx={{
-      padding: "20px"
+      '& .MuiDialog-container': {
+        alignItems: "flex-start",
+      },
     }}
     >
     <DialogContent

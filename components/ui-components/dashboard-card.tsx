@@ -15,9 +15,20 @@ const DashboardCardSm = ({ retrieveApi }) => {
   const _retrieveApi = async () => {
     setLoading(true);
     let totalBusiness = 0
+    console.log(`${new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate() + 1
+    ).toISOString().substring(0, 10)}T18:30:00.000Z`);
+    console.log(`${new Date().toISOString().substring(0, 10)}T18:30:00.000Z`);
+    
     const response = await retrieveApi({
-      "from-date": `${new Date().toISOString().substring(0, 10)}T00:00:00.000Z`,
-      "to-date":`${new Date().toISOString().substring(0, 10)}T23:59:59.999Z`,
+      "from-date": `${new Date().toISOString().substring(0, 10)}T18:30:00.000Z`,
+      "to-date":`${new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate() + 1
+      ).toISOString().substring(0, 10)}T18:30:00.000Z`,
     });
     setLoading(false);
     response.data.mongodb.content.forEach(each => {
@@ -92,8 +103,8 @@ const DashboardCardFull = ({ retrieveApi }) => {
     let totalBusiness = 0
     setLoading(true);
     const response = await retrieveApi({
-      "from-date": `${from.toISOString().substring(0, 10)}T00:00:00.000Z`,
-      "to-date":`${end.toISOString().substring(0, 10)}T23:59:59.999Z`,
+      "from-date": `${from.toISOString().substring(0, 10)}T18:30:00.000Z`,
+      "to-date":`${end.toISOString().substring(0, 10)}T18:30:00.000Z`,
     });
     setLoading(false);
     response.data.mongodb.content.forEach(each => {
@@ -131,7 +142,7 @@ const DashboardCardFull = ({ retrieveApi }) => {
             }}
           >
             <DateCalendar
-              defaultValue={dayjs(new Date().toISOString().substring(0, 10))}
+              defaultValue={dayjs(new Date())}
               onChange={(v, event) => {
                 if(event === "finish" && openCalender === "from") {
                   setFrom(new Date(v["$y"], v["$M"], v["$D"]+1))

@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material";
 export default createTheme({
   typography: {
     fontFamily: [
-      "DM Sans",
+      "Comme",
       "sans-serif"
     ].join(','),
   },
