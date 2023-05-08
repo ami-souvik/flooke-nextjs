@@ -5,9 +5,10 @@ import { setAlertWithDelay } from '../../store/services/uiServices';
 import { previewProcessOrder, processOrder } from '../../utils/web/apis/processOrderApis';
 import Picker from '../../components/form-components/picker';
 import searchAndConnectBt from '../../utils/printUtils/searchAndConnectBt';
-import { WRAPPER_BASE_URL } from '../../utils/constantUtils';
+import { PATH_DEFAULT, WRAPPER_BASE_URL } from '../../utils/constantUtils';
 import PrintRoundedIcon from '@mui/icons-material/PrintRounded';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+import { navigate } from '../../utils/helperUtils';
 import FigureClick from '../../components/form-components/figure-click';
 
 const serviceTypes = ["Dine in", "Takeout", "Delivery", "Zomato", "Swiggy"]
@@ -50,6 +51,7 @@ export default function OrderProcessor() {
       "order-total": processed["order-total"]
     })
     if(res?.data?.mongodb?.status) {
+      navigate(`${PATH_DEFAULT}`)
       setAlertWithDelay({
         status: "success",
         message: res.data.mongodb.status
@@ -79,7 +81,11 @@ export default function OrderProcessor() {
         padding: "12px 20px"
       }}>
       <Box
-        height={`calc(${window.innerHeight}px - 73px - 149px)`}>
+        /** 24 full screen padding */
+        /** 12 Divider */
+        /** 78 processing details section */
+        /** 56 process actions */
+        height={`calc(100vh - 24px - 12px - 78px - 56px)`}>
         {
           processed &&
           processed["order-details"].map(

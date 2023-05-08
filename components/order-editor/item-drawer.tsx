@@ -119,9 +119,8 @@ export default function ItemDrawer({ addItem, syncWithDatabase }: ItemDrawerProp
         </Box>
         <Box
           /** 12 full screen padding bottom */
-          /** 39.5 header category name */
-          /** 64 input field height */
-          height="calc(50vh - 12px - 39.5px - 48px)"
+          /** 48 input field height */
+          height="calc(50vh - 12px - 48px)"
           overflow="scroll">
           {
             category &&

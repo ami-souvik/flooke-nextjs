@@ -1,31 +1,63 @@
-import { Box, Button, Typography } from "@mui/material";
+import { useState } from "react";
+import { Box, Button, IconButton, Typography } from "@mui/material";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined';
+import InputDialogCase from "../../context/input-dialog-case";
+import FigureClick from "./figure-click";
 
-export const IEPageAction = ({ handleFile, clickAction }) => (
-  <Box
-    position="absolute"
-    bottom="0px"
-    display="flex"
-    justifyContent="flex-end"
-    padding="12px"
-    bgcolor="var(--gray-hard-500)"
-    >
-    <Box
-      position="relative"
-      display="flex"
-      onClick={clickAction}>
+export const IEPageAction = ({ error, clearError, categoryAdd, itemAdd }) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  return (
+    <>
       <Typography
-        fontFamily="Noto Serif TC, serif"
-        fontSize="1rem"
-        color="var(--white-X00)"
-      >item</Typography>
-      <Typography
-        fontFamily="Noto Serif TC, serif"
-        fontSize="1rem"
-        color="var(--white-X00)"
-      >+</Typography>
-    </Box>
-  </Box>
-)
+        color="var(--red-hard-500)"
+        fontSize="0.8rem"
+        fontFamily="Comme, sans-serif"
+        paddingX="12px"
+      >{error}</Typography>
+      <Box
+        width={window.innerWidth > 600 ? "600px" : "100%"}
+        position="absolute"
+        bottom="0px"
+        display="flex"
+        justifyContent="center"
+        padding="0px 12px">
+        <InputDialogCase
+          isOpen={open}
+          handleClose={() => setOpen(false)}
+          value={value}
+          setValue={(v) => {
+            clearError()
+            setValue(v)
+          }}
+        />
+        <Box
+          sx={{
+            width: "100%",
+            fontFamily: "Comme, sans-serif",
+            padding: "0px 12px",
+            border: "2px solid var(--gray-hard-500)",
+            color: "rgb(var(--foreground-rgb))",
+            backgroundColor: "rgb(var(--background-end-rgb))"
+          }}
+          onClick={() => setOpen(true)}>
+          <Typography>{value}</Typography>
+        </Box>
+        <FigureClick
+          icon={<AddOutlinedIcon htmlColor="var(--white-X00)" />}
+          padding="12px"
+          clickWork={categoryAdd}
+        />
+        <FigureClick
+          icon={<PostAddOutlinedIcon htmlColor="var(--white-X00)" />}
+          padding="12px"
+          clickWork={itemAdd}
+        />
+      </Box>
+    </>
+  )
+}
 
 export const OPageAction = ({ clickAction }) => (
   <Box
@@ -37,28 +69,12 @@ export const OPageAction = ({ clickAction }) => (
     alignItems="flex-end"
     padding="0px 12px">
     <Box
-      display="flex"
-      padding="12px 16px 16px 12px"
-      bgcolor="var(--gray-hard-500)">
-      <Box
-        position="relative"
-        display="flex"
-        onClick={clickAction}>
-        <Typography
-          fontFamily="Noto Serif TC, serif"
-          fontSize="1rem"
-          color="var(--white-X00)"
-        >order</Typography>
-        <Typography
-          position="absolute"
-          top="2px"
-          right="-8px"
-          fontFamily="Noto Serif TC, serif"
-          fontSize="1rem"
-          lineHeight="0"
-          color="var(--white-X00)"
-        >+</Typography>
-      </Box>
+      padding="4px 0px">
+      <FigureClick
+        icon={<PostAddOutlinedIcon htmlColor="var(--white-X00)" />}
+        padding="12px"
+        clickWork={clickAction}
+      />
     </Box>
   </Box>
 )

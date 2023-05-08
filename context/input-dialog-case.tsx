@@ -5,8 +5,8 @@ import DoneIcon from '@mui/icons-material/Done';
 interface InputDialogCaseProps {
   isOpen: boolean
   handleClose: () => void
-  value: string
-  setValue: (v: string) => void
+  value?: string
+  setValue?: (v: string) => void
 }
 
 const InputDialogCase = ({ isOpen, handleClose, value: parentValue, setValue: setParentValue }

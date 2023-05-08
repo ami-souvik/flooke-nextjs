@@ -20,25 +20,28 @@ export default function Home() {
         position: "relative"
       }}>
       <Box
-        height={`${window.innerHeight - 60.5}px`}
+        height="calc(100vh - 48px)"
         sx={{
           overflowY: "scroll"
         }}>
         {
           orders &&
           Object.keys(orders).map((key, index) => (
-            <Box key={index}>
+            <Box
+              key={index}
+              margin="0px 12px">
               <Typography
                 mx="12px"
-                fontSize="2rem"
-                fontFamily="DM Sans"
+                marginTop="12px"
+                fontSize="1.4rem"
+                fontFamily="Comme, sans-serif"
+                fontWeight="600"
               >{TABLES_MAP[orders[key]["table-number"]]}</Typography>
               <Box
-                m="12px"
                 px="24px"
                 py="12px"
                 borderRadius="4px"
-                boxShadow="0px 0px 2px #000">
+                boxShadow="0px 0px 8px var(--gray-subtle-500)">
                 {
                   orders[key]["order-details"].map(
                     eachItem =>
@@ -48,11 +51,23 @@ export default function Home() {
                       display="flex"
                       alignItems="center"
                       justifyContent="space-between">
-                      <Typography
-                        paddingRight="6px"
-                        fontSize="0.8rem"
-                        fontFamily="Comme, sans-serif"
-                      >{eachItem["item-name"]}</Typography>
+                      <Box>
+                        <Typography
+                          paddingRight="6px"
+                          fontSize="0.8rem"
+                          fontFamily="Comme, sans-serif"
+                        >{eachItem["item-name"]}</Typography>
+                        {
+                          eachItem.comment && <Typography
+                            padding="0px 4px"
+                            marginRight="12px"
+                            fontSize="0.8rem"
+                            fontFamily="Comme, sans-serif"
+                            border="0.5px solid #000"
+                            borderRadius="4px"
+                          >{eachItem.comment}</Typography>
+                        }
+                      </Box>
                       <Box
                         display="flex"
                         justifyContent="center"
@@ -64,7 +79,7 @@ export default function Home() {
                         <Typography
                           color="var(--gray-hard-500)"
                           fontSize="1.2rem"
-                          fontFamily="DM Sans, sans-serif"
+                          fontFamily="Comme, sans-serif"
                         >{eachItem["item-count"]}</Typography>
                       </Box>
                     </Box>

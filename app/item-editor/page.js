@@ -16,7 +16,6 @@ export default function ItemEditor() {
   const [edibles, setEdibles] = useState([]);
   const [error, setError] = useState(null);
   const [formopen, setFormopen] = useState(null);
-  const [categoryName, setCategoryName] = useState(null);
   const [fileContent, setFileContent] = useState(null);
   const _setEdibles = async () => {
     const res = await getAllCategories();
@@ -27,8 +26,9 @@ export default function ItemEditor() {
     ediblesClone[index].expanded = !ediblesClone[index].expanded
     setEdibles(ediblesClone);
   }
-  const _addCategory = async () => {
-    const res = await addCategory({ name: categoryName })
+  const _addCategory = async value => {
+    if(value) setError("Category name cannot be blank");
+    const res = await addCategory({ name: value })
     if(res?.data?.mongodb?.error) {
       setError(res.data.mongodb.error);
       return;
@@ -53,13 +53,6 @@ export default function ItemEditor() {
       setFileContent(content);
     }
     fileReader.readAsText(file);
-  }
-  const calculateTableHeight = () => {
-    var height = window.innerHeight - 56 - 64
-    if(error) {
-      height -= 24
-    }
-    return `${height}px`
   }
   const _bulkImportCategories = () => {
     const contents = fileContent.split('\r\n');
@@ -100,12 +93,17 @@ export default function ItemEditor() {
         flexDirection="column"
         justifyContent="space-between">
         <Box
-          height={calculateTableHeight()}
+          /** 12 full screen padding bottom */
+          /** 48 item editor actions height */
+          height={`calc(100vh - 12px - 48px${error ? " - 24px" : ""})`}
           sx={{
-            overflowX: "scroll"
+            overflowY: "scroll"
           }}>
           <table
-            width={window.innerWidth > 600 ? "600px" : "auto"}>
+            width={window.innerWidth > 600 ? "600px" : "auto"}
+            style={{
+              margin: "8px"
+            }}>
             <thead>
               <tr>
                 <td>
@@ -139,6 +137,7 @@ export default function ItemEditor() {
             </thead>
             <tbody>
               {
+                edibles &&
                 edibles.map((each, index) =>
                   <>
                     <tr key={each.name}>
@@ -159,8 +158,8 @@ export default function ItemEditor() {
                           padding="2px 12px">
                           <Typography
                             fontFamily="Comme, sans-serif"
-                            fontWeight="800"
-                            fontSize="1rem"
+                            fontWeight="200"
+                            fontSize="1.2rem"
                           >{each.name}</Typography>
                         </Box>
                       </td>
@@ -168,48 +167,54 @@ export default function ItemEditor() {
                     {
                       each.expanded &&
                       each["menu-items"]?.map((eachItem, index) =>
-                        <tr key={`${eachItem.name}${index}`}>
-                          <td
+                        <>
+                          <Box height="4px"/>
+                          <tr
+                            key={`${eachItem.name}${index}`}
                             style={{
-                              backgroundColor: "var(--gray-hard-500)"
+                              borderRadius: "8px",
+                              boxShadow: "0px 0px 8px var(--gray-subtle-500)"
                             }}>
-                            <Box
-                              display="flex"
-                              justifyContent="center"
-                              alignItems="center"
-                              onClick={() => setFormopen({
-                                ...eachItem,
-                                index
-                              })}>
-                              <InfoOutlinedIcon
-                                fontSize="small"
-                                htmlColor="var(--white-X00)"
-                              />
-                            </Box>
-                          </td>
-                          <td width="70%">
-                            <Box
-                              display="flex"
-                              alignItems="center"
-                              padding="4px 12px">
-                              <Typography
-                                fontFamily="Comme, sans-serif"
-                                fontSize="0.8rem"
-                              >{eachItem.name}</Typography>
-                            </Box>
-                          </td>
-                          <td width="30%">
-                            <Box
-                              display="flex"
-                              alignItems="center"
-                              paddingLeft="20px">
-                              <Typography
-                                fontFamily="Comme, sans-serif"
-                                fontSize="0.8rem"
-                              >{eachItem["selling-cost"]}</Typography>
-                            </Box>
-                          </td>
-                        </tr>
+                            <td>
+                              <Box
+                                display="flex"
+                                justifyContent="center"
+                                alignItems="center"
+                                onClick={() => setFormopen({
+                                  ...eachItem,
+                                  index
+                                })}>
+                                <InfoOutlinedIcon
+                                  fontSize="small"
+                                  htmlColor="var(--gray-hard-X00)"
+                                />
+                              </Box>
+                            </td>
+                            <td width="70%">
+                              <Box
+                                display="flex"
+                                alignItems="center"
+                                padding="6px 12px">
+                                <Typography
+                                  fontFamily="Comme, sans-serif"
+                                  fontSize="0.8rem"
+                                >{eachItem.name}</Typography>
+                              </Box>
+                            </td>
+                            <td width="30%">
+                              <Box
+                                display="flex"
+                                alignItems="center"
+                                paddingLeft="20px">
+                                <Typography
+                                  fontFamily="Comme, sans-serif"
+                                  fontSize="0.8rem"
+                                >{eachItem["selling-cost"]}</Typography>
+                              </Box>
+                            </td>
+                          </tr>
+                          <Box height="4px"/>
+                        </>
                       )
                     }
                   </>
@@ -219,19 +224,11 @@ export default function ItemEditor() {
           </table>
         </Box>
         <IEPageAction
-          clickAction={() => setFormopen({})}
+          error={error}
+          clearError={() => setError(null)}
+          categoryAdd={_addCategory}
+          itemAdd={() => setFormopen({})}
         />
-        <Box>
-          <Typography color="var(--red-hard-500)">{error}</Typography>
-          <Box
-            display="flex">
-            <TypeIn unique="item-editor-category-name" />
-            <FigureClick
-              icon={<AddOutlinedIcon htmlColor="var(--white-X00)" />}
-              clickWork={_addCategory}
-            />
-          </Box>
-        </Box>
       </Box>
       {
         window.innerWidth > 600 &&

@@ -182,8 +182,6 @@ export default function OrderEditor() {
         addItem={addItem}
         syncWithDatabase={syncWithDatabase}
       />
-      <Box display="flex">
-      </Box>
       <Box
         width="calc(100% - 24px)"
         display="flex"

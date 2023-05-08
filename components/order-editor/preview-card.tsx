@@ -106,7 +106,10 @@ export default function PreviewCard({
             <Divider />
           </Box>
         ) :
-        <Typography>{"Table doesn't have an order"}</Typography>
+        <Typography
+          fontFamily="Comme, sans-serif"
+          fontSize="0.8rem"
+        >{"Table doesn't have an order"}</Typography>
       }
     </Box>
   </div>)
