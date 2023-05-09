@@ -12,6 +12,7 @@ const FigureClick = ({ disabled, icon, padding = "16px", clickWork }: FigureClic
     disabled={disabled}
     sx={{
       padding,
+      marginX: "2px",
       bgcolor: "var(--gray-hard-500)",
       borderRadius: "0",
       "&:hover": {

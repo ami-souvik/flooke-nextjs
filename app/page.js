@@ -9,6 +9,7 @@ import { OPageAction } from '../components/form-components/page-action';
 import { deleteActiveOrder } from '../utils/web/apis/activeOrderApis';
 import { TABLES_MAP, PATH_ORDER_EDITOR, PATH_ORDER_PROCESSOR } from '../utils/constantUtils';
 import { navigate } from '../utils/helperUtils';
+import FigureClick from '../components/form-components/figure-click';
 
 export default function Home() {
   const { orders } = useContext(FirebaseRealtimeDB);
@@ -86,21 +87,25 @@ export default function Home() {
                   )
                 }
                 <Box>
-                  <IconButton
-                    onClick={() => navigate(`${PATH_ORDER_EDITOR}?id=${orders[key]["table-number"]}`)}>
-                    <NoteAltOutlinedIcon fontSize="large" />
-                  </IconButton>
-                  <IconButton onClick={() => {
-                    if(confirm("Are you surely want to delete the table?")) {
-                      deleteActiveOrder({ "table-number": orders[key]["table-number"] });
-                    }
-                  }}>
-                    <DeleteOutlineRoundedIcon fontSize="large" />
-                  </IconButton>
-                  <IconButton
-                    onClick={() => navigate(`${PATH_ORDER_PROCESSOR}?id=${orders[key]["table-number"]}`)}>
-                    <DescriptionOutlinedIcon fontSize="large" />
-                  </IconButton>
+                  <FigureClick
+                    icon={<NoteAltOutlinedIcon htmlColor="var(--white-X00)" />}
+                    padding="12px"
+                    clickWork={() => navigate(`${PATH_ORDER_EDITOR}?id=${orders[key]["table-number"]}`)}
+                  />
+                  <FigureClick
+                    icon={<DeleteOutlineRoundedIcon htmlColor="var(--white-X00)" />}
+                    padding="12px"
+                    clickWork={() => {
+                      if(confirm("Are you surely want to delete the table?")) {
+                        deleteActiveOrder({ "table-number": orders[key]["table-number"] });
+                      }
+                    }}
+                  />
+                  <FigureClick
+                    icon={<DescriptionOutlinedIcon htmlColor="var(--white-X00)" />}
+                    padding="12px"
+                    clickWork={() => navigate(`${PATH_ORDER_PROCESSOR}?id=${orders[key]["table-number"]}`)}
+                  />
                 </Box>
               </Box>
             </Box>

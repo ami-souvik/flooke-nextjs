@@ -45,6 +45,7 @@ export default function OrderProcessor() {
     }
   }
   const _processOrder = async () => {
+    if(!confirm("Are you surely want to process the order?")) return;
     const res = await processOrder({
       "table-number": tableId,
       "payment-type": paymentMethod,

@@ -8,12 +8,14 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
+import { getUTCDateLimit } from "../../utils/helperUtils";
 
 const DashboardCardSm = ({ retrieveApi }) => {
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState(null);
   const _retrieveApi = async () => {
     setLoading(true);
+    let orderCount = 0
     let totalBusiness = 0
     console.log(`${new Date(
       new Date().getFullYear(),
@@ -22,19 +24,14 @@ const DashboardCardSm = ({ retrieveApi }) => {
     ).toISOString().substring(0, 10)}T18:30:00.000Z`);
     console.log(`${new Date().toISOString().substring(0, 10)}T18:30:00.000Z`);
     
-    const response = await retrieveApi({
-      "from-date": `${new Date().toISOString().substring(0, 10)}T18:30:00.000Z`,
-      "to-date":`${new Date(
-        new Date().getFullYear(),
-        new Date().getMonth(),
-        new Date().getDate() + 1
-      ).toISOString().substring(0, 10)}T18:30:00.000Z`,
-    });
+    const response = await retrieveApi(getUTCDateLimit());
     setLoading(false);
     response.data.mongodb.content.forEach(each => {
+      orderCount += 1;
       totalBusiness += Number(each["billed-amount"])
     });
     setContent({
+      orderCount,
       totalBusiness
     });
   }
@@ -63,11 +60,22 @@ const DashboardCardSm = ({ retrieveApi }) => {
           <RefreshRoundedIcon fontSize="small"/>
         </IconButton>
       </Box>
-      <Typography
-        padding="0px 3px"
-        fontWeight="100"
-        fontSize="0.8rem"
-        fontFamily="Comme, sans-serif">{"Today's"}</Typography>
+      <Box
+        display="flex"
+        justifyContent="space-between">
+        <Typography
+          padding="0px 3px"
+          fontWeight="100"
+          fontSize="0.8rem"
+          fontFamily="Comme, sans-serif">{`Orders`}</Typography>
+        <Typography
+          padding="0px 4px"
+          border="0.5px solid var(--gray-hard-500)"
+          borderRadius="4px"
+          fontWeight="600"
+          fontSize="0.8rem"
+          fontFamily="Comme, sans-serif">{content?.orderCount}</Typography>
+      </Box>
       {
         loading ?
         <Skeleton variant="rounded" height={21.5} /> :
