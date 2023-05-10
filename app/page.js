@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { FirebaseRealtimeDB } from '../context/context'
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
@@ -10,9 +10,11 @@ import { deleteActiveOrder } from '../utils/web/apis/activeOrderApis';
 import { TABLES_MAP, PATH_ORDER_EDITOR, PATH_ORDER_PROCESSOR } from '../utils/constantUtils';
 import { navigate } from '../utils/helperUtils';
 import FigureClick from '../components/form-components/figure-click';
+import ConfirmOverlay from '../components/overlays/confirm-overlay';
 
 export default function Home() {
   const { orders } = useContext(FirebaseRealtimeDB);
+  const [deleteTable, confirmDelete] = useState(null);
   return (
     <main
       suppressHydrationWarning
@@ -20,6 +22,13 @@ export default function Home() {
         height: "100vh",
         position: "relative"
       }}>
+      <ConfirmOverlay
+        open={!!deleteTable}
+        handleClose={() => confirmDelete(null)}
+        title="Delete table"
+        message="Are you surely want to delete the table?"
+        onSuccess={() => deleteActiveOrder({ "table-number": orders[deleteTable]["table-number"] })}
+      />
       <Box
         height="calc(100vh - 48px)"
         sx={{
@@ -95,11 +104,7 @@ export default function Home() {
                   <FigureClick
                     icon={<DeleteOutlineRoundedIcon htmlColor="var(--white-X00)" />}
                     padding="12px"
-                    clickWork={() => {
-                      if(confirm("Are you surely want to delete the table?")) {
-                        deleteActiveOrder({ "table-number": orders[key]["table-number"] });
-                      }
-                    }}
+                    clickWork={() => confirmDelete(key)}
                   />
                   <FigureClick
                     icon={<DescriptionOutlinedIcon htmlColor="var(--white-X00)" />}

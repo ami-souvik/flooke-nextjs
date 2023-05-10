@@ -11,6 +11,7 @@ import { DialogCase } from "../../components/overlays/dialog-case";
 import OrderEditorTablePick from "../../components/overlays/order-editor-table-pick";
 import { TABLES_MAP } from "../../utils/constantUtils";
 import GuestDetailsForm from "../../components/order-editor/guest-details-form";
+import ConfirmOverlay from "../../components/overlays/confirm-overlay";
 
 export default function OrderEditor() {
   const queryParameters = new URLSearchParams(window.location.search)
@@ -24,6 +25,7 @@ export default function OrderEditor() {
   const [comment, setComment] = useState(null);
   const [tableOverlay, setTableOverlay] = useState(false);
   const [table, setTable] = useState(tableId || "table1");
+  const [deleteTable, confirmDelete] = useState(false);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
   const setItemCount = (item, count) => {
@@ -100,9 +102,7 @@ export default function OrderEditor() {
   const syncWithDatabase = async () => {
     const apiDetails = {};
     if(Object.values(details).length === 0) {
-      if(confirm("Are you surely want to delete the table?")) {
-        deleteActiveOrder({ "table-number": table });
-      }
+      confirmDelete(true);
       return;
     }
     else {
@@ -146,6 +146,16 @@ export default function OrderEditor() {
         justifyContent: "space-between",
         padding: "12px"
       }}>
+      <ConfirmOverlay
+        open={deleteTable}
+        handleClose={() => confirmDelete(false)}
+        title="Delete table"
+        message="Are you surely want to delete the table?"
+        onSuccess={async () => {
+          await deleteActiveOrder({ "table-number": table })
+          _readActiveOrder()
+        }}
+      />
       {
         !!formopen &&
         <GuestDetailsForm

@@ -17,13 +17,6 @@ const DashboardCardSm = ({ retrieveApi }) => {
     setLoading(true);
     let orderCount = 0
     let totalBusiness = 0
-    console.log(`${new Date(
-      new Date().getFullYear(),
-      new Date().getMonth(),
-      new Date().getDate() + 1
-    ).toISOString().substring(0, 10)}T18:30:00.000Z`);
-    console.log(`${new Date().toISOString().substring(0, 10)}T18:30:00.000Z`);
-    
     const response = await retrieveApi(getUTCDateLimit());
     setLoading(false);
     response.data.mongodb.content.forEach(each => {
@@ -100,12 +93,12 @@ const DashboardCardSm = ({ retrieveApi }) => {
   )
 }
 
-const DashboardCardFull = ({ retrieveApi }) => {
+const DashboardCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
   const [loading, setLoading] = useState(false);
-  const [openCalender, setOpenCalender] = useState(null);
   const [content, setContent] = useState(null);
-  const [from, setFrom] = useState(null);
-  const [end, setEnd] = useState(null);
+  const [openCalender, setOpenCalender] = useState(null);
+  const [from, setFrom] = useState(new Date());
+  const [end, setEnd] = useState(new Date(Date.now()+(24*60*60*1000)));
   const _retrieveApi = async () => {
     if(!from || !end) return;
     let totalBusiness = 0
@@ -118,6 +111,7 @@ const DashboardCardFull = ({ retrieveApi }) => {
     response.data.mongodb.content.forEach(each => {
       totalBusiness += Number(each["billed-amount"])
     });
+    setPastOrders(response.data.mongodb.content);
     setContent({
       totalBusiness
     });
@@ -226,7 +220,11 @@ const DashboardCardFull = ({ retrieveApi }) => {
         <Box
           display="flex"
           alignItems="center"
-          paddingLeft="8px">
+          paddingLeft="8px"
+          sx={{
+            cursor: "pointer"
+          }}
+          onClick={gotoOrders}>
           <Typography
             fontSize="0.8rem"
             fontFamily="Comme, sans-serif">orders</Typography>
@@ -238,14 +236,18 @@ const DashboardCardFull = ({ retrieveApi }) => {
 }
 
 const DashboardCard = ({
-  retrieveApi
+  setPastOrders,
+  retrieveApi,
+  gotoOrders
 }) => (
   <Box
     display="flex">
     <DashboardCardSm retrieveApi={retrieveApi} />
     <Box width="12px"/>
     <DashboardCardFull
+      setPastOrders={setPastOrders}
       retrieveApi={retrieveApi}
+      gotoOrders={gotoOrders}
     />
   </Box>
 )

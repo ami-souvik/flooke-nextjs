@@ -12,11 +12,17 @@ export const AlertUI = () => {
       sx={{
         position: "absolute",
         top: "0px",
-        margin: "12px",
+        margin: "6px",
+        padding: "0 12px",
+        borderRadius: "8px",
+        opacity: "0.95",
         zIndex: 1301
       }}
       onClick={() => dispatch(setAlert(null))}
     >
-      <Typography fontFamily="DM Sans">{alert.message}</Typography>
+      <Typography
+        fontFamily="Comme"
+        fontSize="0.8rem"
+      >{alert.message}</Typography>
     </Alert>
 }

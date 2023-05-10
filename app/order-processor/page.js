@@ -53,11 +53,12 @@ export default function OrderProcessor() {
       "billed-amount": billedAmount,
       "order-total": processed["order-total"]
     })
-    if(res?.data?.mongodb?.status) {
+    if(res?.data?.mongodb?.status
+    || res?.data?.firebase?.status) {
       navigate(`${PATH_DEFAULT}`)
       setAlertWithDelay({
         status: "success",
-        message: res.data.mongodb.status
+        message: res.data.firebase.status
       });
     }
     else if(res?.data?.firebase?.error) {
@@ -94,7 +95,10 @@ export default function OrderProcessor() {
         /** 12 Divider */
         /** 78 processing details section */
         /** 74 process actions */
-        height={`calc(100vh - 24px - 12px - 78px - 74px)`}>
+        height={`calc(100vh - 24px - 12px - 78px - 74px)`}
+        sx={{
+          overflowY: "scroll"
+        }}>
         {
           processed &&
           processed["order-details"].map(
