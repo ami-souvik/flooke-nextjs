@@ -1,4 +1,4 @@
-import { getTodayFormatted } from '../helperUtils'
+import { getTodayFormatted } from '../helperUtils.ts'
 
 // Template horizontal space: 32 char
 // Item description space: 17 char

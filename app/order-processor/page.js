@@ -8,8 +8,9 @@ import searchAndConnectBt from '../../utils/printUtils/searchAndConnectBt';
 import { PATH_DEFAULT, WRAPPER_BASE_URL } from '../../utils/constantUtils';
 import PrintRoundedIcon from '@mui/icons-material/PrintRounded';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
-import { navigate } from '../../utils/helperUtils';
+import { navigate } from '../../utils/helperUtils.ts';
 import InputDialogCase from '../../context/input-dialog-case';
+import ConfirmOverlay from '../../components/overlays/confirm-overlay';
 import FigureClick from '../../components/form-components/figure-click';
 
 const serviceTypes = ["Dine in", "Takeout", "Delivery", "Zomato", "Swiggy"]
@@ -19,6 +20,7 @@ export default function OrderProcessor() {
   const queryParameters = new URLSearchParams(window.location.search)
   const tableId = queryParameters.get("id")
   const [open, setOpen] = useState(false);
+  const [confirmOpen, confirmProcess] = useState(false);
   const [processed, setProcessed] = useState(null);
   const [serviceType, setServiceType] = useState(serviceTypes[0]);
   const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]);
@@ -45,7 +47,6 @@ export default function OrderProcessor() {
     }
   }
   const _processOrder = async () => {
-    if(!confirm("Are you surely want to process the order?")) return;
     const res = await processOrder({
       "table-number": tableId,
       "payment-type": paymentMethod,
@@ -53,6 +54,7 @@ export default function OrderProcessor() {
       "billed-amount": billedAmount,
       "order-total": processed["order-total"]
     })
+    confirmProcess(false);
     if(res?.data?.mongodb?.status
     || res?.data?.firebase?.status) {
       navigate(`${PATH_DEFAULT}`)
@@ -84,6 +86,13 @@ export default function OrderProcessor() {
         position: "relative",
         padding: "12px 20px"
       }}>
+      <ConfirmOverlay
+        open={confirmOpen}
+        handleClose={() => confirmProcess(false)}
+        title="Process order"
+        message="Are you surely want to process the order?"
+        onSuccess={_processOrder}
+      />
       <InputDialogCase
         isOpen={open}
         handleClose={() => setOpen(false)}
@@ -227,7 +236,7 @@ export default function OrderProcessor() {
           />
           <FigureClick
             icon={<ArrowCircleRightOutlinedIcon htmlColor="var(--white-X00)" />}
-            clickWork={_processOrder}
+            clickWork={() => confirmProcess(true)}
           />
         </Box>
       </Box>

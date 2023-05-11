@@ -10,9 +10,8 @@
 #cs-dashboard-col-2 {
   grid-column-start: 2;
   grid-column-end: 3;
-  padding: 0px 12px;
   height: 100vh;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 /* For desktop: */
@@ -36,9 +35,7 @@
 @media only screen
   and (min-width: 768px) 
   and (max-width: 1200px)  {
-  #cs-dashboard-root {
-    column-gap: 10px;
-  }
+  #cs-dashboard-root {}
   #cs-dashboard-col-1 {
     width: 50vw;
   }

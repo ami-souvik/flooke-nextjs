@@ -17,16 +17,17 @@ const PastOrders = ({ content=[] }) => {
       <Box
         display="flex"
         justifyContent="space-between"
-        alignItems="flex-end">
+        alignItems="flex-end"
+        padding="0px 12px">
         <Typography
-          padding="8px 0px 0px 0px"
+          padding="8px 0px 12px 0px"
           fontSize="1rem"
           fontWeight="100"
           fontFamily="Comme, sans-serif"
         >Past Orders</Typography>
         <Box
           display="flex"
-          padding="2px 0px"
+          padding="12px 0px"
           alignItems="center"
           sx={{
             cursor: "pointer"
@@ -38,10 +39,18 @@ const PastOrders = ({ content=[] }) => {
             fontFamily="Comme, sans-serif">dashboard</Typography>
         </Box>
       </Box>
-      {
-      content?.map((each, index) =>
-        <PastOrderCard key={index} data={each} />
-      )}
+      <Box
+        sx={{
+          height: "calc(100vh - 44px)",
+          padding: "0px 12px",
+          overflowY: "scroll"
+        }}>
+        {
+          content?.map((each, index) =>
+            <PastOrderCard key={index} data={each} />
+          )
+        }
+      </Box>
     </Box>
   )
 }

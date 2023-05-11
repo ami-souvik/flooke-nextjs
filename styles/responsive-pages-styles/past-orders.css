@@ -7,14 +7,12 @@
   .cs-billed-amount-key::after {
     content: "Billed Amount - ";
   }
-  .cs-ordered-date-key::after {
-    content: "Ordered Date -";
-  }
   .cs-past-order-card-left {
     width: 50%;
   }
   .cs-past-order-card-right {
     width: 50%;
+    font-size: 0.8rem;
   }
 }
 
@@ -25,8 +23,13 @@
   }
   .cs-past-order-card-right {
     width: 30%;
-    border: 0.5px solid var(--gray-hard-500);
-    border-radius: 8px;
+  }
+  .cs-past-order-card-right .elements {
     align-self: flex-start;
+    margin: 4px 0px;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    background-color: var(--lightblue-400);
+    color: white;
   }
 }

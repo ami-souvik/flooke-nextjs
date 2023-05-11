@@ -44,3 +44,7 @@ export const getUTCDateLimit = () => {
       formatDate(end.getUTCDate())}T18:30:00.000Z`
   }
 }
+
+export const convertUTCtoLocalDate = (utcString: string): string => {
+  return new Date(utcString).toString().substring(0, 24);
+}

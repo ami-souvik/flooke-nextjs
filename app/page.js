@@ -8,7 +8,7 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import { OPageAction } from '../components/form-components/page-action';
 import { deleteActiveOrder } from '../utils/web/apis/activeOrderApis';
 import { TABLES_MAP, PATH_ORDER_EDITOR, PATH_ORDER_PROCESSOR } from '../utils/constantUtils';
-import { navigate } from '../utils/helperUtils';
+import { navigate } from '../utils/helperUtils.ts';
 import FigureClick from '../components/form-components/figure-click';
 import ConfirmOverlay from '../components/overlays/confirm-overlay';
 

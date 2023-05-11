@@ -133,10 +133,6 @@ export default function OrderEditor() {
   useEffect(() => {
     _readActiveOrder();
   }, [table])
-  useEffect(() => {
-    console.log('details changed');
-    console.log(details);
-  }, [details])
   return (
     <div
       style={{

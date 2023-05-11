@@ -8,7 +8,7 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import { getUTCDateLimit } from "../../utils/helperUtils";
+import { getUTCDateLimit } from "../../utils/helperUtils.ts";
 
 const DashboardCardSm = ({ retrieveApi }) => {
   const [loading, setLoading] = useState(false);
