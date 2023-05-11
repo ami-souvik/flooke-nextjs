@@ -5,10 +5,12 @@ import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "../store/index";
 import DBContext from "../context/context";
 import InputDialogProvider from "../context/input-dialog";
-import '../styles/globals.css'
-import '../styles/font-faces.css'
 import { AlertUI } from "../components/ui-components/flooke-alert";
 import theme from "../styles/theme";
+import '../styles/globals.css'
+import '../styles/font-faces.css'
+import '../styles/responsive-pages-styles/root.css'
+import '../styles/responsive-pages-styles/component.css'
 
 export default function RootLayout({ children }) {
   return (

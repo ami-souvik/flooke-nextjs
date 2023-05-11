@@ -5,11 +5,11 @@ import '../../styles/responsive-pages-styles/past-orders.css';
 
 const PastOrders = ({ content=[] }) => {
   const gotoDashboard = () => {
-    const dashboardCol2 = document.getElementById("cs-dashboard-col-1");
-    dashboardCol2.scrollIntoView({
+    const dashboardCol1 = document.getElementById("cs-dashboard-col-1");
+    dashboardCol1.scrollIntoView({
       behavior:"smooth",
       block: "end",
-      inline:"nearest"
+      inline:"center"
     });
   }
   return (
@@ -40,6 +40,7 @@ const PastOrders = ({ content=[] }) => {
         </Box>
       </Box>
       <Box
+        className="scrollable-div"
         sx={{
           height: "calc(100vh - 44px)",
           padding: "0px 12px",

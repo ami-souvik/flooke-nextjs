@@ -136,7 +136,7 @@ export default function OrderEditor() {
   return (
     <div
       style={{
-        height: "calc(100vh - 48px)",
+        height: "calc(100vh)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -191,10 +191,7 @@ export default function OrderEditor() {
         syncWithDatabase={syncWithDatabase}
       />
       <Box
-        width="calc(100% - 24px)"
-        display="flex"
-        position="absolute"
-        bottom="0px">
+        display="flex">
         <Box
           flexGrow={1}
           padding="4px"

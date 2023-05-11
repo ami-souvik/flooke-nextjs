@@ -94,12 +94,13 @@ export default function ItemEditor() {
           handleClose={() => setFormopen(null)}
         />
       }
-      <Box id="cs-item-editor-root">
+      <Box className="cs-component-root">
         <Box
-          id="cs-item-editor-col-1"
+          className="cs-component-col-1"
           display="flex"
           flexDirection="column"
-          justifyContent="space-between">
+          justifyContent="space-between"
+          position="relative">
           <Box
             /** 12 full screen padding bottom */
             /** 48 item editor actions height */
@@ -108,7 +109,6 @@ export default function ItemEditor() {
               overflowY: "scroll"
             }}>
             <table
-              width={window.innerWidth > 600 ? "600px" : "auto"}
               style={{
                 margin: "8px"
               }}>
@@ -241,7 +241,7 @@ export default function ItemEditor() {
         {
           window.innerWidth > 600 &&
           <Box
-            id="cs-item-editor-col-2"
+            className="cs-component-col-2"
             height="100vh"
             position="relative">
             <Box

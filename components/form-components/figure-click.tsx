@@ -2,13 +2,15 @@ import { IconButton } from "@mui/material"
 
 interface FigureClickProps {
   disabled?: boolean
+  id?: string
   icon: JSX.Element
   padding?: number | string
   clickWork: () => void
 }
 
-const FigureClick = ({ disabled, icon, padding = "16px", clickWork }: FigureClickProps): JSX.Element => (
+const FigureClick = ({ disabled, id, icon, padding = "16px", clickWork }: FigureClickProps): JSX.Element => (
   <IconButton
+    id={id}
     disabled={disabled}
     sx={{
       padding,

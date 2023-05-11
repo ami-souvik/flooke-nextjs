@@ -17,7 +17,7 @@ export const IEPageAction = ({ error, clearError, categoryAdd, itemAdd }) => {
         paddingX="12px"
       >{error}</Typography>
       <Box
-        width={window.innerWidth > 600 ? "600px" : "100%"}
+        width="100%"
         position="absolute"
         bottom="0px"
         display="flex"
@@ -71,6 +71,7 @@ export const OPageAction = ({ clickAction }) => (
     <Box
       padding="4px 0px">
       <FigureClick
+        id="cs-order-editor-open-switch"
         icon={<PostAddOutlinedIcon htmlColor="var(--white-X00)" />}
         padding="12px"
         clickWork={clickAction}

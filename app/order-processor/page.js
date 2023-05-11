@@ -83,8 +83,8 @@ export default function OrderProcessor() {
     <main
       style={{
         height: "100vh",
-        position: "relative",
-        padding: "12px 20px"
+        display: "flex",
+        justifyContent: "center"
       }}>
       <ConfirmOverlay
         open={confirmOpen}
@@ -100,144 +100,147 @@ export default function OrderProcessor() {
         setValue={setBilledAmount}
       />
       <Box
-        /** 24 full screen padding */
-        /** 12 Divider */
-        /** 78 processing details section */
-        /** 74 process actions */
-        height={`calc(100vh - 24px - 12px - 78px - 74px)`}
-        sx={{
-          overflowY: "scroll"
-        }}>
-        {
-          processed &&
-          processed["order-details"].map(
-            eachItem =>
-            <Box
-              key={eachItem["item-unique"]}
-              my="8px"
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between">
-              <Typography
-                fontSize="0.8rem"
-                fontFamily="Comme, sans-serif"
-              >{eachItem["item-name"]}</Typography>
+        className="cs-component-col-1">
+        <Box
+          /** 24 full screen padding */
+          /** 12 Divider */
+          /** 78 processing details section */
+          /** 74 process actions */
+          height={`calc(100vh - 24px - 12px - 78px - 74px)`}
+          sx={{
+            overflowY: "scroll"
+          }}>
+          {
+            processed &&
+            processed["order-details"].map(
+              eachItem =>
               <Box
-                width="100px"
+                key={eachItem["item-unique"]}
+                my="8px"
                 display="flex"
+                alignItems="center"
                 justifyContent="space-between">
+                <Typography
+                  fontSize="0.8rem"
+                  fontFamily="Comme, sans-serif"
+                >{eachItem["item-name"]}</Typography>
                 <Box
+                  width="100px"
                   display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  borderRadius="4px">
-                  <Typography
-                    color="var(--gray-hard-500)"
-                    fontSize="1rem"
-                    fontFamily="Comme, sans-serif"
-                  >{eachItem["item-count"]}</Typography>
-                </Box>
-                <Box
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  padding="0px 8px"
-                  border="1px solid var(--gray-hard-500)"
-                  borderRadius="4px">
-                  <Typography
-                    color="var(--gray-hard-500)"
-                    fontSize="1rem"
-                    fontFamily="Comme, sans-serif"
-                  >{Number(eachItem["item-count"]) * Number(eachItem.price)}</Typography>
+                  justifyContent="space-between">
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    borderRadius="4px">
+                    <Typography
+                      color="var(--gray-hard-500)"
+                      fontSize="1rem"
+                      fontFamily="Comme, sans-serif"
+                    >{eachItem["item-count"]}</Typography>
+                  </Box>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    padding="0px 8px"
+                    border="1px solid var(--gray-hard-500)"
+                    borderRadius="4px">
+                    <Typography
+                      color="var(--gray-hard-500)"
+                      fontSize="1rem"
+                      fontFamily="Comme, sans-serif"
+                    >{Number(eachItem["item-count"]) * Number(eachItem.price)}</Typography>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          )
-        }
-      </Box>
-      <Divider
-        sx={{
-          borderRadius: "1px",
-          marginBottom: "12px"
-        }}
-      />
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        marginBottom="24px">
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-between">
-          <Picker
-            label="Service Type"
-            values={serviceTypes}
-            active={serviceType}
-            setActive={setServiceType}
-          />
-          <Picker
-            label="Payment Method"
-            values={paymentMethods}
-            active={paymentMethod}
-            setActive={setPaymentMethod}
-          />
+            )
+          }
         </Box>
+        <Divider
+          sx={{
+            borderRadius: "1px",
+            marginBottom: "12px"
+          }}
+        />
         <Box
           display="flex"
-          flexDirection="column">
+          justifyContent="space-between"
+          marginBottom="24px">
           <Box
             display="flex"
+            flexDirection="column"
             justifyContent="space-between">
-            <Typography>Sub Total - </Typography>
-            <Typography
-              sx={{
-                width: "80px",
-                textAlign: "right"
-              }}>{processed && processed["order-total"]}</Typography>
+            <Picker
+              label="Service Type"
+              values={serviceTypes}
+              active={serviceType}
+              setActive={setServiceType}
+            />
+            <Picker
+              label="Payment Method"
+              values={paymentMethods}
+              active={paymentMethod}
+              setActive={setPaymentMethod}
+            />
           </Box>
           <Box
             display="flex"
-            justifyContent="space-between">
-            <Typography>Tax (0%) - </Typography>
-            <Typography
-              sx={{
-                width: "80px",
-                textAlign: "right"
-              }}>0.00</Typography>
-          </Box>
-          <Box
-            display="flex"
-            justifyContent="space-between">
-            <Typography>Total -</Typography>
+            flexDirection="column">
             <Box
-              onClick={() => setOpen(true)}
-              sx={{
-                width: "80px",
-                textAlign: "right",
-                borderBottom: "1px solid var(--gray-hard-500)",
-              }}>
-              <Typography textAlign="right">{billedAmount}</Typography>
+              display="flex"
+              justifyContent="space-between">
+              <Typography>Sub Total - </Typography>
+              <Typography
+                sx={{
+                  width: "80px",
+                  textAlign: "right"
+                }}>{processed && processed["order-total"]}</Typography>
+            </Box>
+            <Box
+              display="flex"
+              justifyContent="space-between">
+              <Typography>Tax (0%) - </Typography>
+              <Typography
+                sx={{
+                  width: "80px",
+                  textAlign: "right"
+                }}>0.00</Typography>
+            </Box>
+            <Box
+              display="flex"
+              justifyContent="space-between">
+              <Typography>Total -</Typography>
+              <Box
+                onClick={() => setOpen(true)}
+                sx={{
+                  width: "80px",
+                  textAlign: "right",
+                  borderBottom: "1px solid var(--gray-hard-500)",
+                }}>
+                <Typography textAlign="right">{billedAmount}</Typography>
+              </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
-      <Box
-        display="flex"
-        justifyContent="flex-end">
         <Box
           display="flex"
-          alignItems="flex-end">
-          <FigureClick
-            icon={<PrintRoundedIcon htmlColor="var(--white-X00)" />}
-            clickWork={() => parent.window.postMessage({
-              method: "print",
-              content: processed
-            }, WRAPPER_BASE_URL)}
-          />
-          <FigureClick
-            icon={<ArrowCircleRightOutlinedIcon htmlColor="var(--white-X00)" />}
-            clickWork={() => confirmProcess(true)}
-          />
+          justifyContent="flex-end">
+          <Box
+            display="flex"
+            alignItems="flex-end">
+            <FigureClick
+              icon={<PrintRoundedIcon htmlColor="var(--white-X00)" />}
+              clickWork={() => parent.window.postMessage({
+                method: "print",
+                content: processed
+              }, WRAPPER_BASE_URL)}
+            />
+            <FigureClick
+              icon={<ArrowCircleRightOutlinedIcon htmlColor="var(--white-X00)" />}
+              clickWork={() => confirmProcess(true)}
+            />
+          </Box>
         </Box>
       </Box>
     </main>

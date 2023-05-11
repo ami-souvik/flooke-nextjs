@@ -13,18 +13,20 @@ export default function Dashboard() {
     dashboardCol2.scrollIntoView({
       behavior:"smooth",
       block: "end",
-      inline:"nearest"
+      inline:"center"
     });
   }
   return (
     <main
       style={{
-        position: "relative",
-        overflowX: "scroll"
+        position: "relative"
       }}>
-      <Box id="cs-dashboard-root">
+      <Box
+        id="cs-dashboard-root"
+        className="cs-component-root">
         <Box
           id="cs-dashboard-col-1"
+          className="cs-component-col-1"
           display="flex"
           flexDirection="column">
           <Box
@@ -45,7 +47,9 @@ export default function Dashboard() {
             />
           </Box>
         </Box>
-        <Box id="cs-dashboard-col-2">
+        <Box
+          id="cs-dashboard-col-2"
+          className="cs-component-col-2">
           <PastOrders content={pastOrders} />
         </Box>
       </Box>
