@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
-import InputDialogCase from "../../context/input-dialog-case";
+import InputDialogCase from "./input-dialog-case";
 
 const TypeIn = ({ value, setValue }) => {
   const [open, setOpen] = useState(false);

@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Box, Typography, IconButton } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Counter from "../form-components/sm-counter";
-import InputDialogCase from "../../context/input-dialog-case";
+import InputDialogCase from "../form-components/input-dialog-case";
 
 interface PreviewCardLineProps {
   added: boolean

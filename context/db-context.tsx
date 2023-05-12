@@ -6,10 +6,10 @@ import { DATABASE } from "../utils/constantUtils";
 
 export const FirebaseRealtimeDB = createContext(null);
 
-const DBContext = ({ children }) => {
+const DatabaseProvider = ({ children }) => {
   initializeApp(config);
   const db = getDatabase();
-  const [orders, setOrders] = useState(null);
+  const [orders, setOrders] = useState({});
 
   useEffect(() => {
     onValue(ref(
@@ -29,4 +29,4 @@ const DBContext = ({ children }) => {
   );
 }
 
-export default DBContext;
+export default DatabaseProvider;

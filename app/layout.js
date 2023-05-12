@@ -3,8 +3,8 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from "@mui/material";
 import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "../store/index";
-import DBContext from "../context/context";
-import InputDialogProvider from "../context/input-dialog";
+import ConstraintProvider from "../context/constaint-context";
+import DatabaseProvider from "../context/db-context";
 import { AlertUI } from "../components/ui-components/flooke-alert";
 import theme from "../styles/theme";
 import '../styles/globals.css'
@@ -23,14 +23,14 @@ export default function RootLayout({ children }) {
       <body>
         <Provider store={store}>
           <PersistGate persistor={persistor}>
-            <DBContext>
-              <InputDialogProvider>
+            <ConstraintProvider>
+              <DatabaseProvider>
                 <ThemeProvider theme={theme}>
                   <AlertUI />
                   {children}
                 </ThemeProvider>
-              </InputDialogProvider>
-            </DBContext>
+              </DatabaseProvider>
+            </ConstraintProvider>
           </PersistGate>
         </Provider>
       </body>

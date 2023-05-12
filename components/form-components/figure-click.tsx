@@ -2,20 +2,21 @@ import { IconButton } from "@mui/material"
 
 interface FigureClickProps {
   disabled?: boolean
+  invert?: boolean
   id?: string
   icon: JSX.Element
   padding?: number | string
-  clickWork: () => void
+  clickWork?: () => void
 }
 
-const FigureClick = ({ disabled, id, icon, padding = "16px", clickWork }: FigureClickProps): JSX.Element => (
+const FigureClick = ({ disabled, invert, id, icon, padding = "16px", clickWork=null }: FigureClickProps): JSX.Element => (
   <IconButton
     id={id}
     disabled={disabled}
     sx={{
       padding,
       marginX: "2px",
-      bgcolor: "var(--gray-hard-500)",
+      bgcolor: invert ? "transparent" : "var(--gray-hard-500)",
       borderRadius: "0",
       "&:hover": {
         backgroundColor: "var(--gray-hard-500)",

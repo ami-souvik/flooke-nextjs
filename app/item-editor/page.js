@@ -1,11 +1,11 @@
 "use client"
-import { useEffect, useState } from "react";
-import { Box, IconButton, InputBase, Typography, Button } from "@mui/material";
+import { useEffect, useState, useContext } from "react";
+import { Box, Typography, Button } from "@mui/material";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import FigureClick from "../../components/form-components/figure-click";
+import { ConstraintContext } from "../../context/constaint-context";
 import { getAllCategories } from "../../utils/web/apis/categoryApis";
 import { addCategory, deleteItemFromCategory, bulkImportCategories } from "../../utils/web/apis/categoryApis";
 import { IEPageAction } from "../../components/form-components/page-action";
@@ -14,6 +14,7 @@ import '../../styles/responsive-pages-styles/item-editor.css';
 import ConfirmOverlay from "../../components/overlays/confirm-overlay";
 
 export default function ItemEditor() {
+  const { windowWidth } = useContext(ConstraintContext);
   const [edibles, setEdibles] = useState([]);
   const [error, setError] = useState(null);
   const [formopen, setFormopen] = useState(null);
@@ -94,7 +95,9 @@ export default function ItemEditor() {
           handleClose={() => setFormopen(null)}
         />
       }
-      <Box className="cs-component-root">
+      <Box
+        width="100vw"
+        className="cs-component-root">
         <Box
           className="cs-component-col-1"
           display="flex"
@@ -104,7 +107,7 @@ export default function ItemEditor() {
           <Box
             /** 12 full screen padding bottom */
             /** 48 item editor actions height */
-            height={`calc(100vh - 12px - 48px${error ? " - 24px" : ""})`}
+            height={`calc(100vh${error ? " - 24px" : ""})`}
             sx={{
               overflowY: "scroll"
             }}>
@@ -148,13 +151,15 @@ export default function ItemEditor() {
                   edibles &&
                   edibles.map((each, index) =>
                     <>
-                      <tr key={each.name}>
+                      <tr
+                        key={each.name}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => toggleEdibles(index)}>
                         <td>
                           <Box
                             display="flex"
                             justifyContent="center"
-                            alignItems="center"
-                            onClick={() => toggleEdibles(index)}>
+                            alignItems="center">
                             {
                               each.expanded ? <RemoveOutlinedIcon />
                               : <AddOutlinedIcon />
@@ -239,7 +244,7 @@ export default function ItemEditor() {
           />
         </Box>
         {
-          window.innerWidth > 600 &&
+          windowWidth > 600 &&
           <Box
             className="cs-component-col-2"
             height="100vh"

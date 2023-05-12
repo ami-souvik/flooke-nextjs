@@ -10,7 +10,7 @@ import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceW
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import { getUTCDateLimit } from "../../utils/helperUtils.ts";
 
-const DashboardCardSm = ({ retrieveApi }) => {
+const OrderCardSm = ({ retrieveApi }) => {
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState(null);
   const _retrieveApi = async () => {
@@ -93,7 +93,7 @@ const DashboardCardSm = ({ retrieveApi }) => {
   )
 }
 
-const DashboardCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
+const OrderCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState(null);
   const [openCalender, setOpenCalender] = useState(null);
@@ -235,16 +235,17 @@ const DashboardCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
   )
 }
 
-const DashboardCard = ({
+const DashboardOrderCard = ({
   setPastOrders,
   retrieveApi,
   gotoOrders
 }) => (
   <Box
+    m="6px 0px"
     display="flex">
-    <DashboardCardSm retrieveApi={retrieveApi} />
+    <OrderCardSm retrieveApi={retrieveApi} />
     <Box width="12px"/>
-    <DashboardCardFull
+    <OrderCardFull
       setPastOrders={setPastOrders}
       retrieveApi={retrieveApi}
       gotoOrders={gotoOrders}
@@ -252,4 +253,4 @@ const DashboardCard = ({
   </Box>
 )
 
-export default DashboardCard;
+export default DashboardOrderCard;

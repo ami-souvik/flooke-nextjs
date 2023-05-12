@@ -1,13 +1,16 @@
 "use client"
-import { useState } from "react";
-import { Box, Typography } from "@mui/material";
-import DashboardCard from "../../components/ui-components/dashboard-card";
+import { useEffect, useState } from "react";
+import { Box, Skeleton, IconButton, Typography } from "@mui/material";
+import DashboardOrderCard from "../../components/dashboard/dashboard-order-card";
+import DashboardGuestCard from "../../components/dashboard/dashboard-guest-card";
 import PastOrders from "../../components/past-orders/past-orders";
 import { filterProcessedOrderByDate } from '../../utils/web/apis/processedOrderFilterApis';
+import { getAllGuestDetails } from '../../utils/web/apis/guestDetailsApis';
 import '../../styles/responsive-pages-styles/dashboard.css';
 
 export default function Dashboard() {
   const [pastOrders, setPastOrders] = useState([]);
+  const [guestDetails, setGuestDetails] = useState([]);
   const gotoOrders = () => {
     const dashboardCol2 = document.getElementById("cs-dashboard-col-2");
     dashboardCol2.scrollIntoView({
@@ -40,9 +43,14 @@ export default function Dashboard() {
               fontFamily="Comme, sans-serif"
               textAlign="right"
             >Good Evening, BOSS!</Typography>
-            <DashboardCard
+            <DashboardOrderCard
               setPastOrders={setPastOrders}
               retrieveApi={filterProcessedOrderByDate}
+              gotoOrders={gotoOrders}
+            />
+            <DashboardGuestCard
+              setPastOrders={setGuestDetails}
+              retrieveApi={getAllGuestDetails}
               gotoOrders={gotoOrders}
             />
           </Box>
