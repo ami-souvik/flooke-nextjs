@@ -26,7 +26,7 @@ export default function ItemDrawer({ addItem, syncWithDatabase }: ItemDrawerProp
     setLoading(true);
     const res = await getAllCategories();
     if(res?.data?.mongodb?.content) {
-      setLoading(false)
+      setLoading(false);
       setEdibles(res.data.mongodb.content);
       setCategory(res.data.mongodb.content[0]);
     }
@@ -81,6 +81,7 @@ export default function ItemDrawer({ addItem, syncWithDatabase }: ItemDrawerProp
     {
       loading ?
       <Box
+        height="calc(50vh - 16px)"
         display="flex"
         flexDirection="column"
         justifyContent="space-between">
@@ -91,7 +92,6 @@ export default function ItemDrawer({ addItem, syncWithDatabase }: ItemDrawerProp
           <Skeleton variant="text" sx={{ fontSize: '1rem' }} height={40} />
           <Skeleton variant="text" sx={{ fontSize: '1rem' }} height={40} />
         </Box>
-        <Skeleton variant="rounded" height={60} />
       </Box> :
       <>
         <Drawer
