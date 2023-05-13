@@ -15,6 +15,8 @@ const DatabaseProvider = ({ children }) => {
     onValue(ref(
       db, `collections/${DATABASE}/active-orders`
     ), (snapshot) => {
+      console.log(orders);
+      
       const data = snapshot.val();
       if(data) setOrders({});
       setOrders(data);
