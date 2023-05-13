@@ -61,13 +61,21 @@ const OrderCardSm = ({ retrieveApi }) => {
           fontWeight="100"
           fontSize="0.8rem"
           fontFamily="Comme, sans-serif">{`Orders`}</Typography>
-        <Typography
-          padding="0px 4px"
-          border="0.5px solid var(--gray-hard-500)"
-          borderRadius="4px"
-          fontWeight="600"
-          fontSize="0.8rem"
-          fontFamily="Comme, sans-serif">{content?.orderCount}</Typography>
+        {
+          loading ?
+          <Skeleton
+            variant="rounded"
+            width={18}
+            height={20.2}
+          /> :
+          <Typography
+            padding="0px 4px"
+            border="0.5px solid var(--gray-hard-500)"
+            borderRadius="4px"
+            fontWeight="600"
+            fontSize="0.8rem"
+            fontFamily="Comme, sans-serif">{content?.orderCount}</Typography>
+        }
       </Box>
       {
         loading ?

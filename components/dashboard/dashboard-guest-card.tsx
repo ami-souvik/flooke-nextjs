@@ -12,7 +12,7 @@ import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import { getUTCDateLimit } from "../../utils/helperUtils.ts";
 
 const GuestCardSm = ({ retrieveApi }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [content, setContent] = useState(null);
   const _retrieveApi = async () => {
     setLoading(true);
@@ -56,19 +56,27 @@ const GuestCardSm = ({ retrieveApi }) => {
           fontWeight="100"
           fontSize="0.8rem"
           fontFamily="Comme, sans-serif">{`Guests Acquired`}</Typography>
-        <Typography
-          padding="0px 4px"
-          border="0.5px solid var(--gray-hard-500)"
-          borderRadius="4px"
-          fontWeight="600"
-          fontSize="0.8rem"
-          fontFamily="Comme, sans-serif">{content?.guestCount}</Typography>
+        {
+          loading ?
+          <Skeleton
+            variant="rounded"
+            width={18}
+            height={20.2}
+          /> :
+          <Typography
+            padding="0px 4px"
+            border="0.5px solid var(--gray-hard-500)"
+            borderRadius="4px"
+            fontWeight="600"
+            fontSize="0.8rem"
+            fontFamily="Comme, sans-serif">{content?.guestCount}</Typography>
+        }
       </Box>
     </Box>
   )
 }
 
-const GuestCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
+const GuestCardFull = ({ setGuestDetails, retrieveApi, gotoOrders }) => {
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState(null);
   const [openCalender, setOpenCalender] = useState(null);
@@ -77,6 +85,7 @@ const GuestCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
   const _retrieveApi = async () => {
     const response = await retrieveApi();
     retrieveApi(response.data.mongodb.content);
+    setGuestDetails(response.data.mongodb.content);
   }
   useEffect(() => {
     _retrieveApi();
@@ -198,7 +207,7 @@ const GuestCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
 }
 
 const DashboardGuestCard = ({
-  setPastOrders,
+  setGuestDetails,
   retrieveApi,
   gotoOrders
 }) => (
@@ -208,7 +217,7 @@ const DashboardGuestCard = ({
     <GuestCardSm retrieveApi={retrieveApi} />
     <Box width="12px"/>
     <GuestCardFull
-      setPastOrders={setPastOrders}
+      setGuestDetails={setGuestDetails}
       retrieveApi={retrieveApi}
       gotoOrders={gotoOrders}
     />
