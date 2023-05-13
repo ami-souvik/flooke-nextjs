@@ -16,6 +16,7 @@ const DatabaseProvider = ({ children }) => {
       db, `collections/${DATABASE}/active-orders`
     ), (snapshot) => {
       const data = snapshot.val();
+      if(data) setOrders({});
       setOrders(data);
     });
   }, []);
