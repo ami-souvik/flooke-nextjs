@@ -6,16 +6,25 @@ interface FigureClickProps {
   id?: string
   icon: JSX.Element
   padding?: number | string
+  margin?: number | string
   clickWork?: () => void
 }
 
-const FigureClick = ({ disabled, invert, id, icon, padding = "16px", clickWork=null }: FigureClickProps): JSX.Element => (
+const FigureClick = ({
+  disabled,
+  invert,
+  id,
+  icon,
+  padding = "16px",
+  margin = "0px",
+  clickWork=null
+}: FigureClickProps): JSX.Element => (
   <IconButton
     id={id}
     disabled={disabled}
     sx={{
       padding,
-      marginX: "2px",
+      margin,
       bgcolor: invert ? "transparent" : "var(--gray-hard-500)",
       borderRadius: "0",
       "&:hover": {

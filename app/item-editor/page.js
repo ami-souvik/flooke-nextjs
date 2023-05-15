@@ -111,10 +111,7 @@ export default function ItemEditor() {
             sx={{
               overflowY: "scroll"
             }}>
-            <table
-              style={{
-                margin: "8px"
-              }}>
+            <table>
               <thead>
                 <tr>
                   <td>

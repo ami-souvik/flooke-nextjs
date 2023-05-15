@@ -6,12 +6,12 @@ import FigureClick from "../form-components/figure-click";
 import { TABLES_MAP, PATH_ORDER_EDITOR, PATH_ORDER_PROCESSOR } from "../../utils/constantUtils";
 import { navigate } from '../../utils/helperUtils.ts';
 
-interface ManagerViewProps {
+interface StewardViewProps {
   orders: object
   confirmDelete: (v: string) => void
 }
 
-const ManagerView = ({ orders={}, confirmDelete }: ManagerViewProps): JSX.Element => 
+const StewardView = ({ orders={}, confirmDelete }: StewardViewProps): JSX.Element => 
   <>
   {
     orders &&
@@ -54,7 +54,6 @@ const ManagerView = ({ orders={}, confirmDelete }: ManagerViewProps): JSX.Elemen
                       fontFamily="Comme, sans-serif"
                       border="0.5px solid #000"
                       borderRadius="4px"
-                      bgcolor="var(--primary-yellow)"
                     >{eachItem.comment}</Typography>
                   }
                 </Box>
@@ -80,19 +79,16 @@ const ManagerView = ({ orders={}, confirmDelete }: ManagerViewProps): JSX.Elemen
               id="cs-order-editor-go-switch"
               icon={<NoteAltOutlinedIcon htmlColor="var(--white-X00)" />}
               padding="12px"
-              margin="0px 2px"
               clickWork={() => navigate(`${PATH_ORDER_EDITOR}?id=${orders[key]["table-number"]}`)}
             />
             <FigureClick
               icon={<DeleteOutlineRoundedIcon htmlColor="var(--white-X00)" />}
               padding="12px"
-              margin="0px 2px"
               clickWork={() => confirmDelete(key)}
             />
             <FigureClick
               icon={<DescriptionOutlinedIcon htmlColor="var(--white-X00)" />}
               padding="12px"
-              margin="0px 2px"
               clickWork={() => navigate(`${PATH_ORDER_PROCESSOR}?id=${orders[key]["table-number"]}`)}
             />
           </Box>
@@ -102,4 +98,4 @@ const ManagerView = ({ orders={}, confirmDelete }: ManagerViewProps): JSX.Elemen
   }
   </>
 
-export default ManagerView;
+export default StewardView;

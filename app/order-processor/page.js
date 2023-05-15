@@ -230,6 +230,7 @@ export default function OrderProcessor() {
             alignItems="flex-end">
             <FigureClick
               icon={<PrintRoundedIcon htmlColor="var(--white-X00)" />}
+              margin="0px 4px"
               clickWork={() => parent.window.postMessage({
                 method: "print",
                 content: processed

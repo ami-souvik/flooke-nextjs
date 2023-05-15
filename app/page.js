@@ -6,6 +6,8 @@ import { OPageAction } from '../components/form-components/page-action';
 import { deleteActiveOrder } from '../utils/web/apis/activeOrderApis';
 import OrderEditor from './order-editor/page';
 import ManagerView from '../components/orders/manager-view';
+import ChefView from '../components/orders/chef-view';
+import StewardView from '../components/orders/steward-view';
 import ConfirmOverlay from '../components/overlays/confirm-overlay';
 import { navigate } from '../utils/helperUtils.ts';
 import { PATH_ORDER_EDITOR } from '../utils/constantUtils';
@@ -39,7 +41,9 @@ export default function Home() {
               overflowY: "scroll",
               padding: "0px"
             }}>
-            <ManagerView orders={orders}/>
+            {activeView === 0 && <ChefView orders={orders}/>}
+            {activeView === 1 && <ManagerView orders={orders}/>}
+            {activeView === 2 && <StewardView orders={orders}/>}
           </Box>
           <OPageAction
             activeView={activeView}
