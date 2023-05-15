@@ -14,6 +14,7 @@ interface ManagerViewProps {
 const ManagerView = ({ orders={}, confirmDelete }: ManagerViewProps): JSX.Element => 
   <>
   {
+    orders &&
     Object.keys(orders).map((key, index) => (
       <Box
         key={index}
