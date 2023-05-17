@@ -13,6 +13,7 @@ interface ChefViewProps {
 
 const ChefView = ({ orders={} }: ChefViewProps): JSX.Element => {
   const [group, setGroup] = useState(orders || {});
+  if(!orders) return null;
   const _handleServe = async (what, tableIndex, itemIndex) => {
     const tableOrder = JSON.parse(JSON.stringify(orders[tableIndex]))
     if(!tableOrder || !tableOrder["order-details"] || !tableOrder["order-details"][itemIndex]) 
