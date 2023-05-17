@@ -164,30 +164,8 @@ const GuestCardFull = ({ setGuestDetails, retrieveApi, gotoOrders }) => {
       </Box>
       <Box
         display="flex"
+        justifyContent="flex-end"
         alignItems="flex-end">
-        <Box
-          width="100%">
-          {
-            loading ?
-            <Skeleton variant="rounded" height={21.5} /> :
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center">
-              <Typography
-                paddingLeft="3px"
-                fontWeight="600"
-                fontSize="0.9rem"
-                fontFamily="Comme, sans-serif">Rs. </Typography>
-              <Typography
-                paddingRight="3px"
-                fontWeight="600"
-                fontSize="0.9rem"
-                textAlign="right"
-                fontFamily="Comme, sans-serif">{content?.totalBusiness}</Typography>
-            </Box>
-          }
-        </Box>
         <Box
           display="flex"
           alignItems="center"
@@ -198,7 +176,7 @@ const GuestCardFull = ({ setGuestDetails, retrieveApi, gotoOrders }) => {
           onClick={gotoOrders}>
           <Typography
             fontSize="0.8rem"
-            fontFamily="Comme, sans-serif">orders</Typography>
+            fontFamily="Comme, sans-serif">guest details</Typography>
           <ChevronRightOutlinedIcon fontSize="small"/>
         </Box>
       </Box>

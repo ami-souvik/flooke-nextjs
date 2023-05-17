@@ -1,12 +1,12 @@
 "use client"
 import { useEffect, useState } from 'react';
 import { Box, Divider, InputBase, Typography } from '@mui/material';
+import PrintRoundedIcon from '@mui/icons-material/PrintRounded';
+import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import { setAlertWithDelay } from '../../store/services/uiServices';
 import { previewProcessOrder, processOrder } from '../../utils/web/apis/processOrderApis';
 import Picker from '../../components/form-components/picker';
 import { PATH_DEFAULT, WRAPPER_BASE_URL } from '../../utils/constantUtils';
-import PrintRoundedIcon from '@mui/icons-material/PrintRounded';
-import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import { navigate } from '../../utils/helperUtils.ts';
 import InputDialogCase from '../../components/form-components/input-dialog-case';
 import ConfirmOverlay from '../../components/overlays/confirm-overlay';
@@ -78,6 +78,9 @@ export default function OrderProcessor() {
   useEffect(() => {
     _readPreviewProcessed();
   }, [])
+  useEffect(() => {
+    console.log(processed);
+  }, [processed])
   return (
     <main
       style={{

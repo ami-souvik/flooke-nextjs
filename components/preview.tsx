@@ -38,7 +38,11 @@ export default function Preview({
                     flexDirection: "column",
                   }}>
                   <p>{data[cat][item].count} x {item}</p>
-                  {data[cat][item].comment && <p style={{ backgroundColor: '#57C5B6' }}>{data[cat][item].comment}</p>}
+                  {data[cat][item].comment && <p
+                    style={{
+                      lineHeight: "0.8rem",
+                      backgroundColor: '#57C5B6'
+                    }}>{data[cat][item].comment}</p>}
                 </div>
               </ListItemButton>
             </ListItem>

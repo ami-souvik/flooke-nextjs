@@ -36,13 +36,13 @@ export default function Home() {
           sx={{ position: "relative" }}>
           <Box
             className="scrollable-div"
-            height="calc(100vh - 40px)"
+            height="calc(100vh - 48px)"
             sx={{
               overflowY: "scroll",
               padding: "0px"
             }}>
             {activeView === 0 && <ChefView orders={orders}/>}
-            {activeView === 1 && <ManagerView orders={orders}/>}
+            {activeView === 1 && <ManagerView orders={orders} confirmDelete={confirmDelete} />}
             {activeView === 2 && <StewardView orders={orders}/>}
           </Box>
           <OPageAction

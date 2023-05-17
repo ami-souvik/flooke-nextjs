@@ -52,7 +52,10 @@ export const IEPageAction = ({ error, clearError, categoryAdd, itemAdd }) => {
           icon={<AddOutlinedIcon htmlColor="var(--white-X00)" />}
           padding="12px"
           margin="0px 4px"
-          clickWork={categoryAdd}
+          clickWork={() => {
+            categoryAdd(value)
+            setValue(null)
+          }}
         />
         <FigureClick
           icon={<PostAddOutlinedIcon htmlColor="var(--white-X00)" />}

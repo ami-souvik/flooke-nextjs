@@ -58,12 +58,16 @@ export default function PreviewCardLine({
           {
             itemComment &&
             <Typography
+              lineHeight="0.9rem"
+              padding="6px"
+              margin="4px 8px 4px -4px"
               fontSize="0.8rem"
-              padding="0px 4px"
-              margin="0px 4px"
-              bgcolor="var(--white-X00)"
-              border="0.5px solid #000"
+              fontFamily="DM Sans, sans-serif"
+              fontStyle="italic"
               borderRadius="4px"
+              boxShadow="0px 0px 8px var(--gray-subtle-500)"
+              color="var(--white-X00)"
+              bgcolor="var(--lightblue-400)"
             >{itemComment}</Typography>
           }
         </Box>

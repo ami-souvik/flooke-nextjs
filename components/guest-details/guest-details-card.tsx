@@ -7,7 +7,7 @@ const GuestDetailsCard = ({ data = {} }) => {
   return (
     <>
       <Typography
-        fontSize="0.8rem">{convertUTCtoLocalDate(data["created-date"])}</Typography>
+        fontSize="0.8rem">{convertUTCtoLocalDate(data["created-at"])}</Typography>
       <Box
         width="100%"
         display="flex"
@@ -16,7 +16,7 @@ const GuestDetailsCard = ({ data = {} }) => {
         borderRadius="20px"
         boxShadow="0px 0px 8px var(--gray-subtle-500)">
         <Box
-          className="cs-past-order-card-left"
+          width="100%"
           padding="0px 5px">
           <Box
             display="flex"
@@ -35,24 +35,28 @@ const GuestDetailsCard = ({ data = {} }) => {
               fontWeight="600"
               fontSize="0.8rem"
               fontFamily="Comme, sans-serif">{data["phone-number"]}</Typography>
-            {data["is-whatsapp"] ? (
-              <CheckBoxIcon
-                fontSize="small"
-                htmlColor="var(--lightblue-400)"
-              />
-            ) : (
-              <CheckBoxOutlineBlankIcon
-                fontSize="small"
-                htmlColor="var(--lightblue-400)"
-              />
-            )}
-            {/* <Typography
-              padding="0px 4px"
-              border="0.5px solid var(--gray-hard-500)"
-              borderRadius="4px"
-              fontWeight="600"
-              fontSize="0.8rem"
-              fontFamily="Comme, sans-serif">{data["is-whatsapp"]}</Typography> */}
+            <Box
+              display="flex">
+              {data["is-whatsapp"] ? (
+                <CheckBoxIcon
+                  fontSize="small"
+                  htmlColor="var(--lightblue-400)"
+                />
+              ) : (
+                <CheckBoxOutlineBlankIcon
+                  fontSize="small"
+                  htmlColor="var(--lightblue-400)"
+                />
+              )}
+              <Typography
+                padding="0px 4px"
+                borderRadius="4px"
+                fontWeight="600"
+                fontSize="0.8rem"
+                fontFamily="Comme, sans-serif">
+                Is whatsapp?
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Box>

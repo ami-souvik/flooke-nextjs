@@ -26,8 +26,7 @@ export const navigate = (path) => {
   parent.window.postMessage({
     method: "navigate",
     content: path
-  }, WRAPPER_BASE_URL)
-  // window.open(path, '_self');
+  }, WRAPPER_BASE_URL);
 }
 
 const formatDate = (v) => Number(v) > 9 ? `${v}` : `0${v}`

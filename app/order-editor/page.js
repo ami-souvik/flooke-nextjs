@@ -30,7 +30,8 @@ export default function OrderEditor() {
   const forceUpdate = useCallback(() => updateState({}), []);
   const setItemCount = (item, count) => {
     const {
-      "item-unique": itemUnique
+      "item-unique": itemUnique,
+      "served-count": servedCount
     } = item;
     const _details = {...details}
     if(_details[itemUnique]) {
@@ -40,6 +41,7 @@ export default function OrderEditor() {
       _details[itemUnique] = {
         "category-name": item["category-name"],
         "item-count": count,
+        "served-count": servedCount ? servedCount : 0,
         "item-name": item.name,
         price: item.price,
       }
@@ -48,6 +50,7 @@ export default function OrderEditor() {
   }
   const addItem = (item) => {
     const {
+      "served-count": servedCount,
       "unique": itemUnique,
       "selling-cost": price
     } = item;
@@ -59,6 +62,7 @@ export default function OrderEditor() {
       _details[itemUnique] = {
         "category-name": item["category-name"],
         "item-count": 1,
+        "served-count": servedCount ? servedCount : 0,
         "item-name": item.name,
         "item-unique": item.unique,
         price

@@ -30,7 +30,6 @@ export default function ItemEditor() {
     setEdibles(ediblesClone);
   }
   const _addCategory = async value => {
-    if(value) setError("Category name cannot be blank");
     const res = await addCategory({ name: value })
     if(res?.data?.mongodb?.error) {
       setError(res.data.mongodb.error);
@@ -184,16 +183,16 @@ export default function ItemEditor() {
                               style={{
                                 borderRadius: "8px",
                                 boxShadow: "0px 0px 8px var(--gray-subtle-500)"
-                              }}>
+                              }}
+                              onClick={() => setFormopen({
+                                ...eachItem,
+                                index
+                              })}>
                               <td>
                                 <Box
                                   display="flex"
                                   justifyContent="center"
-                                  alignItems="center"
-                                  onClick={() => setFormopen({
-                                    ...eachItem,
-                                    index
-                                  })}>
+                                  alignItems="center">
                                   <InfoOutlinedIcon
                                     fontSize="small"
                                     htmlColor="var(--gray-hard-X00)"

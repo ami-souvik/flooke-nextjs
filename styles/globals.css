@@ -45,6 +45,7 @@
 
   /** Theme colors */
   --white-X00: #FFF;
+  --white-900: #F8F6F4;
   --white-800: #EAEAEA;
   --black-500: #666;
   --black-X00: #000;
@@ -59,6 +60,7 @@
   --red-hard-500: #FC1717;
   --red-subtle-500: #FA9884;
   --yellow-subtle-200: #FCFFB2;
+  --yellow-subtle-900: #FFD95A;
   --green-subtle-400: #98D8AA;
 }
 
@@ -121,8 +123,7 @@ body {
 }
 
 @media only screen
-  and (min-width: 1200px) 
-  and (max-width: 1600px) {
+  and (min-width: 1200px) {
   main {
     display: flex;
     justify-content: center;
