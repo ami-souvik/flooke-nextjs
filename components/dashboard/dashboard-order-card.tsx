@@ -106,7 +106,7 @@ const OrderCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState(null);
   const [openCalender, setOpenCalender] = useState(null);
-  const [from, setFrom] = useState(new Date(Date.now()-(24*60*60*1000)));
+  const [from, setFrom] = useState(new Date());
   const [end, setEnd] = useState(new Date());
   const _retrieveApi = async () => {
     if(!from || !end) return;

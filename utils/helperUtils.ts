@@ -32,15 +32,14 @@ export const navigate = (path) => {
 export const formatDate = (v) => Number(v) > 9 ? `${v}` : `0${v}`
 
 export const getUTCDateLimit = () => {
-  const from = new Date(Date.now()-(24*60*60*1000));
-  const end = new Date();
+  const from = new Date();
   return {
     "from-date": `${from.getFullYear()}-${
       formatDate(from.getMonth()+1)}-${
       formatDate(from.getDate())}T00:00:00.000Z`,
-    "to-date": `${end.getUTCFullYear()}-${
-      formatDate(end.getMonth()+1)}-${
-      formatDate(end.getDate())}T00:00:00.000Z`
+    "to-date": `${from.getUTCFullYear()}-${
+      formatDate(from.getMonth()+1)}-${
+      formatDate(from.getDate())}T23:59:59.999Z`
   }
 }
 
