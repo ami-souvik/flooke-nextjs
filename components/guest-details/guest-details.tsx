@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import GuestDetailsCard from "./guest-details-card";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import GuestDetailsCard from "./guest-details-card";
 import '../../styles/responsive-pages-styles/past-orders.css';
 
 const GuestDetails = ({ content=[] }) => {

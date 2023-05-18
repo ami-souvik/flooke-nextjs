@@ -49,7 +49,7 @@ export const IEPageAction = ({ error, clearError, categoryAdd, itemAdd }) => {
           <Typography>{value}</Typography>
         </Box>
         <FigureClick
-          icon={<AddOutlinedIcon htmlColor="var(--white-X00)" />}
+          Icon={(props) => <AddOutlinedIcon {...props} />}
           padding="12px"
           margin="0px 4px"
           clickWork={() => {
@@ -58,7 +58,7 @@ export const IEPageAction = ({ error, clearError, categoryAdd, itemAdd }) => {
           }}
         />
         <FigureClick
-          icon={<PostAddOutlinedIcon htmlColor="var(--white-X00)" />}
+          Icon={(props) => <PostAddOutlinedIcon {...props} />}
           padding="12px"
           clickWork={itemAdd}
         />
@@ -85,8 +85,8 @@ export const OPageAction = ({ activeView, setActiveView, clickAction }) => (
         padding="6px"
         onClick={() => setActiveView(0)}>
         <FigureClick
+          Icon={() => <WhatshotRoundedIcon htmlColor={activeView !== 0 ? "var(--gray-hard-500)" : "var(--white-X00)"} />}
           invert={activeView !== 0}
-          icon={<WhatshotRoundedIcon htmlColor={activeView !== 0 ? "var(--gray-hard-500)" : "var(--white-X00)"} />}
           padding="6px"
         />
       </Box>
@@ -94,8 +94,8 @@ export const OPageAction = ({ activeView, setActiveView, clickAction }) => (
         padding="6px"
         onClick={() => setActiveView(1)}>
         <FigureClick
+          Icon={() => <ManageAccountsRoundedIcon htmlColor={activeView !== 1 ? "var(--gray-hard-500)" : "var(--white-X00)"} />}
           invert={activeView !== 1}
-          icon={<ManageAccountsRoundedIcon htmlColor={activeView !== 1 ? "var(--gray-hard-500)" : "var(--white-X00)"} />}
           padding="6px"
         />
       </Box>
@@ -103,16 +103,16 @@ export const OPageAction = ({ activeView, setActiveView, clickAction }) => (
         padding="6px"
         onClick={() => setActiveView(2)}>
         <FigureClick
+          Icon={() => <RoomServiceRoundedIcon htmlColor={activeView !== 2 ? "var(--gray-hard-500)" : "var(--white-X00)"} />}
           invert={activeView !== 2}
-          icon={<RoomServiceRoundedIcon htmlColor={activeView !== 2 ? "var(--gray-hard-500)" : "var(--white-X00)"} />}
           padding="6px"
         />
       </Box>
     </Box>
     <Box>
       <FigureClick
+        Icon={(props) => <PostAddOutlinedIcon {...props} />}
         id="cs-order-editor-open-switch"
-        icon={<PostAddOutlinedIcon htmlColor="var(--white-X00)" />}
         padding="12px"
         clickWork={clickAction}
       />

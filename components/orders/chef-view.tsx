@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import RoomServiceRoundedIcon from '@mui/icons-material/RoomServiceRounded';
+import WhatshotRoundedIcon from '@mui/icons-material/WhatshotRounded';
 import { addActiveOrder } from "../../utils/web/apis/activeOrderApis";
 import FigureClick from "../form-components/figure-click";
 import { setAlertWithDelay } from "../../store/services/uiServices";
@@ -176,31 +176,28 @@ const ChefView = ({ orders={} }: ChefViewProps): JSX.Element => {
                   <Box
                     display="flex">
                     <FigureClick
-                      icon={<ArrowBackIosNewIcon
-                        htmlColor="var(--white-X00)"
-                        fontSize="small"
-                      />}
+                      Icon={(props) => <WhatshotRoundedIcon fontSize="small" {...props} />}
                       padding="8px"
                       clickWork={() => _handleServe("unserve-one", each["table-number"], each.itemIndex)}
                     />
                     <Box width="4px"/>
                     <FigureClick
-                      icon={
+                      Icon={(props) =>
                         <Box
                           display="flex"
                           alignItems="center"
                           p="0"
                           m="0">
-                          <ArrowBackIosNewIcon
-                            htmlColor="var(--white-X00)"
+                          <WhatshotRoundedIcon
                             fontSize="small"
+                            {...props}
                           />
                           <Typography
                             color="var(--white-X00)"
                           >{each["item-count"]}</Typography>
                         </Box>
                       }
-                      padding="8px"
+                      padding="6px"
                       clickWork={() => _handleServe("unserve-all", each["table-number"], each.itemIndex)}
                     />
                   </Box>
@@ -273,30 +270,27 @@ const ChefView = ({ orders={} }: ChefViewProps): JSX.Element => {
                   <Box
                     display="flex">
                     <FigureClick
-                      icon={
+                      Icon={(props) =>
                         <Box
                           display="flex"
                           alignItems="center"
                           p="0"
                           m="0">
+                          <RoomServiceRoundedIcon
+                            fontSize="small"
+                            {...props}
+                          />
                           <Typography
                             color="var(--white-X00)"
                           >{each["item-count"]}</Typography>
-                          <ArrowForwardIosIcon
-                            htmlColor="var(--white-X00)"
-                            fontSize="small"
-                          />
                         </Box>
                       }
-                      padding="8px"
+                      padding="6px"
                       clickWork={() => _handleServe("serve-all", each["table-number"], each.itemIndex)}
                     />
                     <Box width="4px"/>
                     <FigureClick
-                      icon={<ArrowForwardIosIcon
-                        htmlColor="var(--white-X00)"
-                        fontSize="small"
-                      />}
+                      Icon={(props) => <RoomServiceRoundedIcon fontSize="small" {...props} />}
                       padding="8px"
                       clickWork={() => _handleServe("serve-one", each["table-number"], each.itemIndex)}
                     />

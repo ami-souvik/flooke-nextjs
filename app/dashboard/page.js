@@ -1,6 +1,10 @@
 "use client"
 import { useEffect, useState } from "react";
 import { Box, Skeleton, IconButton, Typography } from "@mui/material";
+import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined';
+import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined';
+import LightbulbOutlinedIcon from '@mui/icons-material/LightbulbOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DashboardOrderCard from "../../components/dashboard/dashboard-order-card";
 import DashboardGuestCard from "../../components/dashboard/dashboard-guest-card";
 import PastOrders from "../../components/past-orders/past-orders";
@@ -8,6 +12,8 @@ import GuestDetails from "../../components/guest-details/guest-details";
 import { filterProcessedOrderByDate } from '../../utils/web/apis/processedOrderFilterApis';
 import { getAllGuestDetails } from '../../utils/web/apis/guestDetailsApis';
 import '../../styles/responsive-pages-styles/dashboard.css';
+import FigureClick from "../../components/form-components/figure-click";
+import Report from "../../components/dashboard/dashboard-report";
 
 export default function Dashboard() {
   const [view, setView] = useState(null);
@@ -61,6 +67,47 @@ export default function Dashboard() {
                 gotoOrders()
               }}
             />
+            <Box
+              margin="6px 0px"
+              display="flex"
+              overflow="scroll">
+              <FigureClick
+                invert
+                Icon={(props) => <AssessmentOutlinedIcon {...props} />}
+                label="Reporting"
+                margin="0px 8px"
+                padding="32px"
+                rounded="12px"
+                clickWork={() => {
+                  setView("reporting")
+                  gotoOrders()
+                }}
+              />
+              <FigureClick
+                invert
+                Icon={(props) => <TimelineOutlinedIcon {...props} />}
+                label="Business growth"
+                margin="0px 8px"
+                padding="32px"
+                rounded="12px"
+              />
+              <FigureClick
+                invert
+                Icon={(props) => <LightbulbOutlinedIcon {...props} />}
+                label="Insights"
+                margin="0px 8px"
+                padding="32px"
+                rounded="12px"
+              />
+              <FigureClick
+                invert
+                Icon={(props) => <InfoOutlinedIcon {...props} />}
+                label="Further Info"
+                margin="0px 8px"
+                padding="32px"
+                rounded="12px"
+              />
+            </Box>
           </Box>
         </Box>
         <Box
@@ -68,6 +115,7 @@ export default function Dashboard() {
           className="cs-component-col-2">
           {view === "past-orders" && <PastOrders content={pastOrders} />}
           {view === "guest-details" && <GuestDetails content={guestDetails}/>}
+          {view === "reporting" && <Report />}
         </Box>
       </Box>
     </main>

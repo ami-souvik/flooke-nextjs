@@ -232,7 +232,7 @@ export default function OrderProcessor() {
             display="flex"
             alignItems="flex-end">
             <FigureClick
-              icon={<PrintRoundedIcon htmlColor="var(--white-X00)" />}
+              Icon={(props) => <PrintRoundedIcon {...props} />}
               margin="0px 4px"
               clickWork={() => parent.window.postMessage({
                 method: "print",
@@ -240,7 +240,7 @@ export default function OrderProcessor() {
               }, WRAPPER_BASE_URL)}
             />
             <FigureClick
-              icon={<ArrowCircleRightOutlinedIcon htmlColor="var(--white-X00)" />}
+              Icon={(props) => <ArrowCircleRightOutlinedIcon {...props} />}
               clickWork={() => confirmProcess(true)}
             />
           </Box>

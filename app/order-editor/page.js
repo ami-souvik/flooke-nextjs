@@ -220,7 +220,7 @@ export default function OrderEditor() {
         </Box>
         <FigureClick
           disabled={!changed}
-          icon={<PublishRoundedIcon htmlColor="var(--white-X00)" />}
+          Icon={(props) => <PublishRoundedIcon {...props} />}
           padding="12px"
           clickWork={syncWithDatabase}
         />

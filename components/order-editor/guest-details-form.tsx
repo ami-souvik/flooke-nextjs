@@ -94,8 +94,8 @@ const GuestDetailsForm = ({ data, handleClose }) => {
           display="flex"
           justifyContent="flex-end">
           <FigureClick
+            Icon={(props) => <SaveRoundedIcon fontSize="small" {...props} />}
             padding="12px"
-            icon={<SaveRoundedIcon fontSize="small" htmlColor="var(--white-X00)" />}
             clickWork={_addGuestDetails}
           />
         </Box>

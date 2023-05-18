@@ -29,18 +29,18 @@ export const navigate = (path) => {
   }, WRAPPER_BASE_URL);
 }
 
-const formatDate = (v) => Number(v) > 9 ? `${v}` : `0${v}`
+export const formatDate = (v) => Number(v) > 9 ? `${v}` : `0${v}`
 
 export const getUTCDateLimit = () => {
-  const from = new Date();
-  const end = new Date(Date.now()+(24*60*60*1000));
+  const from = new Date(Date.now()-(24*60*60*1000));
+  const end = new Date();
   return {
-    "from-date": `${from.getUTCFullYear()}-${
-      formatDate(from.getUTCMonth()+1)}-${
-      formatDate(from.getUTCDate())}T18:30:00.000Z`,
+    "from-date": `${from.getFullYear()}-${
+      formatDate(from.getMonth()+1)}-${
+      formatDate(from.getDate())}T00:00:00.000Z`,
     "to-date": `${end.getUTCFullYear()}-${
-      formatDate(end.getUTCMonth()+1)}-${
-      formatDate(end.getUTCDate())}T18:30:00.000Z`
+      formatDate(end.getMonth()+1)}-${
+      formatDate(end.getDate())}T00:00:00.000Z`
   }
 }
 

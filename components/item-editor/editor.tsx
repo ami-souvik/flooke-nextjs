@@ -278,14 +278,14 @@ const Editor = ({ data, _setEdibles, _deleteItem, handleClose }) => {
           (data?.unique !== null
           && data?.unique !== undefined) &&
           <FigureClick
+            Icon={(props) => <DeleteForeverRoundedIcon fontSize="small" {...props} />}
             padding="12px"
-            icon={<DeleteForeverRoundedIcon fontSize="small" htmlColor="var(--white-X00)" />}
             clickWork={() => _deleteItem(category, itemName, data?.index)}
           />
         }
         <FigureClick
+          Icon={(props) => <SaveRoundedIcon fontSize="small" {...props} />}
           padding="12px"
-          icon={<SaveRoundedIcon fontSize="small" htmlColor="var(--white-X00)" />}
           clickWork={() => {
             (data?.unique !== null
             && data?.unique !== undefined) ?

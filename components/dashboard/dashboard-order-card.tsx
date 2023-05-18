@@ -8,7 +8,7 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import RefreshRoundedIcon from '@mui/icons-material/RefreshRounded';
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import { getUTCDateLimit } from "../../utils/helperUtils.ts";
+import { formatDate, getUTCDateLimit } from "../../utils/helperUtils.ts";
 
 const OrderCardSm = ({ retrieveApi }) => {
   const [loading, setLoading] = useState(false);
@@ -17,6 +17,7 @@ const OrderCardSm = ({ retrieveApi }) => {
     setLoading(true);
     let orderCount = 0
     let totalBusiness = 0
+    console.log(getUTCDateLimit());
     const response = await retrieveApi(getUTCDateLimit());
     setLoading(false);
     response.data.mongodb.content.forEach(each => {
@@ -105,15 +106,19 @@ const OrderCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState(null);
   const [openCalender, setOpenCalender] = useState(null);
-  const [from, setFrom] = useState(new Date());
-  const [end, setEnd] = useState(new Date(Date.now()+(24*60*60*1000)));
+  const [from, setFrom] = useState(new Date(Date.now()-(24*60*60*1000)));
+  const [end, setEnd] = useState(new Date());
   const _retrieveApi = async () => {
     if(!from || !end) return;
     let totalBusiness = 0
     setLoading(true);
     const response = await retrieveApi({
-      "from-date": `${from.toISOString().substring(0, 10)}T18:30:00.000Z`,
-      "to-date":`${end.toISOString().substring(0, 10)}T18:30:00.000Z`,
+      "from-date": `${from.getFullYear()}-${
+        formatDate(from.getMonth()+1)}-${
+        formatDate(from.getDate())}T00:00:00.000Z`,
+      "to-date": `${end.getUTCFullYear()}-${
+        formatDate(end.getMonth()+1)}-${
+        formatDate(end.getDate())}T00:00:00.000Z`
     });
     setLoading(false);
     response.data.mongodb.content.forEach(each => {
@@ -152,14 +157,19 @@ const OrderCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
             }}
           >
             <DateCalendar
-              defaultValue={dayjs(new Date())}
+              defaultValue={dayjs(
+                openCalender === "from" ? from
+                : openCalender === "end" ? end
+                : new Date()
+              )}
               onChange={(v, event) => {
+                console.log(v);
                 if(event === "finish" && openCalender === "from") {
-                  setFrom(new Date(v["$y"], v["$M"], v["$D"]+1))
+                  setFrom(new Date(v["$y"], v["$M"], v["$D"]))
                   setOpenCalender(null)
                 }
                 else if(event === "finish" && openCalender === "end") {
-                  setEnd(new Date(v["$y"], v["$M"], v["$D"]+1))
+                  setEnd(new Date(v["$y"], v["$M"], v["$D"]))
                   setOpenCalender(null)
                 }
               }}
@@ -183,7 +193,10 @@ const OrderCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
             fontFamily="Comme, sans-serif">FROM DATE</Typography>
           <Typography
             fontSize="0.8rem"
-            fontFamily="Comme, sans-serif">{from ? from.toISOString().substring(0, 10) : "Select Date"}</Typography>
+            fontFamily="Comme, sans-serif">{from ?
+              `${from.getFullYear()}-${
+                formatDate(from.getMonth()+1)}-${
+                formatDate(from.getDate())}` : "Select Date"}</Typography>
         </Box>
         <Box
           width="50%"
@@ -196,7 +209,10 @@ const OrderCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
           <Typography
             fontSize="0.8rem"
             fontFamily="Comme, sans-serif"
-            textAlign="right">{end ? end.toISOString().substring(0, 10) : "Select Date"}</Typography>
+            textAlign="right">{end ?
+              `${end.getFullYear()}-${
+                formatDate(end.getMonth()+1)}-${
+                formatDate(end.getDate())}` : "Select Date"}</Typography>
         </Box>
       </Box>
       <Box

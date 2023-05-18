@@ -118,28 +118,29 @@ const ManagerView = ({ orders={}, confirmDelete }: ManagerViewProps): JSX.Elemen
               </Box>
             )
           }
-          <Box>
+          <Box
+            display="flex">
             <FigureClick
+              Icon={(props) => <NoteAltOutlinedIcon {...props} />}
               id="cs-order-editor-go-switch"
-              icon={<NoteAltOutlinedIcon htmlColor="var(--white-X00)" />}
               padding="12px"
               margin="0px 2px"
               clickWork={() => navigate(`${PATH_ORDER_EDITOR}?id=${orders[key]["table-number"]}`)}
             />
             <FigureClick
-              icon={<DeleteOutlineRoundedIcon htmlColor="var(--white-X00)" />}
+              Icon={(props) => <DeleteOutlineRoundedIcon {...props} />}
               padding="12px"
               margin="0px 2px"
               clickWork={() => confirmDelete(key)}
             />
             <FigureClick
-              icon={<DescriptionOutlinedIcon htmlColor="var(--white-X00)" />}
+              Icon={(props) => <DescriptionOutlinedIcon {...props} />}
               padding="12px"
               margin="0px 2px"
               clickWork={() => navigate(`${PATH_ORDER_PROCESSOR}?id=${orders[key]["table-number"]}`)}
             />
             <FigureClick
-              icon={<PrintRoundedIcon htmlColor="var(--white-X00)" />}
+              Icon={(props) => <PrintRoundedIcon {...props} />}
               padding="12px"
               margin="0px 2px"
               clickWork={() => parent.window.postMessage({

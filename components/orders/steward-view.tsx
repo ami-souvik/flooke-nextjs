@@ -76,18 +76,18 @@ const StewardView = ({ orders={}, confirmDelete }: StewardViewProps): JSX.Elemen
           }
           <Box>
             <FigureClick
+              Icon={(props) => <NoteAltOutlinedIcon {...props} />}
               id="cs-order-editor-go-switch"
-              icon={<NoteAltOutlinedIcon htmlColor="var(--white-X00)" />}
               padding="12px"
               clickWork={() => navigate(`${PATH_ORDER_EDITOR}?id=${orders[key]["table-number"]}`)}
             />
             <FigureClick
-              icon={<DeleteOutlineRoundedIcon htmlColor="var(--white-X00)" />}
+              Icon={(props) => <DeleteOutlineRoundedIcon {...props} />}
               padding="12px"
               clickWork={() => confirmDelete(key)}
             />
             <FigureClick
-              icon={<DescriptionOutlinedIcon htmlColor="var(--white-X00)" />}
+              Icon={(props) => <DescriptionOutlinedIcon {...props} />}
               padding="12px"
               clickWork={() => navigate(`${PATH_ORDER_PROCESSOR}?id=${orders[key]["table-number"]}`)}
             />

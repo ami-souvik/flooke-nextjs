@@ -2,13 +2,12 @@ import { Box, Typography } from "@mui/material";
 import PrintRoundedIcon from '@mui/icons-material/PrintRounded';
 import FigureClick from "../form-components/figure-click";
 import { WRAPPER_BASE_URL } from "../../utils/constantUtils";
-import { convertUTCtoLocalDate } from "../../utils/helperUtils.ts";
 
 const PastOrderCard = ({ data = {} }) => {
   return (
     <>
       <Typography
-        fontSize="0.8rem">{convertUTCtoLocalDate(data["order-date"])}</Typography>
+        fontSize="0.8rem">{data["order-date"]}</Typography>
       <Box
         width="100%"
         display="flex"
@@ -71,7 +70,7 @@ const PastOrderCard = ({ data = {} }) => {
           </Box>
         </Box>
         <FigureClick
-          icon={<PrintRoundedIcon htmlColor="var(--white-X00)" />}
+          Icon={(props) => <PrintRoundedIcon {...props} />}
           padding="12px"
           margin="4px"
           clickWork={() => parent.window.postMessage({
