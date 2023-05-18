@@ -118,7 +118,7 @@ const OrderCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
         formatDate(from.getDate())}T00:00:00.000Z`,
       "to-date": `${end.getUTCFullYear()}-${
         formatDate(end.getMonth()+1)}-${
-        formatDate(end.getDate())}T00:00:00.000Z`
+        formatDate(end.getDate())}T23:59:59.999Z`
     });
     setLoading(false);
     response.data.mongodb.content.forEach(each => {
