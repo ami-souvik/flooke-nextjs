@@ -177,6 +177,8 @@ const OrderCardFull = ({ setPastOrders, retrieveApi, gotoOrders }) => {
           </LocalizationProvider>
         </DialogContent>
       </Dialog>
+      <Typography>{from.toString()}</Typography>
+      <Typography>{end.toString()}</Typography>
       <Box
         width="100%"
         display="flex"
