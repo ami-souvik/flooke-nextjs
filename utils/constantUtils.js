@@ -8,9 +8,9 @@
 // production constants
 export const DATABASE = "thepseudoengineers";
 
-export const WRAPPER_BASE_URL = "https://heres-sav.github.io/flooke-wrapper";
+export const WRAPPER_BASE_URL = "https://flooke-global.github.io/flooke-wrapper";
 export const FRONTEND_BASE_URL = "https://flooke-nextjs-git-development-v2-heres-sav.vercel.app";
-export const BACKEND_API_BASE_URL = "https://flooke-mw.onrender.com";
+export const BACKEND_API_BASE_URL = "https://flooke-mw-n4ow.onrender.com";
 
 export const ORDER_CARD_VIEWS = [
   {
