@@ -1,4 +1,4 @@
-import { getTodayFormatted } from '../helperUtils'
+import { getTodayFormatted } from '../helperUtils.ts'
 
 // Template horizontal space: 32 char
 // Item description space: 17 char
@@ -177,27 +177,6 @@ async function sendTextData(data, printCharacteristic) {
 }
 
 const sendPrinterData = (data, printCharacteristic) => {
-  // const somedata = {
-  //   Appetizers: {
-  //     "BBQ Lollipop": {
-  //       count: 3,
-  //       unit: 200,
-  //       price: 600
-  //     },
-  //     "Honey Mustard Sandwich": {
-  //       count: 1,
-  //       unit: 180,
-  //       price: 180
-  //     }
-  //   },
-  //   "Caffine": {
-  //     "Normal Coffee": {
-  //       count: 4,
-  //       unit: 50,
-  //       price: 200
-  //     }
-  //   }
-  // }
   sendTextData(data, printCharacteristic);
   // Print an image followed by the text
   // sendImageData(printCharacteristic)

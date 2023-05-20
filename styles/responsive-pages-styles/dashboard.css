@@ -1,0 +1,40 @@
+/* For desktop: */
+@media only screen
+  and (min-width: 1200px)  {
+  #cs-dashboard-root {
+    column-gap: 50px;
+    max-width: calc(1200px + 50px);
+  }
+  #cs-dashboard-col-1 {
+    width: 50vw;
+    max-width: 600px;
+  }
+  #cs-dashboard-col-2 {
+    width: 50vw;
+    max-width: 600px;
+  }
+}
+
+@media only screen
+  and (min-width: 768px) 
+  and (max-width: 1200px)  {
+  #cs-dashboard-root {}
+  #cs-dashboard-col-1 {
+    width: 50vw;
+  }
+  #cs-dashboard-col-2 {
+    width: 50vw;
+  }
+}
+
+/* For mobile phones: */
+@media only screen
+  and (max-width: 768px) {
+  #cs-dashboard-root {}
+  #cs-dashboard-col-1 {
+    width: 100vw;
+  }
+  #cs-dashboard-col-2 {
+    width: 100vw;
+  }
+}

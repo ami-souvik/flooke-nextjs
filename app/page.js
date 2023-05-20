@@ -1,100 +1,60 @@
 "use client";
-import { useState, useContext, useEffect } from 'react';
-import { FirebaseRealtimeDB } from '../context/context'
-import { ManagerCard } from '../components/card/types';
-import { IconButton, Switch } from '@mui/material';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import EditOffRoundedIcon from '@mui/icons-material/EditOffRounded';
-import Editor from '../components/editor';
-import BillPreview from '../components/billPreview';
-import Picker from '../components/picker';
-import { getDatestamp } from '../utils/helperUtils';
-
-const views = ["Manager", "Chef", "Steward"]
+import { useContext, useState } from 'react';
+import { FirebaseRealtimeDB } from '../context/db-context'
+import { Box } from '@mui/material';
+import { OPageAction } from '../components/form-components/page-action';
+import { deleteActiveOrder } from '../utils/web/apis/activeOrderApis';
+import OrderEditor from './order-editor/page';
+import ManagerView from '../components/orders/manager-view';
+import ChefView from '../components/orders/chef-view';
+import StewardView from '../components/orders/steward-view';
+import ConfirmOverlay from '../components/overlays/confirm-overlay';
+import { navigate } from '../utils/helperUtils.ts';
+import { PATH_ORDER_EDITOR } from '../utils/constantUtils';
+import '../styles/responsive-pages-styles/orders.css';
 
 export default function Home() {
-  const { edibles, orders, pastOrders, deleteTable } = useContext(FirebaseRealtimeDB);
-  const [view, setView] = useState(views[0]);
-  const [openEd, setOpenEd] = useState(false);
-  const [openPcs, setOpenPcs] = useState(false);
-  const [active, setActive] = useState('1');
-  const [todaysTotal, setTodaysTotal] = useState(0);
-  const calculateTotal = () => {
-    var total = 0
-    Object.keys(pastOrders).forEach(each => {
-      console.log(pastOrders[each]);
-      if(each.substring(0, 10) === getDatestamp()) {
-        console.log('total called');
-        total += pastOrders[each].orderComputation.billingAmount
-      }
-    })
-    console.log(total);
-    setTodaysTotal(total)
-  }
-  useEffect(() => {
-    calculateTotal()
-  }, [pastOrders])
+  const { orders } = useContext(FirebaseRealtimeDB);
+  const [activeView, setActiveView] = useState(1);
+  const [deleteTable, confirmDelete] = useState(null);
   return (
-    <main>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <Switch checked={!!edibles} color="success" />
-        <h3 style={{ paddingRight: "12px" }}>Total: {todaysTotal}</h3>
-      </div>
-      <Picker
-        label="View"
-        values={views}
-        active={view}
-        setActive={setView}
+    <main
+      suppressHydrationWarning
+      style={{
+        height: "100vh"
+      }}>
+      <ConfirmOverlay
+        open={!!deleteTable}
+        handleClose={() => confirmDelete(null)}
+        title="Delete table"
+        message="Are you surely want to delete the table?"
+        onSuccess={() => deleteActiveOrder({ "table-number": orders[deleteTable]["table-number"] })}
       />
-      {orders && Object.keys(orders).map(key => (
-        <ManagerCard
-          key={key}
-          loading={orders ? false : true}
-          title={key}
-          orders={{
-            details: orders[key].orderDetails,
-            total: orders[key].orderComputation
-              && orders[key].orderComputation.orderTotal
-              ? orders[key].orderComputation.orderTotal : null,
-            phnumber: orders[key].phnumber
-          }}
-          onEdit={() => {
-            setOpenEd(true)
-            setActive(key)
-          }}
-          onDelete={() => deleteTable(key)}
-          onProcess={() => {
-            setOpenPcs(true)
-            setActive(key)
-          }}
-        />
-      ))}
-      {openEd &&
-        <Editor
-          title="Order editor"
-          data={edibles}
-          active={active}
-        />
-      }
-      {openPcs &&
-        <BillPreview
-          table={active}
-          handleClose={() => setOpenPcs(false)}
-        />
-      }
-      <IconButton
-        aria-label="edit"
-        onClick={() => setOpenEd(!openEd)}
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          padding: "12px",
-          backgroundColor: "#ddd"
-        }}>
-        {openEd ? <EditOffRoundedIcon fontSize="large" />
-        : <EditRoundedIcon fontSize="large" />}
-      </IconButton>
+      <Box className="cs-component-root">
+        <Box
+          className="cs-component-col-1"
+          sx={{ position: "relative" }}>
+          <Box
+            className="scrollable-div"
+            height="calc(100vh - 48px)"
+            sx={{
+              overflowY: "scroll",
+              padding: "0px"
+            }}>
+            {activeView === 0 && <ChefView orders={orders}/>}
+            {activeView === 1 && <ManagerView orders={orders} confirmDelete={confirmDelete} />}
+            {activeView === 2 && <StewardView orders={orders}/>}
+          </Box>
+          <OPageAction
+            activeView={activeView}
+            setActiveView={setActiveView}
+            clickAction={() => navigate(PATH_ORDER_EDITOR)}
+          />
+        </Box>
+        <Box className="cs-component-col-2">
+          <OrderEditor />
+        </Box>
+      </Box>
     </main>
   )
 }

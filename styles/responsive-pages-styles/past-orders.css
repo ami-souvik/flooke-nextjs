@@ -1,0 +1,35 @@
+@media only screen
+  and (min-width: 880px) 
+  and (max-width: 1600px) {
+  .cs-discount-given-key::after {
+    content: "Discount given - ";
+  }
+  .cs-billed-amount-key::after {
+    content: "Billed Amount - ";
+  }
+  .cs-past-order-card-left {
+    width: 50%;
+  }
+  .cs-past-order-card-right {
+    width: 50%;
+    font-size: 0.8rem;
+  }
+}
+
+@media only screen
+  and (max-width: 880px) {
+  .cs-past-order-card-left {
+    width: 70%;
+  }
+  .cs-past-order-card-right {
+    width: 30%;
+  }
+  .cs-past-order-card-right .elements {
+    align-self: flex-start;
+    margin: 4px 0px;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    background-color: var(--lightblue-400);
+    color: white;
+  }
+}

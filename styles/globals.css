@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comme:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;300;400;500;600;700;900&display=swap');
 
 :root {
   --max-width: 1100px;
@@ -43,11 +45,23 @@
 
   /** Theme colors */
   --white-X00: #FFF;
+  --white-900: #F8F6F4;
   --white-800: #EAEAEA;
   --black-500: #666;
   --black-X00: #000;
   --purple-600: #3D2B6A;
   --lightblue-400: #486484;
+
+  --primary-purple: #4B377B;
+  --primary-yellow: #FFCF2E;
+  --gray-hard-500: #333333;
+  --gray-subtle-500: #D9D9D9;
+  --green-hard-500: #1CC900;
+  --red-hard-500: #FC1717;
+  --red-subtle-500: #FA9884;
+  --yellow-subtle-200: #FCFFB2;
+  --yellow-subtle-900: #FFD95A;
+  --green-subtle-400: #98D8AA;
 }
 
 @media (prefers-color-scheme: light) {
@@ -76,10 +90,18 @@
       #ffffff80
     );
 
+    /** Theme colors */
+    --white-X00: #FFF;
+
     --callout-rgb: 20, 20, 20;
     --callout-border-rgb: 108, 108, 108;
     --card-rgb: 100, 100, 100;
     --card-border-rgb: 200, 200, 200;
+
+    --gray-hard-500: #333333;
+    --gray-subtle-500: #D9D9D9;
+    --green-hard-500: #1CC900;
+    --red-hard-500: #FC1717;
   }
 }
 
@@ -97,16 +119,18 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--white-X00);
+}
+
+@media only screen
+  and (min-width: 1200px) {
+  main {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 h1, h2, h3, h4, h5, h6, p {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: 400;
 }
 
@@ -115,8 +139,15 @@ a {
   text-decoration: none;
 }
 
+table {
+  border-collapse: collapse;
+  /* border: 1px solid rgb(200, 200, 200); */
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+}
+
 @media (prefers-color-scheme: light) {
   html {
-    color-scheme: dark;
+    color-scheme: light;
   }
 }
