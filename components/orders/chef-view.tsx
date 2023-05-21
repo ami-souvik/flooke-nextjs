@@ -66,7 +66,8 @@ const ChefView = ({ orders={} }: ChefViewProps): JSX.Element => {
     Object.keys(orders).forEach(key => {
       orders[key]["order-details"].forEach((each, itemIndex) => {
         const unique = each["item-unique"]
-        if(unique && chefGroup[unique] && each["item-count"]) {
+        if(unique && chefGroup[unique] && each["item-count"]
+        && each["item-count"] !== each["served-count"]) {
           chefGroup[unique]["item-count"] += Number(each["item-count"])
           chefGroup[unique]["served-count"] += Number(each["served-count"])
           if(chefGroup[unique].tables) {
@@ -79,7 +80,8 @@ const ChefView = ({ orders={} }: ChefViewProps): JSX.Element => {
             })
           }
         }
-        else if(unique) {
+        else if(unique
+        && each["item-count"] !== each["served-count"]) {
           chefGroup[unique] = {
             name: each["item-name"],
             "item-count": Number(each["item-count"]),

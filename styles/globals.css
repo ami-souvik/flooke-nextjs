@@ -66,9 +66,9 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 255, 255, 255;
+    --background-end-rgb: 255, 255, 255;
 
     --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
     --secondary-glow: linear-gradient(
@@ -92,16 +92,23 @@
 
     /** Theme colors */
     --white-X00: #FFF;
+    --white-900: #F8F6F4;
+    --white-800: #EAEAEA;
+    --black-500: #666;
+    --black-X00: #000;
+    --purple-600: #3D2B6A;
+    --lightblue-400: #486484;
 
-    --callout-rgb: 20, 20, 20;
-    --callout-border-rgb: 108, 108, 108;
-    --card-rgb: 100, 100, 100;
-    --card-border-rgb: 200, 200, 200;
-
+    --primary-purple: #4B377B;
+    --primary-yellow: #FFCF2E;
     --gray-hard-500: #333333;
     --gray-subtle-500: #D9D9D9;
     --green-hard-500: #1CC900;
     --red-hard-500: #FC1717;
+    --red-subtle-500: #FA9884;
+    --yellow-subtle-200: #FCFFB2;
+    --yellow-subtle-900: #FFD95A;
+    --green-subtle-400: #98D8AA;
   }
 }
 

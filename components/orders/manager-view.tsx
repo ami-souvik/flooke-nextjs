@@ -1,21 +1,53 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import PrintRoundedIcon from '@mui/icons-material/PrintRounded';
+import WhatshotRoundedIcon from '@mui/icons-material/WhatshotRounded';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import FigureClick from "../form-components/figure-click";
-import { TABLES_MAP, PATH_ORDER_EDITOR, PATH_ORDER_PROCESSOR, WRAPPER_BASE_URL } from "../../utils/constantUtils";
+import { addActiveOrder } from "../../utils/web/apis/activeOrderApis";
 import { navigate } from '../../utils/helperUtils.ts';
+import { setAlertWithDelay } from "../../store/services/uiServices";
+import { TABLES_MAP, PATH_ORDER_EDITOR, PATH_ORDER_PROCESSOR, WRAPPER_BASE_URL } from "../../utils/constantUtils";
 
 interface ManagerViewProps {
   orders: object
   confirmDelete: (v: string) => void
 }
 
-const ManagerView = ({ orders={}, confirmDelete }: ManagerViewProps): JSX.Element => 
-  <>
+const ManagerView = ({ orders={}, confirmDelete }: ManagerViewProps): JSX.Element => {
+  const unserveOne = async (tableIndex, itemIndex) => {
+    const tableOrder = JSON.parse(JSON.stringify(orders[tableIndex]))
+    if(!tableOrder || !tableOrder["order-details"] || !tableOrder["order-details"][itemIndex]) 
+      return;
+    const {
+      "served-count": servedCount
+    } = tableOrder["order-details"][itemIndex]
+    if(servedCount === 0) return;
+    tableOrder["order-details"][itemIndex]["served-count"] = servedCount - 1
+    const res = await addActiveOrder(tableOrder);
+    if(res?.data?.firebase?.error) {
+      setAlertWithDelay({
+        status: "error",
+        message: res.data.firebase.error
+      });
+    }
+    else if(res?.data?.firebase?.status) {
+      setAlertWithDelay({
+        status: "success",
+        message: res.data.firebase.status
+      });
+    }
+    else {
+      setAlertWithDelay({
+        status: "error",
+        message: "Something went wrong"
+      });
+    }
+  }
+  return <>
   {
-    orders &&
+    orders && Object.keys(orders).length > 0 ?
     Object.keys(orders).map((key, index) => (
       <Box
         key={index}
@@ -56,33 +88,44 @@ const ManagerView = ({ orders={}, confirmDelete }: ManagerViewProps): JSX.Elemen
           </Box>
           {
             orders[key]["order-details"].map(
-              eachItem =>
+              (eachItem, index) =>
               <Box
                 key={eachItem["item-unique"]}
                 my="8px"
                 display="flex"
                 alignItems="center"
                 justifyContent="space-between">
-                <Box>
-                  <Typography
-                    paddingRight="6px"
-                    fontSize="0.8rem"
-                    fontFamily="Comme, sans-serif"
-                  >{eachItem["item-name"]}</Typography>
-                  {
-                    eachItem.comment && <Typography
-                      lineHeight="0.9rem"
-                      padding="6px"
-                      margin="4px 8px 0px -4px"
+                <Box
+                  display="flex"
+                  alignItems="center">
+                  <FigureClick
+                    Icon={(props) => <WhatshotRoundedIcon fontSize="small" {...props} />}
+                    padding="8px"
+                    clickWork={() => unserveOne(orders[key]["table-number"], index)}
+                  />
+                  <Box width="4px"/>
+                  <Box>
+                    <Typography
+                      paddingX="12px"
                       fontSize="0.8rem"
-                      fontFamily="DM Sans, sans-serif"
-                      fontStyle="italic"
-                      borderRadius="4px"
-                      boxShadow="0px 0px 8px var(--gray-subtle-500)"
-                      color="var(--white-X00)"
-                      bgcolor="var(--lightblue-400)"
-                    >{eachItem.comment}</Typography>
-                  }
+                      fontFamily="Comme, sans-serif"
+                      textAlign="center"
+                    >{eachItem["item-name"]}</Typography>
+                    {
+                      eachItem.comment && <Typography
+                        lineHeight="0.9rem"
+                        padding="6px"
+                        margin="4px 8px 0px -4px"
+                        fontSize="0.8rem"
+                        fontFamily="DM Sans, sans-serif"
+                        fontStyle="italic"
+                        borderRadius="4px"
+                        boxShadow="0px 0px 8px var(--gray-subtle-500)"
+                        color="var(--white-X00)"
+                        bgcolor="var(--lightblue-400)"
+                      >{eachItem.comment}</Typography>
+                    }
+                  </Box>
                 </Box>
                 <Box display="flex">
                   <Box
@@ -151,8 +194,31 @@ const ManagerView = ({ orders={}, confirmDelete }: ManagerViewProps): JSX.Elemen
           </Box>
         </Box>
       </Box>
-    ))
+    )) :
+    <Box
+      height="260px"
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      margin="12px">
+      <Skeleton
+        width="100%"
+        height="80px"
+        variant="rounded"
+      />
+      <Skeleton
+        width="100%"
+        height="80px"
+        variant="rounded"
+      />
+      <Skeleton
+        width="100%"
+        height="80px"
+        variant="rounded"
+      />
+    </Box>
   }
   </>
+}
 
 export default ManagerView;

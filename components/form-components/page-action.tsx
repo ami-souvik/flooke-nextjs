@@ -99,15 +99,6 @@ export const OPageAction = ({ activeView, setActiveView, clickAction }) => (
           padding="6px"
         />
       </Box>
-      <Box
-        padding="6px"
-        onClick={() => setActiveView(2)}>
-        <FigureClick
-          Icon={() => <RoomServiceRoundedIcon htmlColor={activeView !== 2 ? "var(--gray-hard-500)" : "var(--white-X00)"} />}
-          invert={activeView !== 2}
-          padding="6px"
-        />
-      </Box>
     </Box>
     <Box>
       <FigureClick
