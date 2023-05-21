@@ -1,16 +1,16 @@
 // development urls
-export const DATABASE = "crystalsteward";
+// export const DATABASE = "crystalsteward";
 
-export const WRAPPER_BASE_URL = "http://localhost:3001";
-export const FRONTEND_BASE_URL = "http://localhost:3000";
-export const BACKEND_API_BASE_URL = "http://localhost:4000";
+// export const WRAPPER_BASE_URL = "http://localhost:3001";
+// export const FRONTEND_BASE_URL = "http://localhost:3000";
+// export const BACKEND_API_BASE_URL = "http://localhost:4000";
 
 // production constants
-// export const DATABASE = "thepseudoengineers";
+export const DATABASE = "thepseudoengineers";
 
-// export const WRAPPER_BASE_URL = "https://flooke-global.github.io/flooke-wrapper";
-// export const FRONTEND_BASE_URL = "https://flooke-nextjs.vercel.app";
-// export const BACKEND_API_BASE_URL = "https://flooke-mw-n4ow.onrender.com";
+export const WRAPPER_BASE_URL = "https://flooke-global.github.io/flooke-wrapper";
+export const FRONTEND_BASE_URL = "https://flooke-nextjs.vercel.app";
+export const BACKEND_API_BASE_URL = "https://flooke-mw-n4ow.onrender.com";
 
 export const ORDER_CARD_VIEWS = [
   {
