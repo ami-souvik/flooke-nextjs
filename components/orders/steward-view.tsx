@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
@@ -74,7 +74,7 @@ const StewardView = ({ orders={}, confirmDelete }: StewardViewProps): JSX.Elemen
               </Box>
             )
           }
-          <Box>
+          <Stack direction="row" spacing={1}>
             <FigureClick
               Icon={(props) => <NoteAltOutlinedIcon {...props} />}
               id="cs-order-editor-go-switch"
@@ -91,7 +91,7 @@ const StewardView = ({ orders={}, confirmDelete }: StewardViewProps): JSX.Elemen
               padding="12px"
               clickWork={() => navigate(`${PATH_ORDER_PROCESSOR}?id=${orders[key]["table-number"]}`)}
             />
-          </Box>
+          </Stack>
         </Box>
       </Box>
     ))
